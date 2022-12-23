@@ -25,6 +25,22 @@ function App() {
           margin
         </div>
       </header>
+      <body style={{background: "red"}}>
+        <div>
+           busdes
+        </div>
+        <div>
+          南草津→立命館大学
+        </div>
+        <div>
+          <div>
+            6時
+            <div>
+              <span>06:57</span><span>パナソニック 東口経由</span>
+            </div>
+          </div>
+        </div>
+      </body>
     </div>
   );
 }
