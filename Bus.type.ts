@@ -13,13 +13,13 @@ export interface ApproachInfos {
 	ApproachInfo: ApproachInfo[]
 }
 
-interface OneBusTime {
+export interface OneBusTime {
 	Via: string
 	Min: string
 	BusStop: string
 }
 
-interface DayBusTime {
+export interface DayBusTime {
 	"1":OneBusTime[] | null;
 	"2":OneBusTime[] | null;
 	"3":OneBusTime[] | null;
