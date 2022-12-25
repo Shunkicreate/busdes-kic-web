@@ -1,33 +1,33 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { ApproachInfos, TimeTable } from '../Bus.type';
 
-function App() {
+const App = () => {
+  const baseURL = "https://bustimer.azurewebsites.net/";
+  const [timeTable, setTimeTable] = useState<TimeTable>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("fetching...", baseURL + "timetable?fr=京都駅前&to=立命館大学")
+      const result = await axios.get(
+        baseURL + "timetable?fr=京都駅前&to=立命館大学",
+      )
+      setTimeTable(result.data);
+      console.log('setTimeTable', timeTable)
+    }
+    fetchData()
+  }, []);
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <h1 className="text-3xl font-bold underline">
-          Hello world!
-        </h1>
-        <div className='m-3 p-2'>
-          margin
-        </div>
-      </header>
-      <body style={{background: "red"}}>
+      <body style={{ background: "red" }}>
         <div>
-           busdes
+          busdes
         </div>
         <div>
           南草津→立命館大学
