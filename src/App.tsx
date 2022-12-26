@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { ApproachInfos, TimeTable, OneBusTime } from '../Bus.type';
+import BusCard from './BusCard';
 
 const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
     return (
@@ -93,6 +94,7 @@ const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
     return (
         <div className="App">
+            <BusCard></BusCard>
             <body style={{ background: "white" }}>
                 <div>
                     {count}
