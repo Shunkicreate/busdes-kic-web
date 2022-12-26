@@ -95,7 +95,7 @@ const App = () => {
     return (
         <div className="App">
             <BusCard></BusCard>
-            <body style={{ background: "white" }}>
+            <body className='border-2' style={{ background: "white" }}>
                 <div>
                     {count}
                 </div>
@@ -115,7 +115,7 @@ const App = () => {
                 {/* {timeTable === undefined ? <></> : ShowDayBusTime(timeTable.Weekdays)} */}
                 {/* {timeTable?ShowDayBusTime(timeTable.Saturdays):<></>}
                 {timeTable?ShowDayBusTime(timeTable.Holidays):<></>} */}
-                <div>
+                <div className='bg-gray-300'>
                     busdes
                 </div>
                 <div>
