@@ -2,47 +2,8 @@ import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { TimeTable, OneBusTime, unionDays } from '../Bus.type';
 import BusCard from './BusCard';
-
-const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
-    return (
-        <div>
-            <div>{oneBusTime.Min}</div>
-            <div>{oneBusTime.Via}</div>
-            <div>{oneBusTime.BusStop}</div>
-        </div>
-    )
-}
-
-const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
-    if (dayBusTime === undefined) {
-        return (
-            <div>undifined</div>
-        )
-    }
-    const keys = [...dayBusTime.keys()]
-    return (
-        <>
-            {keys.map((key) => {
-                const oneBusTimes = dayBusTime.get(key)
-                if (oneBusTimes !== undefined) {
-                    console.log("oneBusTimes", oneBusTimes)
-                    return (
-                        <div>
-                            {oneBusTimes.map((oneBusTime: OneBusTime, idx) => {
-                                return (
-                                    ShowOneBusTime({ oneBusTime })
-                                )
-                            })}
-                        </div>
-                    )
-                }
-                return (
-                    <div></div>
-                )
-            })}
-        </>
-    )
-}
+import { JsxElement } from 'typescript';
+import logo from './logo.svg'
 
 const useTimeTableApi = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
@@ -81,12 +42,111 @@ const useTimeTableApi = () => {
     )
 }
 
+const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
+    return (
+        <div>
+            <div>{oneBusTime.Min}</div>
+            <div>{oneBusTime.Via}</div>
+            <div>{oneBusTime.BusStop}</div>
+        </div>
+    )
+}
+
+const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
+    if (dayBusTime === undefined) {
+        return (
+            <div>undifined</div>
+        )
+    }
+    // const keys = [...dayBusTime.keys()]
+    //https://ribbit.konomi.app/blog/ts-strict-object-entries
+    //明日頑張れ！！！！！！！！！！
+    const DAYS:unionDays[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+    const jsxBusTime: JSX.Element[] = []
+    debugger
+    for (const [key, value] of Object.entries(dayBusTime)) {
+        console.log(`${key}: ${value}`);
+        const oneBusTimes = 
+        jsxBusTime.push(<div>{key}</div>)
+    }
+    // DAYS.forEach((n) => {
+    //     if( n in dayBusTime){
+    //         console.log(dayBusTime.n)
+    //     }
+    // })
+    for (const element of dayBusTime) {
+        console.log(element);
+    }
+    dayBusTime.forEach((value, idx) => {
+        console.log(idx, value)
+        // jsxBusTime.push(
+        //     (() => {
+        //         return (value.map((oneBusTime) => {
+        //             return (ShowOneBusTime({ oneBusTime }))
+        //         }))
+        //     })()
+        // )
+
+
+    })
+    // for (const [key, value] of dayBusTime) {
+    //     console.log(key, value);
+    // }
+    return (
+        <>
+            {/* {keys.map((key) => {
+                const oneBusTimes = dayBusTime.get(key)
+                if (oneBusTimes !== undefined) {
+                    console.log("oneBusTimes", oneBusTimes)
+                    return (
+                        <div>
+                            {oneBusTimes.map((oneBusTime: OneBusTime, idx) => {
+                                return (
+                                    ShowOneBusTime({ oneBusTime })
+                                )
+                            })}
+                        </div>
+                    )
+                }
+                return (
+                    <div></div>
+                )
+            })} */}
+            <div>hehehe</div>
+        </>
+    )
+}
+
+const showStrJson = (json: TimeTable | undefined) => {
+    if (json === undefined) {
+        return (
+            <div>undifined</div>
+        )
+    }
+    // const keys = [...json.keys()]
+    // console.log(keys)
+    // console.log(json.get("Weekdays"))
+    // debugger
+    console.log(typeof json)
+    console.log("json.Weekdays", json.weekdays)
+    console.log("hehehe", json["weekdays"])
+    return (
+        <div className='bg-stone-200'>
+            <div>
+                {ShowDayBusTime(json.weekdays)}
+            </div>
+            {JSON.stringify(json)}
+        </div>
+    )
+}
+
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
     let idx = 0
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     return (
         <div className="App">
+            <img src={logo}></img>
             <BusCard></BusCard>
             <body className='border-2' style={{ background: "white" }}>
                 <div>
@@ -108,7 +168,8 @@ const App = () => {
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : (
-                    <div>{JSON.stringify(timeTable)}</div>
+                    // <div>{JSON.stringify(timeTable)}</div>
+                    showStrJson(timeTable)
                 )}
                 <div className='bg-gray-300'>
                     busdes
