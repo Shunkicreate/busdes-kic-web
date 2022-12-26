@@ -3,7 +3,7 @@ import logo from './logo.svg';
 // import './App.css';
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { ApproachInfos, TimeTable, DayBusTime, OneBusTime } from '../Bus.type';
+import { ApproachInfos, TimeTable, OneBusTime } from '../Bus.type';
 
 const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
     return (
@@ -16,13 +16,23 @@ const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
 
 }
 
-const ShowDayBusTime = (dayBusTime: DayBusTime) => {
+const ShowDayBusTime = (dayBusTime: Map<string, OneBusTime[]>) => {
     // type dayBusTimeKey = keyof DayBusTime
     // const keys = Object.keys(dayBusTime) as dayBusTimeKey[]
     // debugger
+    const keys = [...dayBusTime.keys()]
     return (
         <>
-            {(Object.keys(dayBusTime) as (keyof DayBusTime)[]).map((key) => {
+            {keys.map((key) => {
+                const oneBusTimes = dayBusTime.get(key)
+                if (oneBusTimes !== undefined) {
+                    console.log("oneBusTimes", oneBusTimes)
+                }
+                return (
+                    <div></div>
+                )
+            })}
+            {/* {(Object.keys(dayBusTime) as (keyof DayBusTime)[]).map((key) => {
                 const data = dayBusTime[key]
                 console.log(data);
                 return (
@@ -33,7 +43,7 @@ const ShowDayBusTime = (dayBusTime: DayBusTime) => {
 
                     })
                 )
-            })}
+            })} */}
             {/* {keys.map((key:string, i:number) => {
 
             })} */}
@@ -42,35 +52,65 @@ const ShowDayBusTime = (dayBusTime: DayBusTime) => {
 
 }
 
-const App = () => {
+const useTimeTableApi = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
+    const [startSta, setStartSta] = useState('京都駅前')
+    const [goalSta, setGoalSta] = useState('立命館大学')
+    const [url, setUrl] = useState(baseURL + "timetable?fr=" + startSta + "&to=" + goalSta)
     const [timeTable, setTimeTable] = useState<TimeTable>()
-    // let JSxDayBusTime = <div></div>
+    const [count, setCount] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const doFetch = () => {
+        setUrl(baseURL + "timetable?fr=" + startSta + "&to=" + goalSta)
+    }
     useEffect(() => {
         const fetchData = async () => {
-            console.log("fetching...", baseURL + "timetable?fr=京都駅前&to=立命館大学")
-            const result = await axios.get(
-                baseURL + "timetable?fr=京都駅前&to=立命館大学",
+            setIsLoading(true)
+            await axios.get(
+                url,
             )
                 .then((res: AxiosResponse<TimeTable>) => {
                     const { data, status } = res;
                     setTimeTable(data);
+                    setIsLoading(false)
                     console.log(data)
+                    setCount(count + 1)
                 })
                 .catch((e: AxiosError<{ error: string }>) => {
-                    // エラー処理
                     console.log(e.message);
+                    setIsError(false);
                 })
         }
         fetchData()
-    }, []);
+    }, [url]);
+    return (
+        [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }]
+    )
+}
 
-
-
+const App = () => {
+    const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
     return (
         <div className="App">
-            <body style={{ background: "red" }}>
-                {timeTable === undefined ? <></> : ShowDayBusTime(timeTable.Weekdays)}
+            <body style={{ background: "white" }}>
+                <div>
+                    {count}
+                </div>
+                <button onClick={() => doFetch()}>検索!</button>
+                <div>
+                    <input type="text" placeholder='from' onChange={event => setStartSta(event.target.value)} />
+                </div>
+                <div>
+                    <input type="text" placeholder='to' onChange={event => setGoalSta(event.target.value)} />
+                </div>
+                {isError && <div>Something went wrong ...</div>}
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : (
+                    <div>data</div>
+                )}
+                {/* {timeTable === undefined ? <></> : ShowDayBusTime(timeTable.Weekdays)} */}
                 {/* {timeTable?ShowDayBusTime(timeTable.Saturdays):<></>}
                 {timeTable?ShowDayBusTime(timeTable.Holidays):<></>} */}
                 <div>
