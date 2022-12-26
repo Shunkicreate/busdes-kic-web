@@ -1,9 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
-// import './App.css';
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { ApproachInfos, TimeTable, OneBusTime } from '../Bus.type';
+import { TimeTable, OneBusTime, unionDays } from '../Bus.type';
 import BusCard from './BusCard';
 
 const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
@@ -14,13 +11,14 @@ const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
             <div>{oneBusTime.BusStop}</div>
         </div>
     )
-
 }
 
-const ShowDayBusTime = (dayBusTime: Map<string, OneBusTime[]>) => {
-    // type dayBusTimeKey = keyof DayBusTime
-    // const keys = Object.keys(dayBusTime) as dayBusTimeKey[]
-    // debugger
+const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
+    if (dayBusTime === undefined) {
+        return (
+            <div>undifined</div>
+        )
+    }
     const keys = [...dayBusTime.keys()]
     return (
         <>
@@ -28,29 +26,22 @@ const ShowDayBusTime = (dayBusTime: Map<string, OneBusTime[]>) => {
                 const oneBusTimes = dayBusTime.get(key)
                 if (oneBusTimes !== undefined) {
                     console.log("oneBusTimes", oneBusTimes)
+                    return (
+                        <div>
+                            {oneBusTimes.map((oneBusTime: OneBusTime, idx) => {
+                                return (
+                                    ShowOneBusTime({ oneBusTime })
+                                )
+                            })}
+                        </div>
+                    )
                 }
                 return (
                     <div></div>
                 )
             })}
-            {/* {(Object.keys(dayBusTime) as (keyof DayBusTime)[]).map((key) => {
-                const data = dayBusTime[key]
-                console.log(data);
-                return (
-                    data?.map((oneBusTime: OneBusTime, idx: number) => {
-                        return (
-                            ShowOneBusTime({ oneBusTime })
-                        )
-
-                    })
-                )
-            })} */}
-            {/* {keys.map((key:string, i:number) => {
-
-            })} */}
         </>
     )
-
 }
 
 const useTimeTableApi = () => {
@@ -92,6 +83,8 @@ const useTimeTableApi = () => {
 
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
+    let idx = 0
+    const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     return (
         <div className="App">
             <BusCard></BusCard>
@@ -99,22 +92,24 @@ const App = () => {
                 <div>
                     {count}
                 </div>
-                <button onClick={() => doFetch()}>検索!</button>
                 <div>
-                    <input type="text" placeholder='from' onChange={event => setStartSta(event.target.value)} />
+                    <button onClick={() => doFetch()}>検索!</button>
                 </div>
                 <div>
-                    <input type="text" placeholder='to' onChange={event => setGoalSta(event.target.value)} />
+                    <button onClick={() => { idx++; setStartSta(searchData[idx % 2][0]); setGoalSta(searchData[idx % 2][1]); }}>スワッピング</button>
+                </div>
+                <div>
+                    <input type="text" placeholder='from' defaultValue={"立命館大学"} onChange={event => setStartSta(event.target.value)} />
+                </div>
+                <div>
+                    <input type="text" placeholder='to' defaultValue={"京都駅前"} onChange={event => setGoalSta(event.target.value)} />
                 </div>
                 {isError && <div>Something went wrong ...</div>}
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : (
-                    <div>data</div>
+                    <div>{JSON.stringify(timeTable)}</div>
                 )}
-                {/* {timeTable === undefined ? <></> : ShowDayBusTime(timeTable.Weekdays)} */}
-                {/* {timeTable?ShowDayBusTime(timeTable.Saturdays):<></>}
-                {timeTable?ShowDayBusTime(timeTable.Holidays):<></>} */}
                 <div className='bg-gray-300'>
                     busdes
                 </div>
