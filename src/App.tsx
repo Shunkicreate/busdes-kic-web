@@ -4,6 +4,7 @@ import { TimeTable, OneBusTime, unionDays } from '../Bus.type';
 import BusCard from './BusCard';
 import { JsxElement } from 'typescript';
 import logo from './logo.svg'
+import { isArray } from 'util';
 
 const useTimeTableApi = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
@@ -42,6 +43,12 @@ const useTimeTableApi = () => {
     )
 }
 
+const strictEntries = <T extends Record<string, any>>(
+	object: T
+): [keyof T, T[keyof T]][] => {
+	return Object.entries(object);
+};
+
 const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
     return (
         <div>
@@ -64,10 +71,29 @@ const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) =>
     const DAYS:unionDays[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
     const jsxBusTime: JSX.Element[] = []
     debugger
-    for (const [key, value] of Object.entries(dayBusTime)) {
-        console.log(`${key}: ${value}`);
-        const oneBusTimes = 
-        jsxBusTime.push(<div>{key}</div>)
+    const entities = strictEntries(dayBusTime)
+    entities.forEach(element => {
+        console.log(element)
+        const hour = element[0]
+        const busArray = element[1]
+        if(Array.isArray(busArray)){
+            console.log(busArray.length)
+            if((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0){
+                console.log("hehe", busArray)
+            }
+        }
+        console.log(typeof busArray, Array.isArray(busArray))
+        // if( typeof busArray === Array && busArray.length > 0){
+
+        // }
+        console.log()
+
+    });
+    for (const [key, value] of strictEntries(dayBusTime)) {
+        console.log(`${String(key)}: ${value}`)
+        console.log(value)
+        // const oneBusTimes = 
+        jsxBusTime.push(<div>{String(key)}</div>)
     }
     // DAYS.forEach((n) => {
     //     if( n in dayBusTime){
