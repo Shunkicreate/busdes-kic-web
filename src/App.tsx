@@ -48,14 +48,16 @@ const strictEntries = <T extends Record<string, any>>(
 };
 
 
-const ShowOneBusTime = ({ oneBusTime }: { oneBusTime: OneBusTime }) => {
+const ShowOneBusTime = (oneBusTime: OneBusTime, index: number, hour:number ) => {
     return (
-        <div>
-            <div>{oneBusTime.min}</div>
-            <div>{oneBusTime.via}</div>
-            <div>{oneBusTime.bus_stop}</div>
+        <div key={index} className="text-left pl-10">
+            <div><span className='pr-3'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-3'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
         </div>
     )
+}
+
+const zeroPadding = (num: number, len: number) => {
+    return( Array(len).join('0') + num).slice(-len)
 }
 
 const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
@@ -70,14 +72,11 @@ const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) =>
         const hour = element[0]
         const busArray = element[1]
         if(Array.isArray(busArray) && busArray.length > 0){
-            console.log(busArray.length)
             if((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0){
-                console.log("hehe", busArray)
-                const oneHourList = <div><div>{String(hour)}</div>{busArray.map( (value: OneBusTime, index) => <div key={index}><div>{value.bus_stop}</div><div>{value.via}</div><div>{value.min}</div></div>)}</div> 
+                const oneHourList = <div><div>{String(hour)}時</div>{busArray.map( (value: OneBusTime, index) => ShowOneBusTime(value, index, Number(hour)))}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
-
     });
     return (
         <>
@@ -92,13 +91,16 @@ const showStrJson = (json: TimeTable | undefined) => {
             <div>undifined</div>
         )
     }
-    console.log(typeof json)
-    console.log("json.Weekdays", json.weekdays)
-    console.log("hehehe", json["weekdays"])
     return (
-        <div className='bg-stone-200'>
+        <div className="m-4">
             <div>
                 {ShowDayBusTime(json.weekdays)}
+            </div>
+            <div>
+                {ShowDayBusTime(json.holidays)}
+            </div>
+            <div>
+                {ShowDayBusTime(json.saturdays)}
             </div>
         </div>
     )
