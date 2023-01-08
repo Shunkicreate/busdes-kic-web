@@ -14,9 +14,9 @@ export interface ApproachInfos {
 }
 
 export interface OneBusTime {
-	Via: string
-	Min: string
-	BusStop: string
+	via: string
+	min: string
+	bus_stop: string
 }
 
 
