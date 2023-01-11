@@ -5,7 +5,7 @@ import { ApproachInfos } from "../Bus.type"
 
 
 const BusCard = () => {
-    
+
     const inputData: ApproachInfos = 
     {
   "approach_infos": [
@@ -58,16 +58,21 @@ const BusCard = () => {
       
     return(
 
-        <div className="w-full max-w-md p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="inline-flex p-10 ">停留所1</div>
-            <div className="inline-flex">
-                <img className = "object-center"src = {BusArrow}alt="BusArrow" width="45" height="45"  />
-            </div>
-            <div className="inline-flex p-10 ">停留所2</div>
-            <hr></hr>
-            <div>{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
+        //inline-flexよりgridの方がいいらしい https://tailwindcss.com/docs/grid-template-columns
+        //flexでもいける??
 
+        <div className="w-full max-w-md p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex justify-center flex-row h-32">
+                <div className="p-12 basis-3/7">立命館大学</div> 
+                <div className="basis-1/7 inline-flex">
+                    <img className = "" src = {BusArrow}alt="BusArrow" width="45" />
+                </div>
+                <div className="p-12 basis-3/7">京都駅前</div>
+            </div>
+            <hr></hr>
+            <div className="flex justify-center text-xl">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
         </div>
+
     )
 }
 
