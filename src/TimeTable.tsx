@@ -40,13 +40,13 @@ export const useTimeTableApi = () => {
 }
 
 const strictEntries = <T extends Record<string, any>>(
-	object: T
+    object: T
 ): [keyof T, T[keyof T]][] => {
-	return Object.entries(object);
+    return Object.entries(object);
 };
 
 
-const ShowOneBusTime = (oneBusTime: OneBusTime, index: number, hour:number ) => {
+const ShowOneBusTime = (oneBusTime: OneBusTime, index: number, hour: number) => {
     return (
         <div key={index} className="text-left pl-10">
             <div><span className='pr-3'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-3'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
@@ -55,7 +55,7 @@ const ShowOneBusTime = (oneBusTime: OneBusTime, index: number, hour:number ) => 
 }
 
 const zeroPadding = (num: number, len: number) => {
-    return( Array(len).join('0') + num).slice(-len)
+    return (Array(len).join('0') + num).slice(-len)
 }
 
 const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
@@ -69,9 +69,9 @@ const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) =>
     entities.forEach(element => {
         const hour = element[0]
         const busArray = element[1]
-        if(Array.isArray(busArray) && busArray.length > 0){
-            if((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0){
-                const oneHourList = <div><div>{String(hour)}時</div>{busArray.map( (value: OneBusTime, index) => ShowOneBusTime(value, index, Number(hour)))}</div>
+        if (Array.isArray(busArray) && busArray.length > 0) {
+            if ((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0) {
+                const oneHourList = <div><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, index) => ShowOneBusTime(value, index, Number(hour)))}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
