@@ -29,3 +29,10 @@ export interface TimeTable {
 	saturdays: Map<unionDays, OneBusTime[]>
 	holidays: Map<unionDays, OneBusTime[]>
 }
+
+
+export type unionBusStops = "立命館大学前" | "京都駅前" | "三条京阪"
+
+export type TimeTableDataStoreType = {
+	busData: Map<unionBusStops, Map<unionBusStops, TimeTable>>
+}

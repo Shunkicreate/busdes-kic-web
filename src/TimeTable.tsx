@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { TimeTable, OneBusTime, unionDays } from '../Bus.type';
+import { TimeTable, OneBusTime, unionDays } from './types/Bus.type';
 
 export const useTimeTableApi = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
