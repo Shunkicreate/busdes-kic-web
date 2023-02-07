@@ -66,7 +66,7 @@ const BusCard = () => {
                 <div className="basis-1/7 inline-flex">
                     <img className = "" src = {BusArrow}alt="BusArrow" width="45" />
                 </div>
-                <div className="p-12 basis-3/7">京都駅前</div>
+                <div className="p-12 basis-3/7">京都駅</div>
             </div>
             <hr></hr>
             <div className="flex justify-center text-xl">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
