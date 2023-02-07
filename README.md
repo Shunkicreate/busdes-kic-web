@@ -20,7 +20,7 @@ Next.jsだと、今回作るウェブページにはオーバースペックに�
 ```
 
 # 開発時のルール(Git, GitHub編)
-- ブランチはmain, develop, feature-buscard, feature-timeTable, feature-settingsの5つとする。
+- ブランチはmain, develop, feature-buscard, feature-timeTable, feature-settings, feature-layout, feature-atomとする。
 - 基本的にはdevelopに対してfeatureブランチからPRでマージする。
 - PRの時にはただしゅんきがコードレビューする。
 - PRを出すときにはissueとつなげる。
