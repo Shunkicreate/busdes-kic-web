@@ -1,4 +1,4 @@
-import BusCard from './BusCard';
+import BusCard from './layout/BusCard';
 import { useTimeTableApi, showTimeTable } from './TimeTable';
 import logo from './logo.svg'
 import { useState } from 'react'

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import BusArrow from "./BusArrow.svg";
-import { ApproachInfos } from "../Bus.type"
+import { ApproachInfos } from "../../Bus.type"
 
 
 const BusCard = () => {
@@ -54,7 +54,6 @@ const BusCard = () => {
         return () => clearInterval(timerId)
 
       }, [date]);
-
       
     return(
 
@@ -67,12 +66,11 @@ const BusCard = () => {
                 <div className="basis-1/7 inline-flex">
                     <img className = "" src = {BusArrow}alt="BusArrow" width="45" />
                 </div>
-                <div className="p-12 basis-3/7">リッツ名鑑</div>
+                <div className="p-12 basis-3/7">京都駅</div>
             </div>
             <hr></hr>
             <div className="flex justify-center text-xl">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
         </div>
-
     )
 }
 
