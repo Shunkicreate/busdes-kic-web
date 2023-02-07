@@ -1,16 +1,16 @@
 interface ApproachInfo {
-	MoreMin: string;
-	RealArrivalTime: string;
-	Direction: string;
-	Via: string;
-	ScheduledTime: string;
-	Delay: string;
-	BusStop: string;
-	RequiredTime: Number;
+	more_min: string;
+	real_arrival_time: string;
+	direction: string;
+	via: string;
+	scheduled_time: string;
+	delay: string;
+	bus_stop: string;
+	required_time: Number;
 }
 
 export interface ApproachInfos {
-	ApproachInfo: ApproachInfo[]
+	approach_infos: ApproachInfo[]
 }
 
 export interface OneBusTime {
