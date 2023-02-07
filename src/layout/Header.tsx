@@ -1,4 +1,4 @@
-const Header = () => {
+export const Header = () => {
     return(
         <div>
             Headerです。
