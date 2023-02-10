@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import BusArrow from "./BusArrow.svg";
 import { ApproachInfos } from "../../Bus.type"
+import { type } from 'os';
 
 
 const BusCard = () => {
@@ -54,6 +55,50 @@ const BusCard = () => {
         return () => clearInterval(timerId)
 
       }, [date]);
+
+      
+      const testdata = inputData.approach_infos.map((info , index) => {
+
+        var dep_time = info.real_arrival_time.split(':')
+        var dep_hour = Number(dep_time[0])
+        var dep_min = Number(dep_time[1])
+        var req_time = Number(info.required_time)
+
+        var arrival_min = dep_min + req_time
+        var arrival_hour = dep_hour
+
+        if(arrival_min >= 120)
+          {
+            arrival_min -= 120
+            arrival_hour += 2
+
+          } 
+          else if(arrival_min >= 60)
+          {
+            arrival_min -= 60
+            arrival_hour += 1
+          } 
+
+        if(index === 0)
+          {
+        
+            return (
+            <div>
+              <div className="flex justify-center text-4xl py-0.5 pt-3">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
+              <div className="flex justify-center pt-1">{info.via} {info.bus_stop}番乗り場</div>
+              <div className="flex justify-center text-xl py-0.5 text-red-500">{info.real_arrival_time} → {arrival_hour}:{arrival_min} &nbsp; &nbsp; {info.via}</div>
+            </div>
+            )
+          
+          }
+        else 
+          {
+            return (
+            <div className="flex justify-center text-xl py-0.5">{info.real_arrival_time} → {arrival_hour}:{arrival_min} &nbsp; &nbsp; {info.via}</div>
+            )
+          }
+        }  
+      )
       
     return(
 
@@ -61,15 +106,15 @@ const BusCard = () => {
         //flexでもいける??
 
         <div className="w-full max-w-md p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex justify-center flex-row h-32">
-                <div className="p-12 basis-3/7">立命館大学</div> 
-                <div className="basis-1/7 inline-flex">
+            <div className="flex justify-center flex-row h-16">
+                <div className="p-6 justify-center text-xl">立命館大学</div> 
+                <div className="inline-flex">
                     <img className = "" src = {BusArrow}alt="BusArrow" width="45" />
                 </div>
-                <div className="p-12 basis-3/7">京都駅</div>
+                <div className="p-6 justify-center text-xl">京都駅</div>
             </div>
             <hr></hr>
-            <div className="flex justify-center text-xl">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
+            <ul>{testdata}</ul>
         </div>
     )
 }
