@@ -5,10 +5,11 @@ import { useState } from 'react'
 import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
+import React from 'react';
 
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
-    let idx = 0
+    // let idx = 0
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const [mode, setMode] = useState<mode>('NextBus')
     return (
