@@ -1,4 +1,5 @@
 import { mode } from "../types/main.type"
+import React from "react"
 export const Footer = ({ setMode }: { setMode: React.Dispatch<React.SetStateAction<mode>> }) => {
     const switchMode = (mode: mode) => {
         setMode(mode)
