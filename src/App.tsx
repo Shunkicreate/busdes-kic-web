@@ -6,14 +6,19 @@ import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { TimeTableManager } from './manager/TimeTableManager';
+import { unionDays } from './types/Bus.type';
 
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
     let idx = 0
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const [mode, setMode] = useState<mode>('NextBus')
+    const hogehoge = "hogehoge hogehoge"
+    const hogehogeB = `hogehoge hogehoge ${hogehoge} hehehe`
     return (
         <div className="App">
+            {hogehoge}
+            {hogehogeB}
             <Header></Header>
             <body className='border-2' style={{ background: "white" }}>
                 {mode}
