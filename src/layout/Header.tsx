@@ -1,5 +1,6 @@
-const Header = () => {
-    return(
+import React from "react"
+export const Header = () => {
+    return (
         <div>
             Headerです。
         </div>
