@@ -7,10 +7,10 @@ import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { TimeTableManager } from './manager/TimeTableManager';
 import { unionDays } from './types/Bus.type';
+import React from 'react';
 
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
-    let idx = 0
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const [mode, setMode] = useState<mode>('NextBus')
     const hogehoge = "hogehoge hogehoge"
