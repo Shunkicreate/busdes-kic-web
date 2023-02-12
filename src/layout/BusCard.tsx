@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+// import BusArrow from "../../BusArrow.svg";
 import BusArrow from "../BusArrow.svg";
 import { ApproachInfos } from "../../Bus.type"
 
@@ -64,7 +65,7 @@ const BusCard = () => {
             <div className="flex justify-center flex-row h-32">
                 <div className="p-12 basis-3/7">立命館大学</div> 
                 <div className="basis-1/7 inline-flex">
-                    <img className = "" src = {BusArrow}alt="BusArrow" width="45" />
+                    {/* <img className = "" src = {BusArrow}alt="BusArrow" width="45" /> */}
                 </div>
                 <div className="p-12 basis-3/7">京都駅</div>
             </div>
