@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { TimeTable, OneBusTime, unionDays } from './types/Bus.type';
-
+import { TimeTable, OneBusTime, unionDays, TwelveLines, FiftyLines, No205, No15, M1, No52, No51, AllBusStops } from '../types/Bus.type';
+import { TimeTableManager } from '../manager/TimeTableManager';
 import React from 'react';
 export const useTimeTableApi = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
@@ -84,23 +84,54 @@ const ShowDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) =>
     )
 }
 
-export const showTimeTable = (json: TimeTable | undefined) => {
-    if (json === undefined) {
-        return (
-            <div>undifined</div>
-        )
-    }
+export const ShowTimeTable = ({ json }: { json: TimeTable | undefined }) => {
+
+    // const AllBusStops = [TwelveLines, FiftyLines, No205, No15, M1, No52, No51]
+    const [{ timeTable, timeTables, isLoading, isError, count, startSta, goalSta, doFetch, setStartSta, setGoalSta, selectBusStop }] = TimeTableManager()
+    const AllBusStopList = (() => {
+        const returnList: string[] = []
+        AllBusStops.forEach((elem) => {
+            returnList.push(String(elem))
+        })
+        return returnList
+    })()
+    const [select, setSelect] = useState("")
     return (
         <div className="m-4">
             <div>
-                {ShowDayBusTime(json.weekdays)}
+                <div>出発</div>
+                <div>{startSta}</div>
             </div>
             <div>
-                {ShowDayBusTime(json.holidays)}
+                <div>到着</div>
+                <div>{goalSta}</div>
             </div>
-            <div>
-                {ShowDayBusTime(json.saturdays)}
-            </div>
+            {select} is selected
+            {selectBusStop()}
+            {
+                (() => {
+                    if (timeTable === undefined) {
+                        return (
+                            <div>undifined</div>
+                        )
+                    }
+                    else {
+                        return (
+                            <div>
+                                <div>
+                                    {ShowDayBusTime(timeTable.weekdays)}
+                                </div>
+                                <div>
+                                    {ShowDayBusTime(timeTable.holidays)}
+                                </div>
+                                <div>
+                                    {ShowDayBusTime(timeTable.saturdays)}
+                                </div>
+                            </div>
+                        )
+                    }
+                })()
+            }
         </div>
     )
 }

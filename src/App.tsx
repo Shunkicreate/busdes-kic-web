@@ -1,5 +1,5 @@
 import BusCard from './layout/BusCard';
-import { useTimeTableApi, showTimeTable } from './TimeTable';
+import { useTimeTableApi, ShowTimeTable } from './layout/TimeTable';
 import logo from './logo.svg'
 import { useState } from 'react'
 import { mode } from './types/main.type';
@@ -10,15 +10,11 @@ import { unionDays } from './types/Bus.type';
 import React from 'react';
 
 const App = () => {
-    const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
+    const [{ timeTable, timeTables, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const [mode, setMode] = useState<mode>('NextBus')
-    const hogehoge = "hogehoge hogehoge"
-    const hogehogeB = `hogehoge hogehoge ${hogehoge} hehehe`
     return (
         <div className="App">
-            {hogehoge}
-            {hogehogeB}
             <Header></Header>
             <body className='border-2' style={{ background: "white" }}>
                 {mode}
@@ -32,6 +28,7 @@ const App = () => {
                         else if (mode === "TimeTable") {
                             return (
                                 <div>
+                                    <ShowTimeTable json={timeTable}></ShowTimeTable>
                                     TimeTable
                                 </div>
                             )
@@ -69,7 +66,7 @@ const App = () => {
                                 {isLoading ? (
                                     <div>Loading...</div>
                                 ) : (
-                                    showTimeTable(timeTable)
+                                    ShowTimeTable(timeTable)
                                 )}
                             </>
                         )
