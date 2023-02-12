@@ -4,6 +4,7 @@ import BusArrow from "./BusArrow.svg";
 import { ApproachInfos } from "../../Bus.type"
 import { type } from 'os';
 import BusTimeProcess from "./BusTimeProcess";
+import NextThreeBusInfo from './NextThreeBusInfo';
 
 
 const BusCard = () => {
@@ -17,12 +18,13 @@ const BusCard = () => {
       <div className="flex justify-center flex-row h-16">
         <div className="p-6 justify-center text-xl">立命館大学</div>
         <div className="inline-flex">
-          <img className="" src={BusArrow} alt="BusArrow" width="45" />
+          <img className="" src={BusArrow} alt="BusArrow" width="45"/>
         </div>
         <div className="p-6 justify-center text-xl">京都駅</div>
       </div>
-      <hr></hr>
+      <hr/>
       <BusTimeProcess/>
+      <NextThreeBusInfo/>
     </div>
   )
 }
