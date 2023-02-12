@@ -23,21 +23,17 @@ const CountDownTimes = (dep_times: Times) => {
     const dep_min = Number(dep_time_split[1])
 
     let count_hour = dep_hour - date.getHours()
-    let count_min = dep_min - date.getMinutes()
+    let count_min = dep_min - date.getMinutes() -1
 
     if (count_min < 0 && count_hour >= 1) {
 
         count_hour -= 1
         count_min += 60
 
-    } else if(count_min < 0){
-
-        count_min += 60
-        
-    }
+    } 
 
     return (
-        <div className="text-4xl py-0.5 pt-3">{count_hour}:{count_min}:{59 - date.getSeconds()}</div>
+        <div className="text-4xl py-0.5 pt-3">{count_hour}:{('00' + count_min).slice(-2)}:{('00' + (59 - date.getSeconds())).slice(-2)}</div>
     )
 
 }

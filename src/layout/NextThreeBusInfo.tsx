@@ -15,7 +15,7 @@ type Props = {
 const NextBusInfo = (prop: Props) => {
 
     return (
-        <button className={`text-xl py-0.5 ${prop.textColor}`}>{`${prop.deptime} → ${prop.hour}:${prop.min} ${prop.approch}`}</button>
+        <button className={`text-xl py-0.5 ${prop.textColor}`}>{`${prop.deptime} → ${('00' + prop.hour).slice(-2)}:${('00' + prop.min).slice(-2)} ${prop.approch}`}</button>
     )
 }
 
@@ -26,7 +26,7 @@ const NextThreeBusInfo = () => {
         "approach_infos": [
             {
                 "more_min": "約n分後に到着",
-                "real_arrival_time": "23:15",
+                "real_arrival_time": "02:00",
                 "direction": "京都駅前",
                 "via": "50号系統",
                 "scheduled_time": "06:10",
