@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react"
 import { useState, useEffect } from 'react';
 import { ApproachInfos } from "../../Bus.type"
+import CountDownTimes from './CountDownTimes';
 import { type } from 'os';
 
 type Props = {
@@ -10,35 +11,6 @@ type Props = {
     min: number
     approch: string
 }
-const [date, setDate] = useState(new Date());
-
-useEffect(() => {
-    const timerId = setInterval(() => {
-        setDate(new Date());
-    }, 1000);
-
-    return () => clearInterval(timerId)
-
-}, [date]);
-
-// const CountDown = (dep_hour : number , dep_min : number) => {
-
-//     let count_hour;
-//     let count_min;
-
-//     if(dep_min > date.getMinutes()){
-//         count_min = dep_min - date.getMinutes()
-//     }
-
-//     if((dep_hour - date.getHours()) === 0){
-
-//         count_hour = 0
-
-//     } else if (dep_hour - date.getHours() > 0){
-
-//     }
-
-// }
 
 const NextBusInfo = (prop: Props) => {
 
@@ -54,7 +26,7 @@ const NextThreeBusInfo = () => {
         "approach_infos": [
             {
                 "more_min": "約n分後に到着",
-                "real_arrival_time": "20:10",
+                "real_arrival_time": "23:15",
                 "direction": "京都駅前",
                 "via": "50号系統",
                 "scheduled_time": "06:10",
@@ -140,7 +112,7 @@ const NextThreeBusInfo = () => {
     return (
         <div>
             <div className='text-center' key={inputData.approach_infos[selectedline].via}>
-                <div className="text-4xl py-0.5 pt-3">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
+                <CountDownTimes dep_time={inputData.approach_infos[selectedline].real_arrival_time} />
                 <div className="pt-1">{inputData.approach_infos[selectedline].via} {inputData.approach_infos[selectedline].bus_stop}番乗り場</div>
             </div>
             <div>{NextThreeBus}</div>
