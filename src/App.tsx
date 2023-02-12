@@ -6,6 +6,7 @@ import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import React from 'react';
+import {ScrollBar} from './layout/ScrollBar'
 
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
@@ -16,6 +17,7 @@ const App = () => {
         <div className="App">
             <Header></Header>
             <body className='border-2' style={{ background: "white" }}>
+                <ScrollBar></ScrollBar>
                 {mode}
                 {
                     (() => {
