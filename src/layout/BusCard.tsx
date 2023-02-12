@@ -23,7 +23,6 @@ const BusCard = () => {
         <div className="p-6 justify-center text-xl">京都駅</div>
       </div>
       <hr/>
-      <BusTimeProcess/>
       <NextThreeBusInfo/>
     </div>
   )

@@ -23,20 +23,20 @@ const BusTimeProcess = () => {
                 "more_min": "約n分後に到着",
                 "real_arrival_time": "06:35",
                 "direction": "京都駅前",
-                "via": "50号系統",
+                "via": "51号系統",
                 "scheduled_time": "06:35",
                 "delay": "定時運行",
-                "bus_stop": "1",
+                "bus_stop": "2",
                 "required_time": 20
             },
             {
                 "more_min": "約n分後に到着",
                 "real_arrival_time": "06:55",
                 "direction": "京都駅前",
-                "via": "50号系統",
+                "via": "52号系統",
                 "scheduled_time": "06:55",
                 "delay": "定時運行",
-                "bus_stop": "1",
+                "bus_stop": "3",
                 "required_time": 20
             }
         ]
@@ -57,18 +57,14 @@ const BusTimeProcess = () => {
     }, [date]);
 
 
-    const testdata = inputData.approach_infos.map((info, index) => {
+    const testdata = inputData.approach_infos.map((info) => {
 
-        if (index === 0) {
-
-            return (
-                <div className='text-center' key={info.via}>
-                    <div className="text-4xl py-0.5 pt-3">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
-                    <div className="pt-1">{info.via} {info.bus_stop}番乗り場</div>
-                </div>
-            )
-
-        }
+        return (
+            <div className='text-center' key={info.via}>
+                <div className="text-4xl py-0.5 pt-3">{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}</div>
+                <div className="pt-1">{info.via} {info.bus_stop}番乗り場</div>
+            </div>
+        )
 
     }
     )
