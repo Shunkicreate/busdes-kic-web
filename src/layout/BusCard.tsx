@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import BusArrow from "./BusArrow.svg";
 import { ApproachInfos } from "../../Bus.type"
 import { type } from 'os';
-import BusTimeProcess from "./BusTimeProcess";
 import NextThreeBusInfo from './NextThreeBusInfo';
 
 
