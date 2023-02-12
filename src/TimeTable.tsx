@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { TimeTable, OneBusTime, unionDays } from '../Bus.type';
-
+import React from 'react';
 export const useTimeTableApi = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
     const [startSta, setStartSta] = useState('京都駅前')

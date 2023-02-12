@@ -78,7 +78,7 @@ const App = () => {
                     </div>
                 </div> */}
             </body>
-            <Footer setMode={setMode}></Footer>
+            <Footer setMode={setMode} currentMode={mode}></Footer>
         </div>
     );
 }

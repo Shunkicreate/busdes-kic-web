@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 // import BusArrow from "../../BusArrow.svg";
+import BusArrow from "../BusArrow.svg";
 import { ApproachInfos } from "../../Bus.type"
 
 
