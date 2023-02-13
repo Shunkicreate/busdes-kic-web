@@ -7,7 +7,6 @@ export const TimeTableManager = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
     const [startSta, setStartSta] = useState<AllBusStopsType>('立命館大学前')
     const [goalSta, setGoalSta] = useState<AllBusStopsType>('京都駅前')
-    // const [url, setUrl] = useState(baseURL + "timetable?fr=" + startSta + "&to=" + goalSta)
     const [timeTable, setTimeTable] = useState<TimeTable>()
     const [timeTables, setTimeTables] = useState<TimeTable[]>([])
     const [count, setCount] = useState(0)
@@ -19,13 +18,11 @@ export const TimeTableManager = () => {
         if ((startSta === "立命館大学前" && goalSta !== "立命館大学") || (startSta !== "立命館大学前" && goalSta === "立命館大学")) {
             return true
         }
-        console.log('check false!')
         return false
     }
 
     const fetchData = async (url: string) => {
         setIsLoading(true)
-        console.log('fetchData!!!!!')
         await axios.get(
             url,
         )
@@ -46,8 +43,7 @@ export const TimeTableManager = () => {
 
     const doFetch = () => {
         // debugger; // eslint-disable-line no-debugger
-        console.log('doFetch!!!!')
-        if (checkStation()) {
+        if (checkStation() && canFetch()) {
             const url = baseURL + "timetable?fr=" + startSta + "&to=" + goalSta
             fetchData(url)
         }
@@ -56,13 +52,18 @@ export const TimeTableManager = () => {
         }
     }
 
-    // const AllBusStopList = (() => {
-    //     const returnList: string[] = []
-    //     AllBusStops.forEach((elem) => {
-    //         returnList.push(String(elem))
-    //     })
-    //     return returnList
-    // })()
+    const canFetch = () => {
+        let flag = true
+        timeTables.forEach((table) => {
+            const from = table.from
+            const to = table.to
+            if( from === startSta && to === goalSta){
+                flag = false
+            }
+        })
+        return flag
+    }
+
     const [select, setSelect] = useState("")
     const upDateStation = (value: string) => {
         setSelect(value)

@@ -25,7 +25,6 @@ export type unionDays = typeof DAYS[number]
 
 export interface TimeTable {
 	weekdays: Map<unionDays, OneBusTime[]>
-	saturdays: Map<unionDays, OneBusTime[]>
 	holidays: Map<unionDays, OneBusTime[]>
 	from: AllBusStopsType
 	to: AllBusStopsType
