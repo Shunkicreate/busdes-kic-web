@@ -5,8 +5,8 @@ import React from 'react';
 
 export const TimeTableManager = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
-    const [startSta, setStartSta] = useState<AllBusStopsType>('京都駅前')
-    const [goalSta, setGoalSta] = useState<AllBusStopsType>('立命館大学')
+    const [startSta, setStartSta] = useState<AllBusStopsType>('立命館大学前')
+    const [goalSta, setGoalSta] = useState<AllBusStopsType>('京都駅前')
     // const [url, setUrl] = useState(baseURL + "timetable?fr=" + startSta + "&to=" + goalSta)
     const [timeTable, setTimeTable] = useState<TimeTable>()
     const [timeTables, setTimeTables] = useState<TimeTable[]>([])
@@ -15,14 +15,17 @@ export const TimeTableManager = () => {
     const [isError, setIsError] = useState(false)
 
     const checkStation = () => {
-        if ((startSta === "立命館大学前" || goalSta === "立命館大学") && !(startSta === "立命館大学前" && goalSta === "立命館大学")) {
+        // debugger; // eslint-disable-line no-debugger
+        if ((startSta === "立命館大学前" && goalSta !== "立命館大学") || (startSta !== "立命館大学前" && goalSta === "立命館大学")) {
             return true
         }
+        console.log('check false!')
         return false
     }
 
     const fetchData = async (url: string) => {
         setIsLoading(true)
+        console.log('fetchData!!!!!')
         await axios.get(
             url,
         )
@@ -30,7 +33,7 @@ export const TimeTableManager = () => {
                 const { data, status } = res;
                 data.from = startSta
                 data.to = goalSta
-                setTimeTable(data);
+                setTimeTable(data)
                 setIsLoading(false)
                 setCount(count + 1)
                 setTimeTables([...timeTables, data])
@@ -42,6 +45,8 @@ export const TimeTableManager = () => {
     }
 
     const doFetch = () => {
+        // debugger; // eslint-disable-line no-debugger
+        console.log('doFetch!!!!')
         if (checkStation()) {
             const url = baseURL + "timetable?fr=" + startSta + "&to=" + goalSta
             fetchData(url)
@@ -51,39 +56,42 @@ export const TimeTableManager = () => {
         }
     }
 
-    const AllBusStopList = (() => {
-        const returnList: string[] = []
-        AllBusStops.forEach((elem) => {
-            returnList.push(String(elem))
-        })
-        return returnList
-    })()
+    // const AllBusStopList = (() => {
+    //     const returnList: string[] = []
+    //     AllBusStops.forEach((elem) => {
+    //         returnList.push(String(elem))
+    //     })
+    //     return returnList
+    // })()
     const [select, setSelect] = useState("")
+    const upDateStation = (value: string) => {
+        setSelect(value)
+        setGoalSta(value as AllBusStopsType)
+    }
     const selectBusStop = () => {
-        const upDateStation = (value: string) => {
-            setSelect(value)
-            setGoalSta('二条城前')
-            console.log('value', value)
-            if(value in AllBusStops){
-                console.log("update",value ,value as AllBusStopsType )
-                setGoalSta(value as AllBusStopsType)
-            }
-        }
         return (
             <div>
-                {select} is selectedhehe<br />
-                <select name="example" value={select} onChange={(event) => upDateStation(event.target.value)}>
-                    {AllBusStops.map((value, idx) => {
-                        return (
-                            <option value={value} key={idx}>{value}</option>
-                        )
-                    })}
-                </select>
+                <div>
+                    <div>
+                        <div>出発</div>
+                        <div>{startSta}</div>
+                    </div>
+                    <div>
+                        <div>到着</div>
+                        <select name="example" value={select} onChange={(event) => upDateStation(event.target.value)}>
+                            {AllBusStops.map((value, idx) => {
+                                return (
+                                    <option value={value} key={idx}>{value}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                </div>
             </div>
         )
     }
 
     return (
-        [{ timeTable, timeTables, isLoading, isError, count, startSta, goalSta, doFetch, setStartSta, setGoalSta, selectBusStop }]
+        [{ timeTable, timeTables, isLoading, isError, count, startSta, goalSta, doFetch, setStartSta, setGoalSta, selectBusStop, }]
     )
 }

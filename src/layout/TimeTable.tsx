@@ -4,7 +4,7 @@ import { TimeTable, OneBusTime, unionDays, TwelveLines, FiftyLines, No205, No15,
 import { TimeTableManager } from '../manager/TimeTableManager';
 import React from 'react';
 export const useTimeTableApi = () => {
-    const baseURL = "https://bustimer.azurewebsites.net/";
+    const baseURL = "https://busdes-kic.mercy34.workers.dev/";
     const [startSta, setStartSta] = useState('京都駅前')
     const [goalSta, setGoalSta] = useState('立命館大学')
     const [url, setUrl] = useState(baseURL + "timetable?fr=" + startSta + "&to=" + goalSta)
@@ -95,19 +95,12 @@ export const ShowTimeTable = ({ json }: { json: TimeTable | undefined }) => {
         })
         return returnList
     })()
-    const [select, setSelect] = useState("")
     return (
         <div className="m-4">
-            <div>
-                <div>出発</div>
-                <div>{startSta}</div>
-            </div>
-            <div>
-                <div>到着</div>
-                <div>{goalSta}</div>
-            </div>
-            {select} is selected
             {selectBusStop()}
+            <div onClick={() => { doFetch() }} className="bg-blue-100">
+                検索！！！！
+            </div>
             {
                 (() => {
                     if (timeTable === undefined) {

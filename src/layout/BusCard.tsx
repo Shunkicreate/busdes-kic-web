@@ -4,6 +4,7 @@ import { ApproachInfos } from "../types/Bus.type"
 import BusArrow from "./BusArrow.svg";
 
 
+
 const BusCard = () => {
 
     const inputData: ApproachInfos = 
@@ -64,7 +65,7 @@ const BusCard = () => {
             <div className="flex justify-center flex-row h-32">
                 <div className="p-12 basis-3/7">立命館大学</div> 
                 <div className="basis-1/7 inline-flex">
-                    <img className = "" src = {BusArrow}alt="BusArrow" width="45" />
+                    {/* <img className = "" src = {BusArrow}alt="BusArrow" width="45" /> */}
                 </div>
                 <div className="p-12 basis-3/7">京都駅</div>
             </div>
