@@ -5,19 +5,19 @@ import { useState } from 'react'
 import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
+import { ScrollBar } from './layout/ScrollBar'
 import React from 'react';
-import {ScrollBar} from './layout/ScrollBar'
 
 const App = () => {
     const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
     // let idx = 0
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
+    const StationName = ['立命館大学前', '北野白梅町', '西ノ京円町', '四条大宮', '二条駅前', '三条京阪前'];
     const [mode, setMode] = useState<mode>('NextBus')
     return (
         <div className="App">
             <Header></Header>
-            <body className='border-2' style={{ background: "white" }}>
-                <ScrollBar></ScrollBar>
+            <div className='border-2' style={{ background: "white" }}>
                 {mode}
                 {
                     (() => {
@@ -29,6 +29,7 @@ const App = () => {
                         else if (mode === "TimeTable") {
                             return (
                                 <div>
+                                    <ScrollBar stationName={StationName}></ScrollBar>
                                     TimeTable
                                 </div>
                             )
@@ -79,7 +80,7 @@ const App = () => {
                         AdSense
                     </div>
                 </div> */}
-            </body>
+            </div>
             <Footer setMode={setMode} currentMode={mode}></Footer>
         </div>
     );

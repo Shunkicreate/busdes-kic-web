@@ -1,15 +1,18 @@
 import React from "react"
-// import "./ScrollBar.css"
+import { useState } from 'react'
 
-export const ScrollBar = () => {
-    const StationName = ['立命館大学前', '北野白梅町', '西ノ京円町', '四条大宮', '二条駅前', '三条京阪前'];
+export const ScrollBar = ({ stationName }: { stationName: string[] }) => {
+    const [currentStation, setCurrentStation] = useState<string>(stationName[0])
 
-    // const NameScroll = StationName.map((name) => <div >ああああああああああああああい</div>)
+    const switchMode = (station: string) => {
+        setCurrentStation(station)
+    }
+
     return (
-        <div className="overflow-x-scroll my-2">
-            <div className="flex whitespace-nowrap ">
-                {StationName.map((name:string) => {
-                    return <div key={name} className="px-6">{name}</div>
+        <div className="overflow-x-scroll bg-yellow-300">
+            <div className="flex whitespace-nowrap">
+                {stationName.map((name: string) => {
+                    return <div onClick={() => { switchMode(name); }} key={name} className={`text-black border-black ${name == currentStation ? 'border-b-2' : 'text-opacity-30 border-b-0'} px-6 py-2`}>{name}</div>
                 })}
             </div>
         </div>
