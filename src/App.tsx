@@ -17,6 +17,7 @@ const App = () => {
     return (
         <div className="App">
             <Header></Header>
+            <ScrollBar stationName={StationName}></ScrollBar>
             <div className='border-2' style={{ background: "white" }}>
                 {mode}
                 {
@@ -29,7 +30,7 @@ const App = () => {
                         else if (mode === "TimeTable") {
                             return (
                                 <div>
-                                    <ScrollBar stationName={StationName}></ScrollBar>
+                                    {/* <ScrollBar stationName={StationName}></ScrollBar> */}
                                     TimeTable
                                 </div>
                             )
