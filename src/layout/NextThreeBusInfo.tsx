@@ -46,7 +46,7 @@ const NextThreeBusInfo = () => {
             },
             {
                 "more_min": "約n分後に到着",
-                "real_arrival_time": "06:55",
+                "real_arrival_time": "16:15",
                 "direction": "京都駅前",
                 "via": "52号系統",
                 "scheduled_time": "06:55",

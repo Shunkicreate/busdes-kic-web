@@ -31,7 +31,7 @@ const CountDownTimes = (dep_times: Times) => {
         count_hour -= 1
         count_min += 60
 
-    } else if (count_hour <= 0 && count_min <0){
+    } else if (count_hour <= 0 && count_min <0 || count_hour < 0){
 
         count_hour = 0
         count_min = 0
