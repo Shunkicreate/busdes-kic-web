@@ -1,23 +1,23 @@
 import BusCard from './layout/BusCard';
-import { useTimeTableApi, showTimeTable } from './TimeTable';
+import { ShowTimeTable } from './layout/TimeTable';
 import logo from './logo.svg'
 import { useState } from 'react'
 import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { ScrollBar } from './layout/ScrollBar'
+import { TimeTableManager } from './manager/TimeTableManager';
+import { unionDays } from './types/Bus.type';
 import React from 'react';
 
 const App = () => {
-    const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
-    // let idx = 0
+    // const [{ timeTable, timeTables, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const StationName = ['立命館大学前', '北野白梅町', '西ノ京円町', '四条大宮', '二条駅前', '三条京阪前'];
     const [mode, setMode] = useState<mode>('NextBus')
     return (
         <div className="App">
             <Header></Header>
-            <ScrollBar stationName={StationName}></ScrollBar>
             <div className='border-2' style={{ background: "white" }}>
                 {mode}
                 {
@@ -30,8 +30,7 @@ const App = () => {
                         else if (mode === "TimeTable") {
                             return (
                                 <div>
-                                    {/* <ScrollBar stationName={StationName}></ScrollBar> */}
-                                    TimeTable
+                                    <ShowTimeTable></ShowTimeTable>
                                 </div>
                             )
                         }
@@ -68,7 +67,7 @@ const App = () => {
                                 {isLoading ? (
                                     <div>Loading...</div>
                                 ) : (
-                                    showTimeTable(timeTable)
+                                    ShowTimeTable(timeTable)
                                 )}
                             </>
                         )

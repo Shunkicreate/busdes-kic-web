@@ -8,12 +8,6 @@ export const ScrollBar = ({ stationName }: { stationName: string[] }) => {
         setCurrentStation(station)
     }
 
-    // function ScrollWindow(id:string) {
-    //     var divElement = document.getElementById(id);
-    //     var scrollLeft = xdivElement.scrollLeft ;
-    //     document.documentElement.scrollTop = scrollLeft;
-    //   }
-
     return (
         <div className="overflow-x-scroll bg-yellow-300 scroll-smooth">
             <div className="flex whitespace-nowrap">

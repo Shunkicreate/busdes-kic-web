@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-// import BusArrow from "../../BusArrow.svg";
-import BusArrow from "../BusArrow.svg";
-import { ApproachInfos } from "../../Bus.type"
+import { ApproachInfos } from "../types/Bus.type"
+import BusArrow from "./BusArrow.svg";
+
 
 
 const BusCard = () => {
