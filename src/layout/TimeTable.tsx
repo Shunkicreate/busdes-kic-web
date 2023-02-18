@@ -29,12 +29,12 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     }
     const jsxBusTime: JSX.Element[] = []
     const entities = strictEntries(dayBusTime)
-    entities.forEach(element => {
+    entities.forEach((element, idx) => {
         const hour = element[0]
         const busArray = element[1]
         if (Array.isArray(busArray) && busArray.length > 0) {
             if ((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0) {
-                const oneHourList = <div><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, index) => ShowOneRowBusTime(value, index, Number(hour)))}</div>
+                const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, index) => ShowOneRowBusTime(value, index, Number(hour)))}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
@@ -77,22 +77,30 @@ export const ShowTimeTable = () => {
                 (() => {
                     if (timeTables === undefined) {
                         return (
-                            <div>undifined</div>
+                            <div>検索してください</div>
+                        )
+                    }
+                    else if (isLoading) {
+                        return (
+                            <div>検索中...</div>
+                        )
+                    }
+                    else if (isError) {
+                        return (
+                            <div>Error. Try again a few minutes later</div>
                         )
                     }
                     else {
                         return (
-                            <>
-                                <div className='flex w-max'>
-                                    {timeTables.map((timeTable) => {
-                                        return (
-                                            <>
-                                                {ShowOneDayBusTime(timeTable)}
-                                            </>
-                                        )
-                                    })}
-                                </div>
-                            </>
+                            <div className='flex w-max'>
+                                {timeTables.map((timeTable, idx) => {
+                                    return (
+                                        <div key={idx}>
+                                            {ShowOneDayBusTime(timeTable)}
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         )
                     }
                 })()
