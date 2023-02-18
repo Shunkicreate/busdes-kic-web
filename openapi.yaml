@@ -1,0 +1,221 @@
+openapi: 3.0.1
+
+info: 
+  title: "busdes kic API"
+  description: "This is busdes kic API"
+  version: "1.0.0"
+
+servers:
+  - url: busdes-kic-api-o7ro75a75a-an.a.run.app
+
+paths:
+  "/timetable/multi":
+    get:
+      description: Returns multi timetable info
+      parameters:
+        - in: query 
+          name: fr
+          description: Bus stop for boarding
+          example: "立命館大学前"
+          required: true
+          schema: 
+            type: string
+        - name: to 
+          in: query
+          description: Bus stop to get off
+          example: "京都駅前,三条京阪"
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timetable:
+                    type: object
+                    properties:
+                      立命館大学:
+                        type: object
+                        properties:
+                            weekdays:
+                              type: object
+                              properties:
+                                hour:
+                                  type: array
+                                  items: 
+                                    type: object
+                                    properties:
+                                      bus_name:
+                                        type: string
+                                        description: "バスの名前"
+                                        example: "12号系統"
+                                      min:
+                                        type: string
+                                        description: "到着時刻の分"
+                                        example: "12"
+                                      bus_stop:
+                                        type: string
+                                        description: "乗り場"
+                                        example: "1番乗り場"
+                            holiday:
+                              type: object
+                              properties:
+                                hour:
+                                  type: array
+                                  items: 
+                                    type: object
+                                    properties:
+                                      bus_name:
+                                        type: string
+                                        description: "バスの名前"
+                                        example: "12号系統"
+                                      min:
+                                        type: string
+                                        description: "到着時刻の分"
+                                        example: "12"
+                                      bus_stop:
+                                        type: string
+                                        description: "乗り場"
+                                        example: "1番乗り場"
+  "/nextbus":
+    get:
+      description: Returns nextbus info
+      parameters: []
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nextbus'
+                type: object
+                properties:
+                  approachinfo:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        more_min:
+                          type: string
+                          description: "後どれくらいで到着するか"
+                          example: "約20分後に到着"
+                        real_arrival_time:
+                          type: string
+                          description: "到着時刻"
+                          example: "12:20"
+                        direction:
+                          type: string
+                          description: "バスの方向"
+                          example: "立命館大学"
+                        delay:
+                          type: string
+                          description: "定時運行かを示す(kicVerではレガシー)"
+                          example: "定時運行"
+                        bus_name:
+                          type: string
+                          description: "バスの名前"
+                          example: "快速立命館号系統"
+                        scheduled_time:
+                          type: string
+                          description: "定時の到着時刻"
+                          example: "12:20"
+                        bus_stop:
+                          type: string
+                          description: "バス停の情報"
+                          example: "1"
+                        required_time:
+                          type: integer
+                          format: int
+                          description: "目的地までの所要時間"
+                          example: 20
+  "/timetable":
+    get:
+      description: Returns timetable
+      parameters: []
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/timetable'
+                type: object
+                properties:
+                  weekdays:
+                    type: object
+                    properties:
+                      hour:
+                        type: array
+                        items: 
+                          type: object
+                          properties:
+                            bus_name:
+                              type: string
+                              description: "バスの名前"
+                              example: "12号系統"
+                            min:
+                              type: string
+                              description: "到着時刻の分"
+                              example: "12"
+                            bus_stop:
+                              type: string
+                              description: "乗り場"
+                              example: "1番乗り場"
+                  holiday:
+                    type: object
+                    properties:
+                      hour:
+                        type: array
+                        items: 
+                          type: object
+                          properties:
+                            bus_name:
+                              type: string
+                              description: "バスの名前"
+                              example: "12号系統"
+                            min:
+                              type: string
+                              description: "到着時刻の分"
+                              example: "12"
+                            bus_stop:
+                              type: string
+                              description: "乗り場"
+                              example: "1番乗り場"
+components:
+  schemas:
+    timetable:
+      type: object
+      required: [fr, to]
+      properties:
+        fr: 
+        - in: query 
+          description: Bus stop for boarding
+          required: true
+          schema: 
+            type: string
+        to: 
+          in: query
+          description: Bus stop to get off
+          required: true
+          schema: 
+            type: string
+    nextbus:
+      type: object
+      required: [fr, to]
+      properties:
+        fr: 
+        - in: query 
+          description: Bus stop for boarding
+          required: true
+          schema: 
+            type: string
+        to: 
+          in: query
+          description: Bus stop to get off
+          required: true
+          schema: 
+            type: string
