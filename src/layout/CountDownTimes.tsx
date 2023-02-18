@@ -23,7 +23,7 @@ const CountDownTimes = (dep_times: Times) => {
     const dep_min = Number(dep_time_split[1])
 
     let count_hour = dep_hour - date.getHours()
-    let count_min = dep_min - date.getMinutes() -1
+    let count_min = dep_min - date.getMinutes() - 1
     let count_sec = 59 - date.getSeconds()
 
     if (count_min < 0 && count_hour >= 1) {
@@ -31,7 +31,7 @@ const CountDownTimes = (dep_times: Times) => {
         count_hour -= 1
         count_min += 60
 
-    } else if (count_hour <= 0 && count_min <0 || count_hour < 0){
+    } else if (count_hour <= 0 && count_min < 0 || count_hour < 0) {
 
         count_hour = 0
         count_min = 0

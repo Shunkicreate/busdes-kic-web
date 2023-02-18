@@ -7,15 +7,15 @@ type Props = {
     to_bus: AllBusStopsType
 }
 
-const BusCardHeader = (station_name : Props) => {
+const BusCardHeader = (props: Props) => {
 
     return (
-        <div className="grid grid-cols-3 h-16 place-content-center">
-            <div className="text-center text-xl">{station_name.from_bus}</div>
+        <div className="grid grid-cols-5 h-16 place-content-center text-center">
+            <div className="text-xl col-start-1 col-span-2">{props.from_bus}</div>
             <div className="flex justify-center">
                 <img className="" src={BusArrow} alt="BusArrow" width="45" />
             </div>
-            <div className="text-center text-xl">{station_name.to_bus}</div>
+            <div className="text-xl col-start-4 col-span-2">{props.to_bus}</div>
         </div>
     )
 }

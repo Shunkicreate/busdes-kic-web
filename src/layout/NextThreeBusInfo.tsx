@@ -2,7 +2,6 @@ import React from "react"
 import { useState, useEffect } from 'react';
 import { ApproachInfos } from "../types/Bus.type"
 import CountDownTimes from './CountDownTimes';
-import { type } from 'os';
 
 type Props = {
     textColor: string
