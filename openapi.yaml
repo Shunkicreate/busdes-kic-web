@@ -84,14 +84,25 @@ paths:
   "/nextbus":
     get:
       description: Returns nextbus info
-      parameters: []
+      parameters:
+        - in: query 
+          name: fr
+          description: Bus stop for boarding
+          required: true
+          schema: 
+            type: string
+        - name: to 
+          in: query
+          description: Bus stop to get off
+          required: true
+          schema: 
+            type: string
       responses:
         '200':
           description: 成功時
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/nextbus'
                 type: object
                 properties:
                   approachinfo:
@@ -135,14 +146,25 @@ paths:
   "/timetable":
     get:
       description: Returns timetable
-      parameters: []
+      parameters:
+        - in: query 
+          name: fr
+          description: Bus stop for boarding
+          required: true
+          schema: 
+            type: string
+        - name: to 
+          in: query
+          description: Bus stop to get off
+          required: true
+          schema: 
+            type: string
       responses:
         '200':
           description: 成功時
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/timetable'
                 type: object
                 properties:
                   weekdays:
@@ -185,37 +207,3 @@ paths:
                               type: string
                               description: "乗り場"
                               example: "1番乗り場"
-components:
-  schemas:
-    timetable:
-      type: object
-      required: [fr, to]
-      properties:
-        fr: 
-        - in: query 
-          description: Bus stop for boarding
-          required: true
-          schema: 
-            type: string
-        to: 
-          in: query
-          description: Bus stop to get off
-          required: true
-          schema: 
-            type: string
-    nextbus:
-      type: object
-      required: [fr, to]
-      properties:
-        fr: 
-        - in: query 
-          description: Bus stop for boarding
-          required: true
-          schema: 
-            type: string
-        to: 
-          in: query
-          description: Bus stop to get off
-          required: true
-          schema: 
-            type: string

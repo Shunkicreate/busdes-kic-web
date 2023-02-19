@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
+import { getDefaultMSW,  } from '../default/default.msw';
+import { useGetTimetable, useGetNextbus } from '../default/default';
 import React from 'react';
 
 export const TimeTableManager = () => {
@@ -21,6 +23,8 @@ export const TimeTableManager = () => {
         }
         return false
     }
+
+
 
     const fetchData = async (url: string) => {
         setIsLoading(true)
