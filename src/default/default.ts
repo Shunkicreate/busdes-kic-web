@@ -66,7 +66,7 @@ export const useGetTimetableMultiInfinite = <TData = Awaited<ReturnType<typeof g
 
 
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimetableMulti>>> = ({ signal, pageParam }) => getTimetableMulti({ nextId: pageParam, ...params }, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimetableMulti>>> = ({ signal, pageParam }) => getTimetableMulti({ ...params }, { signal, ...axiosOptions });
 
 
 
@@ -138,7 +138,7 @@ export const useGetNextbusInfinite = <TData = Awaited<ReturnType<typeof getNextb
 
 
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getNextbus>>> = ({ signal, pageParam }) => getNextbus({ nextId: pageParam, ...params }, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getNextbus>>> = ({ signal, pageParam }) => getNextbus({ ...params }, { signal, ...axiosOptions });
 
 
 
@@ -210,7 +210,7 @@ export const useGetTimetableInfinite = <TData = Awaited<ReturnType<typeof getTim
 
 
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimetable>>> = ({ signal, pageParam }) => getTimetable({ nextId: pageParam, ...params }, { signal, ...axiosOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTimetable>>> = ({ signal, pageParam }) => getTimetable({ ...params }, { signal, ...axiosOptions });
 
 
 

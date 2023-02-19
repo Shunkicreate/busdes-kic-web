@@ -37,14 +37,12 @@ paths:
                 properties:
                   timetable:
                     type: object
-                    properties:
-                      立命館大学:
+                    additionalProperties:
                         type: object
                         properties:
                             weekdays:
                               type: object
-                              properties:
-                                hour:
+                              additionalProperties:
                                   type: array
                                   items: 
                                     type: object
@@ -61,10 +59,9 @@ paths:
                                         type: string
                                         description: "乗り場"
                                         example: "1番乗り場"
-                            holiday:
+                            holidays:
                               type: object
-                              properties:
-                                hour:
+                              additionalProperties:
                                   type: array
                                   items: 
                                     type: object
@@ -169,41 +166,29 @@ paths:
                 properties:
                   weekdays:
                     type: object
-                    properties:
-                      hour:
-                        type: array
-                        items: 
-                          type: object
-                          properties:
-                            bus_name:
-                              type: string
-                              description: "バスの名前"
-                              example: "12号系統"
-                            min:
-                              type: string
-                              description: "到着時刻の分"
-                              example: "12"
-                            bus_stop:
-                              type: string
-                              description: "乗り場"
-                              example: "1番乗り場"
-                  holiday:
+                    additionalProperties:
+                      $ref: '#/components/schemas/timetable'
+                  holidays:
                     type: object
-                    properties:
-                      hour:
-                        type: array
-                        items: 
-                          type: object
-                          properties:
-                            bus_name:
-                              type: string
-                              description: "バスの名前"
-                              example: "12号系統"
-                            min:
-                              type: string
-                              description: "到着時刻の分"
-                              example: "12"
-                            bus_stop:
-                              type: string
-                              description: "乗り場"
-                              example: "1番乗り場"
+                    additionalProperties:
+                      $ref: '#/components/schemas/timetable'
+
+components:
+  schemas:
+    timetable:
+      type: array
+      items:
+        type: object
+        properties:
+          bus_name:
+            type: string
+            description: "バスの名前"
+            example: "12号系統"
+          min:
+            type: string
+            description: "到着時刻の分"
+            example: "12"
+          bus_stop:
+            type: string
+            description: "乗り場"
+            example: "1番乗り場"

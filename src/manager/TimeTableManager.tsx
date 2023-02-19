@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
-import { getDefaultMSW,  } from '../default/default.msw';
-import { useGetTimetable, useGetNextbus } from '../default/default';
+import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
+import { userApi } from './reactQueryManager';
 import React from 'react';
 
 export const TimeTableManager = () => {
@@ -14,7 +13,8 @@ export const TimeTableManager = () => {
     const [count, setCount] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [witchIsRits, setWitchIsRits] = useState<'start'|'goal'>('start')
+    const [witchIsRits, setWitchIsRits] = useState<'start' | 'goal'>('start')
+    // const TimetableQuery = useGetTimetable({ fr: "立命館大学前", to: "京都駅前" })
 
     const checkStation = () => {
         // debugger; // eslint-disable-line no-debugger
@@ -26,8 +26,30 @@ export const TimeTableManager = () => {
 
 
 
+
     const fetchData = async (url: string) => {
         setIsLoading(true)
+        await userApi.timetableGet("立命館大学前", "京都駅前").then((response) => {
+            // const { data, status } = response;
+            // const map = new Map(response.data.weekdays);
+            if(response.data.weekdays){
+                const data = response.data.weekdays
+                // const data = response.data as TimeTableResponse
+                console.log("openapi!!", response.data)
+                console.log("openapi!!", data)
+            }
+
+            if (response.data.weekdays) {
+                console.log(response.data.weekdays)
+            }
+            // data.from = startSta
+            // data.to = goalSta
+            // setTimeTable(data)
+            // setIsLoading(false)
+            // setCount(count + 1)
+            // setTimeTables([...timeTables, data])
+        }
+        )
         await axios.get(
             url,
         )
@@ -70,6 +92,7 @@ export const TimeTableManager = () => {
     }
 
     const swapRits = (busStop: AllBusStopsType) => {
+        // console.log(TimetableQuery)
         if (busStop === "立命館大学前") {
             setWitchIsRits('goal')
             return ("立命館大学")
@@ -93,10 +116,10 @@ export const TimeTableManager = () => {
     const [select, setSelect] = useState("")
     const upDateStation = (value: string) => {
         setSelect(value)
-        if(witchIsRits === 'start'){
+        if (witchIsRits === 'start') {
             setGoalSta(value as AllBusStopsType)
         }
-        else if(witchIsRits === 'goal'){
+        else if (witchIsRits === 'goal') {
             setStartSta(value as AllBusStopsType)
         }
     }
@@ -110,7 +133,7 @@ export const TimeTableManager = () => {
             <div>
                 <div>
                     <div>
-                        <button onClick={()=>{swapDestination()}} className='bg-blue-100'>行先切り替え</button>
+                        <button onClick={() => { swapDestination() }} className='bg-blue-100'>行先切り替え</button>
                     </div>
                     <div>
                         <div>出発: {startSta}</div>

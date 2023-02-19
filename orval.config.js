@@ -3,6 +3,7 @@ module.exports = {
         output: {
             mode: 'tags-split',
             target: 'src/openapi.ts',
+            clean: true,
             schemas: 'src/model',
             client: 'react-query',
             mock: true,
