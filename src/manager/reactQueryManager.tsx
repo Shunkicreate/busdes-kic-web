@@ -1,22 +1,30 @@
-import { DefaultApi } from '../openapi-generator/typescript-axios';
-import { Configuration } from '../openapi-generator/typescript-axios';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import React from 'react';
 
-const API_URL = "https://bustimer.azurewebsites.net";
-
-const config = new Configuration({
-    basePath: API_URL,
-});
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-const userApi = new DefaultApi(config, '', axiosInstance);
-
-export {
-    userApi
+const fetchUsers = async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    return res.json();
 };
+
+function User() {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        fetchUsers().then((data) => {
+            setUsers(data);
+        });
+    }, []);
+
+    return (
+        <div>
+            <h2>ユーザ一覧</h2>
+            <div>
+                {users.map((user, ind) => (
+                    <div key={ind}>{user}</div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default User;

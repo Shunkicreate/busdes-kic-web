@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
-import { userApi } from './reactQueryManager';
 import React from 'react';
 
 export const TimeTableManager = () => {
@@ -29,27 +28,7 @@ export const TimeTableManager = () => {
 
     const fetchData = async (url: string) => {
         setIsLoading(true)
-        await userApi.timetableGet("立命館大学前", "京都駅前").then((response) => {
-            // const { data, status } = response;
-            // const map = new Map(response.data.weekdays);
-            if(response.data.weekdays){
-                const data = response.data.weekdays
-                // const data = response.data as TimeTableResponse
-                console.log("openapi!!", response.data)
-                console.log("openapi!!", data)
-            }
 
-            if (response.data.weekdays) {
-                console.log(response.data.weekdays)
-            }
-            // data.from = startSta
-            // data.to = goalSta
-            // setTimeTable(data)
-            // setIsLoading(false)
-            // setCount(count + 1)
-            // setTimeTables([...timeTables, data])
-        }
-        )
         await axios.get(
             url,
         )
