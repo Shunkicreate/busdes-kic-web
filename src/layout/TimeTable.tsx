@@ -46,7 +46,7 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
-const ShowOneDayBusTime = (timeTable: TimeTable) => {
+export const ShowOneDayBusTime = (timeTable: TimeTable) => {
     return (
         <div>
             <div>
@@ -66,12 +66,25 @@ const ShowOneDayBusTime = (timeTable: TimeTable) => {
 }
 
 export const ShowTimeTable = () => {
-    const [{ timeTables, isLoading, isError, doFetch, selectBusStop }] = TimeTableManager()
+    const [{ timeTables, timetableQueryResults, doFetch, selectBusStop }] = TimeTableManager()
     return (
         <div className="m-4">
             {selectBusStop()}
             <div onClick={() => { doFetch() }} className="bg-blue-100">
                 検索！！！！
+            </div>
+            <div>
+                {timetableQueryResults.map((timetableQueryResult, i) => {
+                    const timeTable = timetableQueryResult.data
+                    if (timeTable) {
+                        return (
+                            <div key={i}>
+                                {ShowOneDayBusTime(timeTable)}
+                            </div>
+                        )
+
+                    }
+                })}
             </div>
             {
                 (() => {
@@ -80,16 +93,16 @@ export const ShowTimeTable = () => {
                             <div>検索してください</div>
                         )
                     }
-                    else if (isLoading) {
-                        return (
-                            <div>検索中...</div>
-                        )
-                    }
-                    else if (isError) {
-                        return (
-                            <div>Error. Try again a few minutes later</div>
-                        )
-                    }
+                    // else if (timetableQueryResults.isLoading) {
+                    //     return (
+                    //         <div>検索中...</div>
+                    //     )
+                    // }
+                    // else if (timetableQueryResults.isError) {
+                    //     return (
+                    //         <div>Error. Try again a few minutes later</div>
+                    //     )
+                    // }
                     else {
                         return (
                             <div className='flex w-max'>

@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
 import React from 'react';
+import { useState } from 'react';
+import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
+import reactQueryManager from './reactQueryManager';
+import { SettingsManager } from './SettingsManager';
+
 
 export const TimeTableManager = () => {
-    const baseURL = "https://bustimer.azurewebsites.net/";
-    const [startSta, setStartSta] = useState<AllBusStopsType>('立命館大学前')
-    const [goalSta, setGoalSta] = useState<AllBusStopsType>('京都駅前')
+    const { timetableQueryResults, handleReset, addQueryKey } = reactQueryManager().TimeTablereactQueryManager
+    const { startStaSetting, goalStaSetting, setStartStaSetting, setGoalStaSetting } = SettingsManager().TimeTableParams
+    const [startSta, setStartSta] = useState<AllBusStopsType>(startStaSetting)
+    const [goalSta, setGoalSta] = useState<AllBusStopsType>(goalStaSetting)
     const [timeTable, setTimeTable] = useState<TimeTable>()
     const [timeTables, setTimeTables] = useState<TimeTable[]>([])
-    const [count, setCount] = useState(0)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState(false)
     const [witchIsRits, setWitchIsRits] = useState<'start' | 'goal'>('start')
-    // const TimetableQuery = useGetTimetable({ fr: "立命館大学前", to: "京都駅前" })
 
     const checkStation = () => {
         // debugger; // eslint-disable-line no-debugger
@@ -23,35 +22,26 @@ export const TimeTableManager = () => {
         return false
     }
 
-
-
-
-    const fetchData = async (url: string) => {
-        setIsLoading(true)
-
-        await axios.get(
-            url,
+    const fetchData = async () => {
+        // debugger; // eslint-disable-line no-debugger
+        handleReset().then(
+            () => {
+                if (timetableQueryResults) {
+                    // const addedTable: TimeTable = timetableQueryResults.data
+                    // addedTable.from = startSta
+                    // addedTable.to = goalSta
+                    // console.log(addedTable)
+                    // setTimeTable(addedTable)
+                    // setTimeTables([...timeTables, addedTable])
+                }
+            }
         )
-            .then((res: AxiosResponse<TimeTable>) => {
-                const { data, status } = res;
-                data.from = startSta
-                data.to = goalSta
-                setTimeTable(data)
-                setIsLoading(false)
-                setCount(count + 1)
-                setTimeTables([...timeTables, data])
-            })
-            .catch((e: AxiosError<{ error: string }>) => {
-                console.log(e.message);
-                setIsError(false);
-            })
     }
 
     const doFetch = () => {
-        // debugger; // eslint-disable-line no-debugger
         if (checkStation() && canFetch()) {
-            const url = baseURL + "timetable?fr=" + startSta + "&to=" + goalSta
-            fetchData(url)
+            // fetchData()
+            handleReset()
         }
         else {
             return (false)
@@ -112,6 +102,19 @@ export const TimeTableManager = () => {
             <div>
                 <div>
                     <div>
+                        {timeTables.map((value, i) => {
+                            return (
+                                <div key={i}>
+                                    from:{value.from},
+                                    to:{value.to}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div>
+                        {/* isLoading:{result.isLoading.toString()} */}
+                    </div>
+                    <div>
                         <button onClick={() => { swapDestination() }} className='bg-blue-100'>行先切り替え</button>
                     </div>
                     <div>
@@ -142,6 +145,6 @@ export const TimeTableManager = () => {
     }
 
     return (
-        [{ timeTable, timeTables, isLoading, isError, count, startSta, goalSta, doFetch, setStartSta, setGoalSta, selectBusStop, }]
+        [{ timetableQueryResults, timeTable, timeTables, startSta, goalSta, doFetch, setStartSta, setGoalSta, selectBusStop, }]
     )
 }
