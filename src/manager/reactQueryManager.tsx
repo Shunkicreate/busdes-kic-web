@@ -68,7 +68,7 @@ const reactQueryManager = () => {
             return (
                 {
                     queryKey: ["timetable", value],
-                    queryFn: () => axios.get('https://busdes-kic.mercy34.workers.dev/timetable?fr=%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E5%89%8D&to=%E4%BA%AC%E9%83%BD%E9%A7%85%E5%89%8D',).then((res: AxiosResponse<TimeTableResponse>) => res) as Promise<TimeTableResponse>,
+                    queryFn: () => axios.get(`https://bustimer.azurewebsites.net/timetable?fr=${value.fr}&to=${value.to}`,).then((res: AxiosResponse) => res.data) as Promise<TimeTableResponse>,
                     UseQueryOptions: {
                         enabled: false,
                     },
@@ -90,7 +90,10 @@ const reactQueryManager = () => {
             await queryClient.refetchQueries().then(
                 () => {
                     console.log("refetch")
-                    console.log(timetableQueryResults)
+                    timetableQueryResults.forEach((value)=>{
+                        console.log(value.data?.holidays)
+                    }
+                    )
                 }
             )
             // url = baseURL + "timetable?fr=" + startStaSetting + "&to=" + goalStaSetting
