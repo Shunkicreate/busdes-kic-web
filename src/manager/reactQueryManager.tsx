@@ -4,6 +4,7 @@ import { hashQueryKey, useQuery, useQueries, QueryClient } from 'react-query';
 import { TimeTableResponse, AllBusStopsType } from '../types/Bus.type';
 import { SettingsManager } from './SettingsManager';
 import { UseQueryResult } from 'react-query';
+import axios, { AxiosResponse } from 'axios';
 export const queryClient = new QueryClient();
 
 const reactQueryManager = () => {
@@ -49,11 +50,25 @@ const reactQueryManager = () => {
             'X-Custom-Header': 'ProcessThisImmediately',
             'sec-fetch-site': 'none'
         });
+        const config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'https://busdes-kic.mercy34.workers.dev/timetable?fr=%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E5%89%8D&to=%E4%BA%AC%E9%83%BD%E9%A7%85%E5%89%8D',
+            headers: {}
+        };
+
+            // .then(function (response) {
+            //     console.log(JSON.stringify(response.data));
+            // })
+            // .catch(function (error) {
+            //     console.log(error);
+            // });
+
         const queryElem = queryKeys.map((value) => {
             return (
                 {
                     queryKey: ["timetable", value],
-                    queryFn: () => fetch(`${baseURL}timetable?fr=${value.fr}&to=${value.to}`, { mode: 'no-cors', method: 'GET' }).then((res) => res.json()) as Promise<TimeTableResponse>,
+                    queryFn: () => axios(config).then((res: AxiosResponse<TimeTableResponse>) => res) as Promise<TimeTableResponse>,
                     UseQueryOptions: {
                         enabled: false,
                     },
