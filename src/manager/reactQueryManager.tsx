@@ -68,7 +68,7 @@ const reactQueryManager = () => {
             return (
                 {
                     queryKey: ["timetable", value],
-                    queryFn: () => axios(config).then((res: AxiosResponse<TimeTableResponse>) => res) as Promise<TimeTableResponse>,
+                    queryFn: () => axios.get('https://busdes-kic.mercy34.workers.dev/timetable?fr=%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E5%89%8D&to=%E4%BA%AC%E9%83%BD%E9%A7%85%E5%89%8D',).then((res: AxiosResponse<TimeTableResponse>) => res) as Promise<TimeTableResponse>,
                     UseQueryOptions: {
                         enabled: false,
                     },
