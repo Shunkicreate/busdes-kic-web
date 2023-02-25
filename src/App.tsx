@@ -7,6 +7,7 @@ import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { QueryClientProvider } from 'react-query';
 import { unionDays } from './types/Bus.type';
+import Settings from './layout/Settings';
 import reactQueryManager from './manager/reactQueryManager';
 import { queryClient } from './manager/reactQueryManager';
 import { RecoilRoot } from 'recoil';
@@ -22,7 +23,6 @@ const App = () => {
                 <QueryClientProvider client={queryClient}>
                     <Header></Header>
                     <div className='border-2' style={{ background: "white" }}>
-                        {mode}
                         {
                             (() => {
                                 if (mode === "NextBus") {
@@ -39,9 +39,7 @@ const App = () => {
                                 }
                                 else if (mode === "Settings") {
                                     return (
-                                        <div>
-                                            settings
-                                        </div>
+                                        <Settings></Settings>
                                     )
                                 }
                                 else {

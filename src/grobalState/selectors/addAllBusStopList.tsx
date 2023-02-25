@@ -17,7 +17,7 @@ const addAllBusStopListSelector = selector<busStopListAtomType[]>({
                 }
             })
             if (flag) {
-                set(busStopListAtom, [...get(busStopListAtom), ...newBusStop]);
+                set(busStopListAtom, [...get(busStopListAtom), ...newBusStop])
             }
         }
     }
