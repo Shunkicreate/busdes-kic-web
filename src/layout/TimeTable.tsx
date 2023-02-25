@@ -5,6 +5,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useTimeTableManager from '../manager/TimeTableManager';
 import busRouteAtom from '../grobalState/atoms/busRoute';
 import swapBusRouteSelector from '../grobalState/selectors/setBusRoute';
+import useReactQuery from '../manager/reactQueryManager';
+import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -50,17 +52,6 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
-// export const SwapDestination = ({ fr, goal }: { fr: AllBusStopsType, goal: AllBusStopsType }) => {
-//     const swapDestination = SettingsManager().swapDestination
-//     const settings = SettingsManager()
-
-//     return (
-//         <div>
-//             <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>0Swap</div>
-//             <div onClick={() => { swapDestination(fr, goal, 'TimeTable') }}>1Swap</div>
-//         </div>
-//     )
-// }
 
 export const ShowOneDayBusTime = (timeTable: TimeTable) => {
     return (
@@ -82,16 +73,31 @@ export const ShowOneDayBusTime = (timeTable: TimeTable) => {
 }
 
 export const ShowTimeTable = () => {
-    const [{ timeTables, reactQueryResults, selectBusStop }] = useTimeTableManager()
+    const [{ timeTables, selectBusStop }] = useTimeTableManager()
     const settings = SettingsManager()
     const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
     const swapBusRoute = useSetRecoilState(swapBusRouteSelector)
+    const { reactQueryResults, fetchData } = useReactQuery()
+    const AllBusStopList = useRecoilValue(getAllBusStopList)
+
 
 
     return (
         <div className="m-4">
             <div className='bg-red-100'>
-                <div>
+                {AllBusStopList.map((busStopListAtom, i) => {
+                    return (
+                        <div key={i}>
+                            <div>
+                                fr:{busStopListAtom.fr}
+                            </div>
+                            <div>
+                                to:{busStopListAtom.to}
+                            </div>
+                        </div>
+                    )
+                })}
+                {/* <div>
                     recoil
                 </div>
                 <div>
@@ -102,7 +108,7 @@ export const ShowTimeTable = () => {
                 </div>
                 <div onClick={()=>{swapBusRoute(busRoute)}}>
                     swap by recoil
-                </div>
+                </div> */}
                 <div>
                     {/* {reactQueryResults.map((reactQueryResult, i) => {
                         const { isLoading, data, error } = reactQueryResult
@@ -113,9 +119,9 @@ export const ShowTimeTable = () => {
                 </div>
             </div>
             {selectBusStop()}
-            {/* <div onClick={() => { doFetch() }} className="bg-blue-100">
+            <div onClick={() => { fetchData(busRoute.fr, busRoute.to) }} className="bg-blue-100">
                 検索！！！！
-            </div> */}
+            </div>
             {/* <div>
                 {timetableQueryResults.map((timetableQueryResult, i) => {
                     const timeTable = timetableQueryResult.data

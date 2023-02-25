@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops, busRouteAtomType } from '../types/Bus.type';
+import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops, busRouteAtomType, busStopListAtomType } from '../types/Bus.type';
 import useReactQuery from './reactQueryManager';
 import { SettingsManager } from './SettingsManager';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import busRouteAtom from '../grobalState/atoms/busRoute';
 import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 import setpBusRouteSelector from '../grobalState/selectors/setBusRoute';
+import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 
 const useTimeTableManager = () => {
     const { reactQueryResults, fetchData } = useReactQuery()
@@ -15,6 +16,7 @@ const useTimeTableManager = () => {
     const setBusRoute = useSetRecoilState(setpBusRouteSelector)
     const [timeTable, setTimeTable] = useState<TimeTable>()
     const [timeTables, setTimeTables] = useState<TimeTable[]>([])
+    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
 
     const [select, setSelect] = useState("")
     const upDateStation = (value: string) => {
@@ -32,6 +34,18 @@ const useTimeTableManager = () => {
             }
             setBusRoute(newRoute)
         }
+    }
+
+    const addSettingList = () => {
+        const addBusStop: busStopListAtomType[] = [{
+            fr: busRoute.fr,
+            to: busRoute.to,
+            ShowTimeTable: true,
+            ShowBusCard: false,
+            TimeTableData: undefined,
+            BusCardData: undefined,
+        }]
+        addAllBusStopList(addBusStop)
     }
 
     const onClickEventHandle = () => {
@@ -69,6 +83,9 @@ const useTimeTableManager = () => {
                         <div>到着: {busRoute.to}</div>
                         <label htmlFor="bus-stop-choice">Choose a Bus Stop:</label>
                         <input type="text" list="bus-stop-list" id="bus-stop-choice" name="bus-stop-choice" value={select} onChange={(event) => upDateStation(event.target.value)} placeholder="駅名を入力" onClick={() => { onClickEventHandle() }}></input>
+                        <div onClick={addSettingList}>
+                            要素追加
+                        </div>
                         {/* <select name="example" onChange={(event) => upDateStation(event.target.value)}>
                             {AllBusStops.map((value, idx) => {
                                 return (
