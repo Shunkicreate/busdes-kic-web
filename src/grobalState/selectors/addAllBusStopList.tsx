@@ -8,8 +8,17 @@ const addAllBusStopListSelector = selector<busStopListAtomType[]>({
         return get(busStopListAtom)
     },
     set: ({ get, set }, newBusStop) => {
-        if(!(newBusStop instanceof DefaultValue)){
-            set(busStopListAtom, [...get(busStopListAtom), ...newBusStop]);
+        const defaultRoute = get(busStopListAtom)
+        if (!(newBusStop instanceof DefaultValue)) {
+            let flag = true
+            defaultRoute.forEach((route, i) => {
+                if ((route.fr === newBusStop[0].fr) && (route.to === newBusStop[0].to)) {
+                    flag = false
+                }
+            })
+            if (flag) {
+                set(busStopListAtom, [...get(busStopListAtom), ...newBusStop]);
+            }
         }
     }
 })
