@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
-import reactQueryManager from './reactQueryManager';
+import useReactQuery from './reactQueryManager';
 import { SettingsManager } from './SettingsManager';
 
 
 export const TimeTableManager = () => {
-    const { timetableQueryResults, handleReset, addQueryKey } = reactQueryManager().TimeTablereactQueryManager
+    const { reactQueryResults, fetchData  } = useReactQuery()
     const { startStaSetting, goalStaSetting, setStartStaSetting, setGoalStaSetting } = SettingsManager().TimeTableParams
     const swapFunc = SettingsManager().swapDestination
     const settings = SettingsManager()
@@ -25,26 +25,26 @@ export const TimeTableManager = () => {
         return false
     }
 
-    const fetchData = async () => {
-        // debugger; // eslint-disable-line no-debugger
-        handleReset().then(
-            () => {
-                if (timetableQueryResults) {
-                    // const addedTable: TimeTable = timetableQueryResults.data
-                    // addedTable.from = startSta
-                    // addedTable.to = goalSta
-                    // console.log(addedTable)
-                    // setTimeTable(addedTable)
-                    // setTimeTables([...timeTables, addedTable])
-                }
-            }
-        )
-    }
+    // const fetchData = async () => {
+    //     // debugger; // eslint-disable-line no-debugger
+    //     handleReset().then(
+    //         () => {
+    //             if (timetableQueryResults) {
+    //                 // const addedTable: TimeTable = timetableQueryResults.data
+    //                 // addedTable.from = startSta
+    //                 // addedTable.to = goalSta
+    //                 // console.log(addedTable)
+    //                 // setTimeTable(addedTable)
+    //                 // setTimeTables([...timeTables, addedTable])
+    //             }
+    //         }
+    //     )
+    // }
 
     const doFetch = () => {
         if (checkStation() && canFetch()) {
-            // fetchData()
-            handleReset()
+            fetchData(startStaSetting, goalStaSetting)
+            // handleReset()
         }
         else {
             return (false)
@@ -152,6 +152,6 @@ export const TimeTableManager = () => {
     }
 
     return (
-        [{ timetableQueryResults, timeTable, timeTables, doFetch, selectBusStop, }]
+        [{ reactQueryResults, timeTable, timeTables, doFetch, selectBusStop, }]
     )
 }

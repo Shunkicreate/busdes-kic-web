@@ -1,8 +1,6 @@
 import { selector } from 'recoil'
 import { busRouteAtomType, AllBusStopsType } from '../../types/Bus.type'
 import busRouteAtom from '../atoms/busRoute'
-import { useState } from 'react'
-
 
 const checkStation = (route: busRouteAtomType) => {
     // debugger; // eslint-disable-line no-debugger

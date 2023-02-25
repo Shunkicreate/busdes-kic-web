@@ -82,7 +82,7 @@ export const ShowOneDayBusTime = (timeTable: TimeTable) => {
 }
 
 export const ShowTimeTable = () => {
-    const [{ timeTables, timetableQueryResults, doFetch, selectBusStop }] = TimeTableManager()
+    const [{ timeTables, reactQueryResults, doFetch, selectBusStop }] = TimeTableManager()
     const settings = SettingsManager()
     const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
     const swapBusRoute = useSetRecoilState(swapBusRouteSelector)
@@ -103,19 +103,12 @@ export const ShowTimeTable = () => {
                 <div onClick={()=>{swapBusRoute(busRoute)}}>
                     swap by recoil
                 </div>
-                {/* <div>設定</div>
-                <SwapDestination start={settings.TimeTableParams.startStaSetting} goal={settings.TimeTableParams.goalStaSetting} />
-                <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>Swap</div>
-                <div>{settings.TimeTableParams.goalStaSetting}</div>
-                <div>{settings.TimeTableParams.goalStaSettings}</div>
-                <div>{settings.TimeTableParams.startStaSetting}</div>
-                <div>{settings.TimeTableParams.startStaSettings}</div> */}
             </div>
             {selectBusStop()}
             <div onClick={() => { doFetch() }} className="bg-blue-100">
                 検索！！！！
             </div>
-            <div>
+            {/* <div>
                 {timetableQueryResults.map((timetableQueryResult, i) => {
                     const timeTable = timetableQueryResult.data
                     if (timeTable) {
@@ -127,7 +120,7 @@ export const ShowTimeTable = () => {
 
                     }
                 })}
-            </div>
+            </div> */}
             {
                 (() => {
                     if (timeTables === undefined) {
