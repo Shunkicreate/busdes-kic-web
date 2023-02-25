@@ -85,15 +85,13 @@ export const ShowTimeTable = () => {
     return (
         <div className="m-4">
             <div className='bg-red-100'>
-                {AllBusStopList.map((busStopListAtom, i) => {
+                {AllBusStopList.map((BusStop, i) => {
                     return (
-                        <div key={i}>
-                            <div>
-                                fr:{busStopListAtom.fr}
-                            </div>
-                            <div>
-                                to:{busStopListAtom.to}
-                            </div>
+                        <div key={i} className="even:bg-stone-200 odd:bg-stone-300">
+                            <span>fr: </span>
+                            <span>{BusStop.fr}</span>
+                            <span>to: </span>
+                            <span>{BusStop.to}</span>
                         </div>
                     )
                 })}
@@ -118,7 +116,7 @@ export const ShowTimeTable = () => {
                     })} */}
                 </div>
             </div>
-            {selectBusStop()}
+            {/* {selectBusStop()} */}
             <div onClick={() => { fetchData(busRoute.fr, busRoute.to) }} className="bg-blue-100">
                 検索！！！！
             </div>
@@ -155,10 +153,11 @@ export const ShowTimeTable = () => {
                     else {
                         return (
                             <div className='flex w-max'>
-                                {timeTables.map((timeTable, idx) => {
+                                {AllBusStopList.map((BusStop, idx) => {
                                     return (
                                         <div key={idx}>
-                                            {ShowOneDayBusTime(timeTable)}
+                                            <div>{BusStop.fr}{BusStop.to}</div>
+                                            {(BusStop.TimeTableData)?ShowOneDayBusTime(BusStop.TimeTableData):<></>}
                                         </div>
                                     )
                                 })}

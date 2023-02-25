@@ -1,18 +1,20 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { hashQueryKey, useQuery, useQueries, QueryClient } from 'react-query';
-import { TimeTableResponse, AllBusStopsType, TimeTable } from '../types/Bus.type';
+import { TimeTableResponse, AllBusStopsType, TimeTable, busStopListAtomType } from '../types/Bus.type';
 import { SettingsManager } from './SettingsManager';
 import { UseQueryResult } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 
 export const queryClient = new QueryClient();
 
 const useReactQuery = () => {
     const baseURL = "https://bustimer.azurewebsites.net/";
     const AllBusStopList = useRecoilValue(getAllBusStopList)
+    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const [queryKeys, setQueryKeys] = useState(AllBusStopList.map((AllBusStopData, i) => {
         return (
             {
@@ -37,10 +39,43 @@ const useReactQuery = () => {
     )
 
     const fetchData = (fr: AllBusStopsType, to: AllBusStopsType) => {
+        // queryClient.invalidateQueries(["timetable", { fr: fr, to: to }]).then((res)=>{
+        //     console.log(res)
+        // })
+        //AllBusStopListのうちundefinedのやつだけrefetchする仕様にする
         reactQueryResults.forEach((reactQueryResult, i) => {
             if (reactQueryResult) {
                 reactQueryResult.refetch().then((res) => {
-                    console.log(fr, to, res)
+                    // debugger; // eslint-disable-line no-debugger
+                    queryKeys.forEach((queryKey, i) => {
+                        const data = queryClient.getQueriesData(["timetable", queryKey])
+                        console.log(queryKey, data)
+                    })
+                    // const data = queryClient.getQueriesData(["timetable", {
+                    //     fr: AllBusStopData.fr,
+                    //     to: AllBusStopData.to
+                    // }])
+                    AllBusStopList.forEach((BusStop, i) => {
+                        if ((BusStop.fr === fr) && (BusStop.to === to) && (res.data)) {
+                            const addTimeTable: TimeTable = res.data
+                            addTimeTable.from = AllBusStopList[i].fr
+                            addTimeTable.to = AllBusStopList[i].to
+                            const addBusStopListAtom: busStopListAtomType = {
+                                fr: fr,
+                                to: to,
+                                ShowTimeTable: true,
+                                ShowBusCard: false,
+                                TimeTableData: addTimeTable,
+                                BusCardData: undefined
+                            }
+                            addAllBusStopList([addBusStopListAtom])
+                            // BusStop.TimeTableData = addTimeTable
+                        }
+                    })
+                    // const addBusStop: busStopListAtomType = {
+                    // }
+                    // addAllBusStopList()
+                    // console.log(fr, to, res)
                 }
                 )
             }
