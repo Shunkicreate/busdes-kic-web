@@ -1,6 +1,6 @@
 export type busStopListAtomType = {
-	start: AllBusStopsType
-	goal: AllBusStopsType
+	fr: AllBusStopsType
+	to: AllBusStopsType
 	ShowTimeTable: boolean
 	ShowBusCard: boolean
 	TimeTableData: TimeTable | undefined
@@ -8,8 +8,8 @@ export type busStopListAtomType = {
 }
 
 export type busRouteAtomType = {
-	start: AllBusStopsType
-	goal: AllBusStopsType
+	fr: AllBusStopsType
+	to: AllBusStopsType
 }
 
 interface ApproachInfo {

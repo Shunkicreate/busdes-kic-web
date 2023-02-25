@@ -5,8 +5,8 @@ const busStopListAtom = atom<busStopListAtomType[]>({
     key: "busStopListAtom",
     default: [
         {
-            start: "立命館大学前",
-            goal: "京都駅前",
+            fr: "立命館大学前",
+            to: "京都駅前",
             ShowTimeTable: true,
             ShowBusCard: true,
             TimeTableData: undefined,

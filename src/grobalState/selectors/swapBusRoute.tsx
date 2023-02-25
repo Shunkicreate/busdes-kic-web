@@ -4,20 +4,20 @@ import busRouteAtom from '../atoms/busRoute'
 
 const checkStation = (route: busRouteAtomType) => {
     // debugger; // eslint-disable-line no-debugger
-    if ((route.start === "立命館大学前" && route.goal !== "立命館大学") || (route.start !== "立命館大学前" && route.goal === "立命館大学")) {
+    if ((route.fr === "立命館大学前" && route.to !== "立命館大学") || (route.fr !== "立命館大学前" && route.to === "立命館大学")) {
         return true
     }
     return false
 }
 
-const swapRits = (routeElem: AllBusStopsType, mode: 'start' | 'goal') => {
+const swapRits = (routeElem: AllBusStopsType, mode: 'fr' | 'to') => {
     let returnSta: AllBusStopsType = routeElem
-    if (mode === 'start') {
+    if (mode === 'fr') {
         if (returnSta === "立命館大学前") {
             returnSta = "立命館大学"
         }
     }
-    else if (mode === 'goal') {
+    else if (mode === 'to') {
         if (returnSta === "立命館大学") {
             returnSta = "立命館大学前"
 
@@ -30,8 +30,8 @@ const swapDestination = (route: busRouteAtomType) => {
     // debugger; // eslint-disable-line no-debugger
     if (checkStation(route)) {
         const swappedRoute: busRouteAtomType = {
-            start: swapRits(route.goal, 'goal'),
-            goal: swapRits(route.start, 'start')
+            fr: swapRits(route.to, 'to'),
+            to: swapRits(route.fr, 'fr')
         }
         return (swappedRoute)
     }

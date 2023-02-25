@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { hashQueryKey, useQuery, useQueries, QueryClient } from 'react-query';
-import { TimeTableResponse, AllBusStopsType } from '../types/Bus.type';
+import { TimeTableResponse, AllBusStopsType, TimeTable } from '../types/Bus.type';
 import { SettingsManager } from './SettingsManager';
 import { UseQueryResult } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
@@ -16,8 +16,8 @@ const useReactQuery = () => {
     const [queryKeys, setQueryKeys] = useState(AllBusStopList.map((AllBusStopData, i) => {
         return (
             {
-                fr: AllBusStopData.start,
-                to: AllBusStopData.goal
+                fr: AllBusStopData.fr,
+                to: AllBusStopData.to
             }
         )
     }))
@@ -25,7 +25,7 @@ const useReactQuery = () => {
         return (
             {
                 queryKey: ["timetable", value],
-                queryFn: () => axios.get(`${baseURL}timetable?fr=${value.fr}&to=${value.to}`,).then((res: AxiosResponse) => res.data) as Promise<TimeTableResponse>,
+                queryFn: () => axios.get(`${baseURL}timetable?fr=${value.fr}&to=${value.to}`,).then((res: AxiosResponse) => res.data) as Promise<TimeTable>,
                 UseQueryOptions: {
                     enabled: false,
                 },
@@ -38,11 +38,15 @@ const useReactQuery = () => {
 
     const fetchData = (fr: AllBusStopsType, to: AllBusStopsType) => {
         reactQueryResults.forEach((reactQueryResult, i) => {
-            if(reactQueryResult){
-                console.log(reactQueryResult)
+            if (reactQueryResult) {
+                reactQueryResult.refetch().then((res) => {
+                    console.log(fr, to, res)
+                }
+                )
             }
         })
     }
+
     // const TimeTablereactQueryManager = (() => {
     //     // const [startSta, setStartSta] = useState<AllBusStopsType>('立命館大学前')
     //     // const [goalSta, setGoalSta] = useState<AllBusStopsType>('京都駅前')

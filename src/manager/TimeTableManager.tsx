@@ -1,89 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
-import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops } from '../types/Bus.type';
+import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops, busRouteAtomType } from '../types/Bus.type';
 import useReactQuery from './reactQueryManager';
 import { SettingsManager } from './SettingsManager';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import busRouteAtom from '../grobalState/atoms/busRoute';
+import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 
-
-export const TimeTableManager = () => {
+const useTimeTableManager = () => {
     const { reactQueryResults, fetchData  } = useReactQuery()
     const { startStaSetting, goalStaSetting, setStartStaSetting, setGoalStaSetting } = SettingsManager().TimeTableParams
     const swapFunc = SettingsManager().swapDestination
     const settings = SettingsManager()
+    const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
+    const swapBusRoute = useSetRecoilState(swapBusRouteSelector)
+
 
     // const [startSta, setStartSta] = useState<AllBusStopsType>(startStaSetting)
     // const [goalSta, setGoalSta] = useState<AllBusStopsType>(goalStaSetting)
     const [timeTable, setTimeTable] = useState<TimeTable>()
     const [timeTables, setTimeTables] = useState<TimeTable[]>([])
     const [witchIsRits, setWitchIsRits] = useState<'start' | 'goal'>('start')
-
-    const checkStation = () => {
-        // debugger; // eslint-disable-line no-debugger
-        if ((startStaSetting === "立命館大学前" && goalStaSetting !== "立命館大学") || (startStaSetting !== "立命館大学前" && goalStaSetting === "立命館大学")) {
-            return true
-        }
-        return false
-    }
-
-    // const fetchData = async () => {
-    //     // debugger; // eslint-disable-line no-debugger
-    //     handleReset().then(
-    //         () => {
-    //             if (timetableQueryResults) {
-    //                 // const addedTable: TimeTable = timetableQueryResults.data
-    //                 // addedTable.from = startSta
-    //                 // addedTable.to = goalSta
-    //                 // console.log(addedTable)
-    //                 // setTimeTable(addedTable)
-    //                 // setTimeTables([...timeTables, addedTable])
-    //             }
-    //         }
-    //     )
-    // }
-
-    const doFetch = () => {
-        if (checkStation() && canFetch()) {
-            fetchData(startStaSetting, goalStaSetting)
-            // handleReset()
-        }
-        else {
-            return (false)
-        }
-    }
-
-    const canFetch = () => {
-        let flag = true
-        timeTables.forEach((table) => {
-            const from = table.from
-            const to = table.to
-            if (from === startStaSetting && to === goalStaSetting) {
-                flag = false
-            }
-        })
-        return flag
-    }
-
-    const swapRits = (busStop: AllBusStopsType) => {
-        // console.log(TimetableQuery)
-        if (busStop === "立命館大学前") {
-            setWitchIsRits('goal')
-            return ("立命館大学")
-        }
-        else if (busStop === "立命館大学") {
-            setWitchIsRits('start')
-            return ("立命館大学前")
-        }
-        else {
-            return (busStop)
-        }
-    }
-
-    const swapDestination = () => {
-        const tempStart = swapRits(startStaSetting)
-        const tempGoal = swapRits(goalStaSetting)
-        setStartStaSetting(tempGoal)
-        setGoalStaSetting(tempStart)
-    }
 
     const [select, setSelect] = useState("")
     const upDateStation = (value: string) => {
@@ -122,7 +59,7 @@ export const TimeTableManager = () => {
                         {/* isLoading:{result.isLoading.toString()} */}
                     </div>
                     <div>
-                        <button onClick={() => { swapDestination() }} className='bg-blue-100'>行先切り替え</button>
+                        <button onClick={() => { swapBusRoute(busRoute) }} className='bg-blue-100'>行先切り替え</button>
                     </div>
                     <div>
                         <div>出発: {startStaSetting}</div>
@@ -152,6 +89,8 @@ export const TimeTableManager = () => {
     }
 
     return (
-        [{ reactQueryResults, timeTable, timeTables, doFetch, selectBusStop, }]
+        [{ reactQueryResults, timeTable, timeTables, selectBusStop }]
     )
 }
+
+export default useTimeTableManager

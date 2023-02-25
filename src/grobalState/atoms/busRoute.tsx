@@ -4,8 +4,8 @@ import { busRouteAtomType } from '../../types/Bus.type'
 const busRouteAtom = atom<busRouteAtomType>({
     key: "busRouteAtom",
     default: {
-        start: "立命館大学前",
-        goal: "京都駅前",
+        fr: "立命館大学前",
+        to: "京都駅前",
     }
 })
 

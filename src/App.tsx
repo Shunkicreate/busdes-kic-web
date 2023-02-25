@@ -6,7 +6,6 @@ import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { QueryClientProvider } from 'react-query';
-import { TimeTableManager } from './manager/TimeTableManager';
 import { unionDays } from './types/Bus.type';
 import reactQueryManager from './manager/reactQueryManager';
 import { queryClient } from './manager/reactQueryManager';
