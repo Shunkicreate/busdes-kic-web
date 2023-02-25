@@ -4,7 +4,7 @@ import { SettingsManager } from '../manager/SettingsManager';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useTimeTableManager from '../manager/TimeTableManager';
 import busRouteAtom from '../grobalState/atoms/busRoute';
-import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
+import swapBusRouteSelector from '../grobalState/selectors/setBusRoute';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -50,17 +50,17 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
-export const SwapDestination = ({ fr, goal }: { fr: AllBusStopsType, goal: AllBusStopsType }) => {
-    const swapDestination = SettingsManager().swapDestination
-    const settings = SettingsManager()
+// export const SwapDestination = ({ fr, goal }: { fr: AllBusStopsType, goal: AllBusStopsType }) => {
+//     const swapDestination = SettingsManager().swapDestination
+//     const settings = SettingsManager()
 
-    return (
-        <div>
-            <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>0Swap</div>
-            <div onClick={() => { swapDestination(fr, goal, 'TimeTable') }}>1Swap</div>
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>0Swap</div>
+//             <div onClick={() => { swapDestination(fr, goal, 'TimeTable') }}>1Swap</div>
+//         </div>
+//     )
+// }
 
 export const ShowOneDayBusTime = (timeTable: TimeTable) => {
     return (
