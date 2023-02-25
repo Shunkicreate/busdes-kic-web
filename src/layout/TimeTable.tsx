@@ -1,4 +1,5 @@
-import { TimeTable, OneBusTime, unionDays } from '../types/Bus.type';
+import { TimeTable, OneBusTime, unionDays, AllBusStopsType } from '../types/Bus.type';
+import { SettingsManager } from '../manager/SettingsManager';
 import { TimeTableManager } from '../manager/TimeTableManager';
 import React from 'react';
 
@@ -46,6 +47,18 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
+export const SwapDestination = ({ start, goal }: { start: AllBusStopsType, goal: AllBusStopsType }) => {
+    const swapDestination = SettingsManager().swapDestination
+    const settings = SettingsManager()
+
+    return (
+        <div>
+            <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>0Swap</div>
+            <div onClick={() => { swapDestination(start, goal, 'TimeTable') }}>1Swap</div>
+        </div>
+    )
+}
+
 export const ShowOneDayBusTime = (timeTable: TimeTable) => {
     return (
         <div>
@@ -67,8 +80,19 @@ export const ShowOneDayBusTime = (timeTable: TimeTable) => {
 
 export const ShowTimeTable = () => {
     const [{ timeTables, timetableQueryResults, doFetch, selectBusStop }] = TimeTableManager()
+    const settings = SettingsManager()
+
     return (
         <div className="m-4">
+            <div className='bg-red-100'>
+                <div>設定</div>
+                <SwapDestination start={settings.TimeTableParams.startStaSetting} goal={settings.TimeTableParams.goalStaSetting} />
+                <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>Swap</div>
+                <div>{settings.TimeTableParams.goalStaSetting}</div>
+                <div>{settings.TimeTableParams.goalStaSettings}</div>
+                <div>{settings.TimeTableParams.startStaSetting}</div>
+                <div>{settings.TimeTableParams.startStaSettings}</div>
+            </div>
             {selectBusStop()}
             <div onClick={() => { doFetch() }} className="bg-blue-100">
                 検索！！！！

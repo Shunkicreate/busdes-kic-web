@@ -8,15 +8,18 @@ import { SettingsManager } from './SettingsManager';
 export const TimeTableManager = () => {
     const { timetableQueryResults, handleReset, addQueryKey } = reactQueryManager().TimeTablereactQueryManager
     const { startStaSetting, goalStaSetting, setStartStaSetting, setGoalStaSetting } = SettingsManager().TimeTableParams
-    const [startSta, setStartSta] = useState<AllBusStopsType>(startStaSetting)
-    const [goalSta, setGoalSta] = useState<AllBusStopsType>(goalStaSetting)
+    const swapFunc = SettingsManager().swapDestination
+    const settings = SettingsManager()
+
+    // const [startSta, setStartSta] = useState<AllBusStopsType>(startStaSetting)
+    // const [goalSta, setGoalSta] = useState<AllBusStopsType>(goalStaSetting)
     const [timeTable, setTimeTable] = useState<TimeTable>()
     const [timeTables, setTimeTables] = useState<TimeTable[]>([])
     const [witchIsRits, setWitchIsRits] = useState<'start' | 'goal'>('start')
 
     const checkStation = () => {
         // debugger; // eslint-disable-line no-debugger
-        if ((startSta === "立命館大学前" && goalSta !== "立命館大学") || (startSta !== "立命館大学前" && goalSta === "立命館大学")) {
+        if ((startStaSetting === "立命館大学前" && goalStaSetting !== "立命館大学") || (startStaSetting !== "立命館大学前" && goalStaSetting === "立命館大学")) {
             return true
         }
         return false
@@ -53,7 +56,7 @@ export const TimeTableManager = () => {
         timeTables.forEach((table) => {
             const from = table.from
             const to = table.to
-            if (from === startSta && to === goalSta) {
+            if (from === startStaSetting && to === goalStaSetting) {
                 flag = false
             }
         })
@@ -76,20 +79,20 @@ export const TimeTableManager = () => {
     }
 
     const swapDestination = () => {
-        const tempStart = swapRits(startSta)
-        const tempGoal = swapRits(goalSta)
-        setStartSta(tempGoal)
-        setGoalSta(tempStart)
+        const tempStart = swapRits(startStaSetting)
+        const tempGoal = swapRits(goalStaSetting)
+        setStartStaSetting(tempGoal)
+        setGoalStaSetting(tempStart)
     }
 
     const [select, setSelect] = useState("")
     const upDateStation = (value: string) => {
         setSelect(value)
         if (witchIsRits === 'start') {
-            setGoalSta(value as AllBusStopsType)
+            setGoalStaSetting(value as AllBusStopsType)
         }
         else if (witchIsRits === 'goal') {
-            setStartSta(value as AllBusStopsType)
+            setStartStaSetting(value as AllBusStopsType)
         }
     }
 
@@ -101,6 +104,10 @@ export const TimeTableManager = () => {
         return (
             <div>
                 <div>
+                    <div>
+                        <div onClick={() => { swapFunc(startStaSetting, goalStaSetting, 'TimeTable') }}>Swap in timetable manager</div>
+                        <div onClick={() => { console.log('haaaaa');settings.swapDestination(settings.TimeTableParams.goalStaSetting, settings.TimeTableParams.startStaSetting, 'TimeTable') }}>Swap</div>
+                    </div>
                     <div>
                         {timeTables.map((value, i) => {
                             return (
@@ -118,10 +125,10 @@ export const TimeTableManager = () => {
                         <button onClick={() => { swapDestination() }} className='bg-blue-100'>行先切り替え</button>
                     </div>
                     <div>
-                        <div>出発: {startSta}</div>
+                        <div>出発: {startStaSetting}</div>
                     </div>
                     <div>
-                        <div>到着: {goalSta}</div>
+                        <div>到着: {goalStaSetting}</div>
                         <label htmlFor="bus-stop-choice">Choose a Bus Stop:</label>
                         <input type="text" list="bus-stop-list" id="bus-stop-choice" name="bus-stop-choice" value={select} onChange={(event) => upDateStation(event.target.value)} placeholder="駅名を入力" onClick={() => { onClickEventHandle() }}></input>
                         {/* <select name="example" onChange={(event) => upDateStation(event.target.value)}>
@@ -145,6 +152,6 @@ export const TimeTableManager = () => {
     }
 
     return (
-        [{ timetableQueryResults, timeTable, timeTables, startSta, goalSta, doFetch, setStartSta, setGoalSta, selectBusStop, }]
+        [{ timetableQueryResults, timeTable, timeTables, doFetch, selectBusStop, }]
     )
 }
