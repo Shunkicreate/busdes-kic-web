@@ -10,19 +10,55 @@ import { TimeTableManager } from './manager/TimeTableManager';
 import { unionDays } from './types/Bus.type';
 import reactQueryManager from './manager/reactQueryManager';
 import { queryClient } from './manager/reactQueryManager';
+import { RecoilRoot } from 'recoil';
+
 import React from 'react';
 const App = () => {
     // const [{ timeTable, timeTables, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
     const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <QueryClientProvider client={queryClient}>
-            <div className="App">
-                <Header></Header>
-                <body className='border-2' style={{ background: "white" }}>
-                    {mode}
-                    {
-                        (() => {
+        <div className="App">
+            <RecoilRoot>
+                <QueryClientProvider client={queryClient}>
+                    <Header></Header>
+                    <div className='border-2' style={{ background: "white" }}>
+                        {mode}
+                        {
+                            (() => {
+                                if (mode === "NextBus") {
+                                    return (
+                                        <BusCard></BusCard>
+                                    )
+                                }
+                                else if (mode === "TimeTable") {
+                                    return (
+                                        <div>
+                                            <ShowTimeTable></ShowTimeTable>
+                                        </div>
+                                    )
+                                }
+                                else if (mode === "Settings") {
+                                    return (
+                                        <div>
+                                            settings
+                                        </div>
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <></>
+                                    )
+                                }
+                            })()
+                        }
+                        {/* <div>
+                            {count}
+                        </div>
+                        <div>
+                            <button onClick={() => doFetch()}>検索!</button>
+                        </div>
+                        {(() => {
                             if (mode === "NextBus") {
                                 return (
                                     <BusCard></BusCard>
@@ -30,61 +66,29 @@ const App = () => {
                             }
                             else if (mode === "TimeTable") {
                                 return (
-                                    <div>
-                                        <ShowTimeTable></ShowTimeTable>
-                                    </div>
+                                    <>
+                                        {isError && <div>Something went wrong ...</div>}
+                                        {isLoading ? (
+                                            <div>Loading...</div>
+                                        ) : (
+                                            ShowTimeTable(timeTable)
+                                        )}
+                                    </>
                                 )
                             }
-                            else if (mode === "Settings") {
-                                return (
-                                    <div>
-                                        settings
-                                    </div>
-                                )
-                            }
-                            else {
-                                return (
-                                    <></>
-                                )
-                            }
-                        })()
-                    }
-                    {/* <div>
-                        {count}
+                        })()}
+                        <div className='absolute bottom-0 text-center w-full my-5'>
+                            <button onClick={() => { setMode("NextBus") }}>Next bus</button>
+                            <button onClick={() => { setMode("TimeTable") }}>Timetable</button>
+                            <div className='bg-stone-100'>
+                                AdSense
+                            </div>
+                        </div> */}
                     </div>
-                    <div>
-                        <button onClick={() => doFetch()}>検索!</button>
-                    </div>
-                    {(() => {
-                        if (mode === "NextBus") {
-                            return (
-                                <BusCard></BusCard>
-                            )
-                        }
-                        else if (mode === "TimeTable") {
-                            return (
-                                <>
-                                    {isError && <div>Something went wrong ...</div>}
-                                    {isLoading ? (
-                                        <div>Loading...</div>
-                                    ) : (
-                                        ShowTimeTable(timeTable)
-                                    )}
-                                </>
-                            )
-                        }
-                    })()}
-                    <div className='absolute bottom-0 text-center w-full my-5'>
-                        <button onClick={() => { setMode("NextBus") }}>Next bus</button>
-                        <button onClick={() => { setMode("TimeTable") }}>Timetable</button>
-                        <div className='bg-stone-100'>
-                            AdSense
-                        </div>
-                    </div> */}
-                </body>
-                <Footer setMode={setMode} currentMode={mode}></Footer>
-            </div>
-        </QueryClientProvider>
+                    <Footer setMode={setMode} currentMode={mode}></Footer>
+                </QueryClientProvider>
+            </RecoilRoot>
+        </div>
     );
 }
 

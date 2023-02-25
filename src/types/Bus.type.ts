@@ -1,3 +1,17 @@
+export type busStopListAtomType = {
+	start: AllBusStopsType
+	goal: AllBusStopsType
+	ShowTimeTable: boolean
+	ShowBusCard: boolean
+	TimeTableData: TimeTable | undefined
+	BusCardData: ApproachInfos | undefined
+}
+
+export type busRouteAtomType = {
+	start: AllBusStopsType
+	goal: AllBusStopsType
+}
+
 interface ApproachInfo {
 	more_min: string;
 	real_arrival_time: string;

@@ -1,7 +1,10 @@
-import { TimeTable, OneBusTime, unionDays, AllBusStopsType } from '../types/Bus.type';
+import React from 'react';
+import { TimeTable, OneBusTime, unionDays, AllBusStopsType, busRouteAtomType } from '../types/Bus.type';
 import { SettingsManager } from '../manager/SettingsManager';
 import { TimeTableManager } from '../manager/TimeTableManager';
-import React from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import busRouteAtom from '../grobalState/atoms/busRoute';
+import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -81,17 +84,32 @@ export const ShowOneDayBusTime = (timeTable: TimeTable) => {
 export const ShowTimeTable = () => {
     const [{ timeTables, timetableQueryResults, doFetch, selectBusStop }] = TimeTableManager()
     const settings = SettingsManager()
+    const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
+    const swapBusRoute = useSetRecoilState(swapBusRouteSelector)
+
 
     return (
         <div className="m-4">
             <div className='bg-red-100'>
-                <div>設定</div>
+                <div>
+                    recoil
+                </div>
+                <div>
+                    {busRoute.start}
+                </div>
+                <div>
+                    {busRoute.goal}
+                </div>
+                <div onClick={()=>{swapBusRoute(busRoute)}}>
+                    swap by recoil
+                </div>
+                {/* <div>設定</div>
                 <SwapDestination start={settings.TimeTableParams.startStaSetting} goal={settings.TimeTableParams.goalStaSetting} />
                 <div onClick={() => { settings.swapDestination(settings.TimeTableParams.startStaSetting, settings.TimeTableParams.goalStaSetting, 'TimeTable') }}>Swap</div>
                 <div>{settings.TimeTableParams.goalStaSetting}</div>
                 <div>{settings.TimeTableParams.goalStaSettings}</div>
                 <div>{settings.TimeTableParams.startStaSetting}</div>
-                <div>{settings.TimeTableParams.startStaSettings}</div>
+                <div>{settings.TimeTableParams.startStaSettings}</div> */}
             </div>
             {selectBusStop()}
             <div onClick={() => { doFetch() }} className="bg-blue-100">
