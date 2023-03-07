@@ -53,7 +53,7 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
 }
 
 
-export const ShowOneDayBusTime = (timeTable: TimeTable) => {
+export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
     return (
         <div>
             <div>
@@ -85,16 +85,7 @@ export const ShowTimeTable = () => {
     return (
         <div className="m-4">
             <div className='bg-red-100'>
-                {AllBusStopList.map((BusStop, i) => {
-                    return (
-                        <div key={i} className="even:bg-stone-200 odd:bg-stone-300">
-                            <span>fr: </span>
-                            <span>{BusStop.fr}</span>
-                            <span>to: </span>
-                            <span>{BusStop.to}</span>
-                        </div>
-                    )
-                })}
+
                 {/* <div>
                     recoil
                 </div>
@@ -120,6 +111,17 @@ export const ShowTimeTable = () => {
             <div onClick={() => { fetchData(busRoute.fr, busRoute.to) }} className="bg-blue-100">
                 検索！！！！
             </div>
+            {/* {AllBusStopList.map((BusStop, i) => {
+                return (
+                    <div key={i} className="even:bg-stone-200 odd:bg-stone-300">
+                        <span>fr: </span>
+                        <span>{BusStop.fr}</span>
+                        <span>to: </span>
+                        <span>{BusStop.to}</span>
+                        {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
+                    </div>
+                )
+            })} */}
             {/* <div>
                 {timetableQueryResults.map((timetableQueryResult, i) => {
                     const timeTable = timetableQueryResult.data
@@ -157,7 +159,7 @@ export const ShowTimeTable = () => {
                                     return (
                                         <div key={idx}>
                                             <div>{BusStop.fr}{BusStop.to}</div>
-                                            {(BusStop.TimeTableData)?ShowOneDayBusTime(BusStop.TimeTableData):<></>}
+                                            {(BusStop.TimeTableData) ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
                                         </div>
                                     )
                                 })}
