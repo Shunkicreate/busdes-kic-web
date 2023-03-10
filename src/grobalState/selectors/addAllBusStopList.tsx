@@ -9,20 +9,20 @@ const addAllBusStopListSelector = selector<busStopListAtomType[]>({
     },
     set: ({ get, set }, newBusStop) => {
         const defaultRoutes = get(busStopListAtom)
+        // debugger; // eslint-disable-line no-debugger
         if (!(newBusStop instanceof DefaultValue)) {
             let flag = true
             defaultRoutes.forEach((defaultRoute, i) => {
                 if ((defaultRoute.fr === newBusStop[0].fr) && (defaultRoute.to === newBusStop[0].to)) {
                     const newBusStopListAtom: busStopListAtomType[] = [...defaultRoutes]
                     newBusStopListAtom[i] = newBusStop[0]
-                    // debugger; // eslint-disable-line no-debugger
                     set(busStopListAtom, newBusStopListAtom)
                     flag = false
                 }
             })
-            // if (flag) {
-            //     set(busStopListAtom, [...get(busStopListAtom), ...newBusStop])
-            // }
+            if (flag) {
+                set(busStopListAtom, [...get(busStopListAtom), ...newBusStop])
+            }
         }
     }
 })
