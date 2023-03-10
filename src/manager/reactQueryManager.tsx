@@ -24,12 +24,14 @@ const useReactQuery = () => {
         )
     }))
     const queryElem = queryKeys.map((value) => {
+        console.log("value", value)
+        console.log("url", `${baseURL}timetable?fr=${value.fr}&to=${value.to}`)
         return (
             {
                 queryKey: ["timetable", value],
                 queryFn: () => axios.get(`${baseURL}timetable?fr=${value.fr}&to=${value.to}`,).then((res: AxiosResponse) => res.data) as Promise<TimeTable>,
                 UseQueryOptions: {
-                    enabled: false,
+                    enabled: true,
                 },
             }
         )
@@ -38,28 +40,38 @@ const useReactQuery = () => {
         queryElem
     )
 
-    const fetchData = (fr: AllBusStopsType, to: AllBusStopsType) => {
-        // queryClient.invalidateQueries(["timetable", { fr: fr, to: to }]).then((res)=>{
-        //     console.log(res)
-        // })
+    const fetchData = () => {
         //AllBusStopListのうちundefinedのやつだけrefetchする仕様にする
+        console.log("queryKeys", queryElem)
+        // AllBusStopList.forEach((BusStop, i) => {
+        //     if (BusStop.TimeTableData === undefined) {
+        //         queryClient.invalidateQueries(["timetable", {
+        //             fr: BusStop.fr,
+        //             to: BusStop.to
+        //         }])
+        //     }
+        // })
         reactQueryResults.forEach((reactQueryResult, i) => {
             if (reactQueryResult) {
                 reactQueryResult.refetch().then((res) => {
-                    // debugger; // eslint-disable-line no-debugger
-                    queryKeys.forEach((queryKey, i) => {
-                        const data = queryClient.getQueriesData(["timetable", queryKey])
-                        console.log(queryKey, data)
-                    })
-                    // const data = queryClient.getQueriesData(["timetable", {
-                    //     fr: AllBusStopData.fr,
-                    //     to: AllBusStopData.to
-                    // }])
+                    // queryKeys.forEach((queryKey, i) => {
+                    //     const data = queryClient.getQueriesData(["timetable", queryKey])
+                    //     // console.log(queryKey, data)
+                    // })
                     AllBusStopList.forEach((BusStop, i) => {
-                        if ((BusStop.fr === fr) && (BusStop.to === to) && (res.data)) {
-                            const addTimeTable: TimeTable = res.data
-                            addTimeTable.from = AllBusStopList[i].fr
-                            addTimeTable.to = AllBusStopList[i].to
+                        // https://bustimer.azurewebsites.net/timetable?fr=%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E5%89%8D&to=%E4%BA%AC%E9%83%BD%E9%A7%85%E5%89%8D
+                        // https://bustimer.azurewebsites.net/timetable?fr=京都駅前&to=立命館大学
+                        if ((res.data)) {
+                            // debugger; // eslint-disable-line no-debugger
+                            // if ((BusStop.fr === fr) && (BusStop.to === to) && (res.data)) {
+                            const addTimeTable: TimeTable = Object.assign({}, res.data)
+                            const fr = BusStop.fr
+                            const to = BusStop.to
+                            // Object.assign(addTimeTable, { fr: fr })
+                            // Object.assign(addTimeTable, { to: to })
+                            addTimeTable.fr = fr
+                            addTimeTable.to = to
+                            debugger; // eslint-disable-line no-debugger
                             const addBusStopListAtom: busStopListAtomType = {
                                 fr: fr,
                                 to: to,
@@ -69,117 +81,14 @@ const useReactQuery = () => {
                                 BusCardData: undefined
                             }
                             addAllBusStopList([addBusStopListAtom])
-                            // BusStop.TimeTableData = addTimeTable
                         }
                     })
-                    // const addBusStop: busStopListAtomType = {
-                    // }
-                    // addAllBusStopList()
-                    // console.log(fr, to, res)
                 }
                 )
             }
         })
     }
 
-    // const TimeTablereactQueryManager = (() => {
-    //     // const [startSta, setStartSta] = useState<AllBusStopsType>('立命館大学前')
-    //     // const [goalSta, setGoalSta] = useState<AllBusStopsType>('京都駅前')
-    //     const { startStaSettings, goalStaSettings } = SettingsManager().TimeTableParams
-    //     // const [queryKeys, setQueryKeys] = useState([["timeTableQuery", { fr: startStaSetting }, { to: goalStaSetting }]])
-    //     const [queryKeys, setQueryKeys] = useState(startStaSettings.map((startStaSetting, i) => {
-    //         return (
-    //             {
-    //                 fr: startStaSetting,
-    //                 to: goalStaSettings[i]
-    //             }
-    //         )
-    //     }))
-    //     // let url = baseURL + "timetable?fr=" + startStaSetting + "&to=" + goalStaSetting
-    //     // function fetchTodoList({ queryKey }: {
-    //     //     queryKey: (string | {
-    //     //         fr: AllBusStopsType;
-    //     //         to?: undefined;
-    //     //     } | {
-    //     //         to: AllBusStopsType;
-    //     //         fr?: undefined;
-    //     //     })[]
-    //     // }) {
-    //     //     const a = queryKey
-    //     //     fetch(baseURL).then((res) =>
-    //     //         res.json()
-    //     //     )
-    //     //     // return Promise()
-    //     // }
-    //     // const fetchPost = () => {
-    //     //     fetch(baseURL).then((res) =>
-    //     //         res.json()
-    //     //     )
-    //     //     return Promise
-    //     // }
-    //     const myHeaders = new Headers({
-    //         'Content-Type': 'text/plain',
-    //         'X-Custom-Header': 'ProcessThisImmediately',
-    //         'sec-fetch-site': 'none'
-    //     });
-    //     const config = {
-    //         method: 'get',
-    //         maxBodyLength: Infinity,
-    //         url: 'https://busdes-kic.mercy34.workers.dev/timetable?fr=%E7%AB%8B%E5%91%BD%E9%A4%A8%E5%A4%A7%E5%AD%A6%E5%89%8D&to=%E4%BA%AC%E9%83%BD%E9%A7%85%E5%89%8D',
-    //         headers: {}
-    //     };
-
-    //     // .then(function (response) {
-    //     //     console.log(JSON.stringify(response.data));
-    //     // })
-    //     // .catch(function (error) {
-    //     //     console.log(error);
-    //     // });
-
-    //     const queryElem = queryKeys.map((value) => {
-    //         return (
-    //             {
-    //                 queryKey: ["timetable", value],
-    //                 queryFn: () => axios.get(`https://bustimer.azurewebsites.net/timetable?fr=${value.fr}&to=${value.to}`,).then((res: AxiosResponse) => res.data) as Promise<TimeTableResponse>,
-    //                 UseQueryOptions: {
-    //                     enabled: false,
-    //                 },
-    //             }
-    //         )
-    //     })
-    //     const reactQueryResults = useQueries(
-    //         queryElem
-    //     )
-    //     // queryKey: 'timeTableQuery',
-    //     // queryFn: () =>
-    //     //     fetch(url).then((res) =>
-    //     //         res.json()
-    //     //     )
-    //     // )
-    //     const handleReset = async () => {
-    //         console.log("start refetch")
-    //         await queryClient.refetchQueries().then(
-    //             () => {
-    //                 console.log("refetch")
-    //                 reactQueryResults.forEach((value) => {
-    //                     console.log(value.data?.holidays)
-    //                 }
-    //                 )
-    //             }
-    //         )
-    //         // url = baseURL + "timetable?fr=" + startStaSetting + "&to=" + goalStaSetting
-    //         // console.log(url)
-    //         // await result.refetch()
-    //     }
-
-    //     // const addQueryKey = (fr: AllBusStopsType, to: AllBusStopsType) => {
-    //     //     setQueryKeys([...queryKeys, { fr: fr, to: to }])
-    //     // }
-
-    //     return (
-    //         { reactQueryResults, handleReset, addQueryKey }
-    //     )
-    // })()
 
     return (
         { queryClient, reactQueryResults, fetchData }

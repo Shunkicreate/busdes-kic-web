@@ -57,15 +57,11 @@ const useTimeTableManager = () => {
         return (
             <div>
                 <div>
-                    {/* <div>
-                        <div onClick={() => { swapFunc(startStaSetting, goalStaSetting, 'TimeTable') }}>Swap in timetable manager</div>
-                        <div onClick={() => { console.log('haaaaa'); settings.swapDestination(settings.TimeTableParams.goalStaSetting, settings.TimeTableParams.startStaSetting, 'TimeTable') }}>Swap</div>
-                    </div> */}
                     <div>
                         {timeTables.map((value, i) => {
                             return (
                                 <div key={i}>
-                                    from:{value.from},
+                                    from:{value.fr},
                                     to:{value.to}
                                 </div>
                             )

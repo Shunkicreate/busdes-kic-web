@@ -1,19 +1,18 @@
 import React from 'react';
-import { TimeTable, OneBusTime, unionDays, AllBusStopsType, busRouteAtomType } from '../types/Bus.type';
-import { SettingsManager } from '../manager/SettingsManager';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import useTimeTableManager from '../manager/TimeTableManager';
+import { TimeTable, OneBusTime, unionDays, busRouteAtomType } from '../types/Bus.type';
+import { useRecoilValue, } from 'recoil';
 import busRouteAtom from '../grobalState/atoms/busRoute';
-import swapBusRouteSelector from '../grobalState/selectors/setBusRoute';
 import useReactQuery from '../manager/reactQueryManager';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
+import { queryClient } from '../manager/reactQueryManager';
+import { useEffect } from "react"
+import useTimeTable from '../hooks/useTimeTable';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
 ): [keyof T, T[keyof T]][] => {
     return Object.entries(object);
 };
-
 
 const ShowOneRowBusTime = (oneBusTime: OneBusTime, index: number, hour: number) => {
     return (
@@ -52,12 +51,11 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
-
 export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
     return (
         <div>
             <div>
-                from: {timeTable.from}
+                from: {timeTable.fr}
             </div>
             <div>
                 to: {timeTable.to}
@@ -73,85 +71,47 @@ export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
 }
 
 export const ShowTimeTable = () => {
-    const [{ timeTables, selectBusStop }] = useTimeTableManager()
-    const settings = SettingsManager()
     const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
-    const swapBusRoute = useSetRecoilState(swapBusRouteSelector)
-    const { reactQueryResults, fetchData } = useReactQuery()
+    const { fetchData } = useReactQuery()
     const AllBusStopList = useRecoilValue(getAllBusStopList)
-
-
-
+    const BreakError = {};
+    // useEffect(() => {
+    //     try {
+    //         AllBusStopList.forEach((BusStop, idx) => {
+    //             if (BusStop.TimeTableData === undefined) {
+    //                 fetchData()
+    //                 throw BreakError;
+    //             }
+    //         })
+    //     } catch (error) {
+    //         if (error !== BreakError) throw error;
+    //     }
+    // }, [])
     return (
         <div className="m-4">
-            <div className='bg-red-100'>
-
-                {/* <div>
-                    recoil
-                </div>
-                <div>
-                    {busRoute.fr}
-                </div>
-                <div>
-                    {busRoute.to}
-                </div>
-                <div onClick={()=>{swapBusRoute(busRoute)}}>
-                    swap by recoil
-                </div> */}
-                <div>
-                    {/* {reactQueryResults.map((reactQueryResult, i) => {
-                        const { isLoading, data, error } = reactQueryResult
-                        return(
-                            reactQueryResult.data?
-                        )
-                    })} */}
-                </div>
-            </div>
-            {/* {selectBusStop()} */}
-            <div onClick={() => { fetchData(busRoute.fr, busRoute.to) }} className="bg-blue-100">
+            <div onClick={() => { fetchData() }} className="bg-blue-100">
                 検索！！！！
             </div>
-            {/* {AllBusStopList.map((BusStop, i) => {
-                return (
-                    <div key={i} className="even:bg-stone-200 odd:bg-stone-300">
-                        <span>fr: </span>
-                        <span>{BusStop.fr}</span>
-                        <span>to: </span>
-                        <span>{BusStop.to}</span>
-                        {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
-                    </div>
-                )
-            })} */}
-            {/* <div>
-                {timetableQueryResults.map((timetableQueryResult, i) => {
-                    const timeTable = timetableQueryResult.data
-                    if (timeTable) {
-                        return (
-                            <div key={i}>
-                                {ShowOneDayBusTime(timeTable)}
-                            </div>
-                        )
+            {
+                AllBusStopList.map((AllBusStop, i) => {
+                    const fr = AllBusStop.fr
+                    const to = AllBusStop.to
+                    // const result = useTimeTable({fr, to})
+                    return (
+                        <div key={i}>
 
-                    }
-                })}
-            </div> */}
+                        </div>
+                    )
+                })
+            }
             {
                 (() => {
-                    if (timeTables === undefined) {
+                    if (queryClient.isFetching() === undefined) {
+                        console.log("fetching...")
                         return (
-                            <div>検索してください</div>
+                            <div>loading...</div>
                         )
                     }
-                    // else if (timetableQueryResults.isLoading) {
-                    //     return (
-                    //         <div>検索中...</div>
-                    //     )
-                    // }
-                    // else if (timetableQueryResults.isError) {
-                    //     return (
-                    //         <div>Error. Try again a few minutes later</div>
-                    //     )
-                    // }
                     else {
                         return (
                             <div className='flex w-max'>
