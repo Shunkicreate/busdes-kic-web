@@ -1,13 +1,16 @@
 import React from 'react';
-import { TimeTable, OneBusTime, unionDays, busRouteAtomType } from '../types/Bus.type';
-import { useRecoilValue, } from 'recoil';
+import { TimeTable, OneBusTime, unionDays, busRouteAtomType, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import busRouteAtom from '../grobalState/atoms/busRoute';
-import useReactQuery from '../manager/reactQueryManager';
+// import useReactQuery from '../manager/reactQueryManager';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
-import { queryClient } from '../manager/reactQueryManager';
+// import { queryClient } from '../manager/reactQueryManager';
 import { useEffect } from "react"
-import useTimeTable from '../hooks/useTimeTable';
-import { useFetchPosts } from '../features/get/hooks';
+// import useTimeTable from '../hooks/useTimeTable';
+// import { useFetchPosts } from '../features/get/hooks';
+import { ApiClient } from '../lib/api-client';
+import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
+import getBusRoute from '../grobalState/selectors/getBusRoute';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -53,6 +56,11 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
 }
 
 export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
+    const dayOfWeek = new Date().getDay();
+    let holyday = false
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+        holyday = true
+    }
     return (
         <div>
             <div>
@@ -62,84 +70,62 @@ export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
                 to: {timeTable.to}
             </div>
             <div>
-                {ShowOneCategoryDayBusTime(timeTable.weekdays)}
-            </div>
-            <div>
-                {ShowOneCategoryDayBusTime(timeTable.holidays)}
+                {holyday ? ShowOneCategoryDayBusTime(timeTable.holidays) : ShowOneCategoryDayBusTime(timeTable.weekdays)}
             </div>
         </div>
     )
 }
 
-export const ShowTimeTable = () => {
-    const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
-    // const { fetchData } = useReactQuery()
-    const AllBusStopList = useRecoilValue(getAllBusStopList)
-    const BreakError = {};
-    // useEffect(() => {
-    //     try {
-    //         AllBusStopList.forEach((BusStop, idx) => {
-    //             if (BusStop.TimeTableData === undefined) {
-    //                 fetchData()
-    //                 throw BreakError;
-    //             }
-    //         })
-    //     } catch (error) {
-    //         if (error !== BreakError) throw error;
-    //     }
-    // }, [])
-    const { isFetching, posts } = useFetchPosts()
-    return (
-        <div className="m-4">
-            <div className="text-lg">
-                {isFetching}
-            </div>
-            {/* <div onClick={() => { fetchData() }} className="bg-blue-100">
-                検索！！！！
-            </div> */}
-            {
-                // AllBusStopList.map((AllBusStop, i) => {
-                //     const fr = AllBusStop.fr
-                //     const to = AllBusStop.to
-                //     // const result = useTimeTable({fr, to})
-                //     return (
-                //         <div key={i}>
+const fetchTimeTable = async (fr: AllBusStopsType, to: AllBusStopsType) => {
+    const response = await ApiClient.get<TimeTableResponse>(`/timetable?fr=${fr}&to=${to}`)
+    const data = response.data
+    const addTimeTable: TimeTable = Object.assign({}, data)
+    addTimeTable.fr = fr
+    addTimeTable.to = to
+    return (addTimeTable)
+}
 
-                //         </div>
-                //     )
-                // })
-                posts.map((timetable, i) => {
-                    return (
-                        <div key={i}>
-                            <ShowOneDayBusTime timeTable={timetable}></ShowOneDayBusTime>
-                        </div>
-                    )
+export const ShowTimeTable = () => {
+    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
+    const AllBusStopList = useRecoilValue(getAllBusStopList)
+
+    useEffect(() => {
+        console.log('use effect')
+        let ignoreTwoRendering = false
+        AllBusStopList.forEach((BusStop) => {
+            if (BusStop.TimeTableData === undefined) {
+                fetchTimeTable(BusStop.fr, BusStop.to).then((timetable) => {
+                    const addBusStopListAtom: busStopListAtomType = {
+                        fr: BusStop.fr,
+                        to: BusStop.to,
+                        ShowTimeTable: true,
+                        ShowBusCard: false,
+                        TimeTableData: timetable,
+                        BusCardData: undefined
+                    }
+                    addAllBusStopList([addBusStopListAtom])
                 })
             }
-            {/* {
-                (() => {
-                    if (queryClient.isFetching() === undefined) {
-                        console.log("fetching...")
+        })
+
+        return () => {
+            ignoreTwoRendering = true
+        }
+
+    }, [])
+    return (
+        <div>
+            <div className="m-4 flex w-max">
+                {
+                    AllBusStopList.map((BusStop, i) => {
                         return (
-                            <div>loading...</div>
-                        )
-                    }
-                    else {
-                        return (
-                            <div className='flex w-max'>
-                                {AllBusStopList.map((BusStop, idx) => {
-                                    return (
-                                        <div key={idx}>
-                                            <div>{BusStop.fr}{BusStop.to}</div>
-                                            {(BusStop.TimeTableData) ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
-                                        </div>
-                                    )
-                                })}
+                            <div key={i} className="timetable">
+                                {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
                             </div>
                         )
-                    }
-                })()
-            } */}
+                    })
+                }
+            </div>
         </div>
     )
 }
