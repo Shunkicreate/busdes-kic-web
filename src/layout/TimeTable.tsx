@@ -7,6 +7,7 @@ import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { queryClient } from '../manager/reactQueryManager';
 import { useEffect } from "react"
 import useTimeTable from '../hooks/useTimeTable';
+import { useFetchPosts } from '../features/get/hooks';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -72,7 +73,7 @@ export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
 
 export const ShowTimeTable = () => {
     const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
-    const { fetchData } = useReactQuery()
+    // const { fetchData } = useReactQuery()
     const AllBusStopList = useRecoilValue(getAllBusStopList)
     const BreakError = {};
     // useEffect(() => {
@@ -87,24 +88,35 @@ export const ShowTimeTable = () => {
     //         if (error !== BreakError) throw error;
     //     }
     // }, [])
+    const { isFetching, posts } = useFetchPosts()
     return (
         <div className="m-4">
-            <div onClick={() => { fetchData() }} className="bg-blue-100">
-                検索！！！！
+            <div className="text-lg">
+                {isFetching}
             </div>
+            {/* <div onClick={() => { fetchData() }} className="bg-blue-100">
+                検索！！！！
+            </div> */}
             {
-                AllBusStopList.map((AllBusStop, i) => {
-                    const fr = AllBusStop.fr
-                    const to = AllBusStop.to
-                    // const result = useTimeTable({fr, to})
+                // AllBusStopList.map((AllBusStop, i) => {
+                //     const fr = AllBusStop.fr
+                //     const to = AllBusStop.to
+                //     // const result = useTimeTable({fr, to})
+                //     return (
+                //         <div key={i}>
+
+                //         </div>
+                //     )
+                // })
+                posts.map((timetable, i) => {
                     return (
                         <div key={i}>
-
+                            <ShowOneDayBusTime timeTable={timetable}></ShowOneDayBusTime>
                         </div>
                     )
                 })
             }
-            {
+            {/* {
                 (() => {
                     if (queryClient.isFetching() === undefined) {
                         console.log("fetching...")
@@ -127,7 +139,7 @@ export const ShowTimeTable = () => {
                         )
                     }
                 })()
-            }
+            } */}
         </div>
     )
 }

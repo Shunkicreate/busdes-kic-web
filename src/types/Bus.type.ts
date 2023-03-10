@@ -16,7 +16,7 @@ interface ApproachInfo {
 	more_min: string;
 	real_arrival_time: string;
 	direction: string;
-	via: string;
+	bus_name: string;
 	scheduled_time: string;
 	delay: string;
 	bus_stop: string;

@@ -27,7 +27,7 @@ const NextThreeBusInfo = () => {
                 "more_min": "約n分後に到着",
                 "real_arrival_time": "09:30",
                 "direction": "京都駅前",
-                "via": "50号系統",
+                "bus_name": "50号系統",
                 "scheduled_time": "06:10",
                 "delay": "定時運行",
                 "bus_stop": "1",
@@ -37,7 +37,7 @@ const NextThreeBusInfo = () => {
                 "more_min": "約n分後に到着",
                 "real_arrival_time": "06:35",
                 "direction": "京都駅前",
-                "via": "51号系統",
+                "bus_name": "51号系統",
                 "scheduled_time": "06:35",
                 "delay": "定時運行",
                 "bus_stop": "2",
@@ -47,7 +47,7 @@ const NextThreeBusInfo = () => {
                 "more_min": "約n分後に到着",
                 "real_arrival_time": "16:15",
                 "direction": "京都駅前",
-                "via": "52号系統",
+                "bus_name": "52号系統",
                 "scheduled_time": "06:55",
                 "delay": "定時運行",
                 "bus_stop": "3",
@@ -100,7 +100,7 @@ const NextThreeBusInfo = () => {
         return (
 
             <div className="text-center" key={info.real_arrival_time} onClick={buttonAlert}>
-                <NextBusInfo textColor={TextColorChange(index)} deptime={info.real_arrival_time} hour={arrival_hour} min={arrival_min} approch={info.via} />
+                <NextBusInfo textColor={TextColorChange(index)} deptime={info.real_arrival_time} hour={arrival_hour} min={arrival_min} approch={info.bus_name} />
             </div>
 
         )
@@ -110,9 +110,9 @@ const NextThreeBusInfo = () => {
 
     return (
         <div>
-            <div className='text-center' key={inputData.approach_infos[selectedline].via}>
+            <div className='text-center' key={inputData.approach_infos[selectedline].bus_name}>
                 <CountDownTimes dep_time={inputData.approach_infos[selectedline].real_arrival_time} />
-                <div className="pt-1">{inputData.approach_infos[selectedline].via} {inputData.approach_infos[selectedline].bus_stop}番乗り場</div>
+                <div className="pt-1">{inputData.approach_infos[selectedline].bus_name} {inputData.approach_infos[selectedline].bus_stop}番乗り場</div>
             </div>
             <div>{NextThreeBus}</div>
         </div>
