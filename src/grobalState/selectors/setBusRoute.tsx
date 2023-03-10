@@ -17,13 +17,13 @@ const setpBusRouteSelector = selector<busRouteAtomType>({
     },
     set: ({ get, set }, newRoute) => {
         const defaultRoute = get(busRouteAtom)
-        if(newRoute instanceof DefaultValue){
-            return(
+        if (newRoute instanceof DefaultValue) {
+            return (
                 defaultRoute
             )
         }
-        else{
-            if(checkStation(newRoute)){
+        else {
+            if (checkStation(newRoute)) {
                 set(busRouteAtom, newRoute)
             }
         }

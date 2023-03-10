@@ -1,10 +1,8 @@
 import React from "react";
 import { useModal } from 'react-hooks-use-modal';
 import { useState } from 'react';
-import { TimeTable, TimeTableResponse, OneBusTime, unionDays, AllBusStopsType, TimeTableDataStoreType, AllBusStops, busRouteAtomType, busStopListAtomType } from '../types/Bus.type';
-import useReactQuery from '../manager/reactQueryManager';
-import { SettingsManager } from '../manager/SettingsManager';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { AllBusStopsType, AllBusStops, busRouteAtomType, busStopListAtomType } from '../types/Bus.type';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import busRouteAtom from '../grobalState/atoms/busRoute';
 import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 import setpBusRouteSelector from '../grobalState/selectors/setBusRoute';
@@ -68,7 +66,7 @@ const SettingModal = () => {
             <Modal>
                 <button onClick={close} className="text-white">CLOSE</button>
                 <div style={modalStyle}>
-                    <div onClick={()=>{swapBusRoute(busRoute)}}>
+                    <div onClick={() => { swapBusRoute(busRoute) }}>
                         入れ替え
                     </div>
                     <div>

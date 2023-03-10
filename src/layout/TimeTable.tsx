@@ -1,16 +1,10 @@
 import React from 'react';
-import { TimeTable, OneBusTime, unionDays, busRouteAtomType, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
+import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import busRouteAtom from '../grobalState/atoms/busRoute';
-// import useReactQuery from '../manager/reactQueryManager';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
-// import { queryClient } from '../manager/reactQueryManager';
 import { useEffect } from "react"
-// import useTimeTable from '../hooks/useTimeTable';
-// import { useFetchPosts } from '../features/get/hooks';
 import { ApiClient } from '../lib/api-client';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
-import getBusRoute from '../grobalState/selectors/getBusRoute';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -90,8 +84,6 @@ export const ShowTimeTable = () => {
     const AllBusStopList = useRecoilValue(getAllBusStopList)
 
     useEffect(() => {
-        console.log('use effect')
-        let ignoreTwoRendering = false
         AllBusStopList.forEach((BusStop) => {
             if (BusStop.TimeTableData === undefined) {
                 fetchTimeTable(BusStop.fr, BusStop.to).then((timetable) => {
@@ -107,12 +99,8 @@ export const ShowTimeTable = () => {
                 })
             }
         })
-
-        return () => {
-            ignoreTwoRendering = true
-        }
-
     }, [])
+
     return (
         <div>
             <div className="m-4 flex w-max">

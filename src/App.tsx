@@ -1,61 +1,22 @@
 import BusCard from './layout/BusCard';
 import { ShowTimeTable } from './layout/TimeTable';
-import logo from './logo.svg'
 import { useState } from 'react'
 import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
-import { QueryClientProvider } from 'react-query';
-import { unionDays } from './types/Bus.type';
 import Settings from './layout/Settings';
-import reactQueryManager from './manager/reactQueryManager';
-import { queryClient } from './manager/reactQueryManager';
 import { RecoilRoot } from 'recoil';
-
 import React from 'react';
+
 const App = () => {
-    // const [{ timeTable, timeTables, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = TimeTableManager()
-    const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
     const [mode, setMode] = useState<mode>('NextBus')
     return (
         <div className="App">
             <RecoilRoot>
-                <QueryClientProvider client={queryClient}>
-                    <Header></Header>
-                    <div className='border-2' style={{ background: "white" }}>
-                        {
-                            (() => {
-                                if (mode === "NextBus") {
-                                    return (
-                                        <BusCard></BusCard>
-                                    )
-                                }
-                                else if (mode === "TimeTable") {
-                                    return (
-                                        <div>
-                                            <ShowTimeTable></ShowTimeTable>
-                                        </div>
-                                    )
-                                }
-                                else if (mode === "Settings") {
-                                    return (
-                                        <Settings></Settings>
-                                    )
-                                }
-                                else {
-                                    return (
-                                        <></>
-                                    )
-                                }
-                            })()
-                        }
-                        {/* <div>
-                            {count}
-                        </div>
-                        <div>
-                            <button onClick={() => doFetch()}>検索!</button>
-                        </div>
-                        {(() => {
+                <Header></Header>
+                <div className='border-2' style={{ background: "white" }}>
+                    {
+                        (() => {
                             if (mode === "NextBus") {
                                 return (
                                     <BusCard></BusCard>
@@ -63,27 +24,25 @@ const App = () => {
                             }
                             else if (mode === "TimeTable") {
                                 return (
-                                    <>
-                                        {isError && <div>Something went wrong ...</div>}
-                                        {isLoading ? (
-                                            <div>Loading...</div>
-                                        ) : (
-                                            ShowTimeTable(timeTable)
-                                        )}
-                                    </>
+                                    <div>
+                                        <ShowTimeTable></ShowTimeTable>
+                                    </div>
                                 )
                             }
-                        })()}
-                        <div className='absolute bottom-0 text-center w-full my-5'>
-                            <button onClick={() => { setMode("NextBus") }}>Next bus</button>
-                            <button onClick={() => { setMode("TimeTable") }}>Timetable</button>
-                            <div className='bg-stone-100'>
-                                AdSense
-                            </div>
-                        </div> */}
-                    </div>
-                    <Footer setMode={setMode} currentMode={mode}></Footer>
-                </QueryClientProvider>
+                            else if (mode === "Settings") {
+                                return (
+                                    <Settings></Settings>
+                                )
+                            }
+                            else {
+                                return (
+                                    <></>
+                                )
+                            }
+                        })()
+                    }
+                </div>
+                <Footer setMode={setMode} currentMode={mode}></Footer>
             </RecoilRoot>
         </div>
     );

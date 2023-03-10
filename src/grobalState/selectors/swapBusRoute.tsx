@@ -20,7 +20,6 @@ const swapRits = (routeElem: AllBusStopsType, mode: 'fr' | 'to') => {
     else if (mode === 'to') {
         if (returnSta === "立命館大学") {
             returnSta = "立命館大学前"
-
         }
     }
     return (returnSta)
