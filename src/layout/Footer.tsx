@@ -1,6 +1,6 @@
-import { mode } from "../types/main.type"
-import { TabbarButton } from "../atom/TabbarButton"
-import React from "react"
+import { mode } from '../types/main.type'
+import { TabbarButton } from '../atom/TabbarButton'
+import React from 'react'
 
 
 import { AddButton } from "../atom/AddButton"

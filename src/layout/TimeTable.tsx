@@ -1,6 +1,10 @@
-import { TimeTable, OneBusTime, unionDays } from '../types/Bus.type';
-import { TimeTableManager } from '../manager/TimeTableManager';
 import React from 'react';
+import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
+import { useEffect } from 'react'
+import { ApiClient } from '../lib/api-client';
+import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -8,10 +12,9 @@ const strictEntries = <T extends Record<string, any>>(
     return Object.entries(object);
 };
 
-
-const ShowOneRowBusTime = (oneBusTime: OneBusTime, index: number, hour: number) => {
+const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour: number }) => {
     return (
-        <div key={index} className="text-left pl-10">
+        <div className='text-left pl-10'>
             <div><span className='pr-3'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-3'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
         </div>
     )
@@ -21,7 +24,7 @@ const zeroPadding = (num: number, len: number) => {
     return (Array(len).join('0') + num).slice(-len)
 }
 
-const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
+const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, OneBusTime[]> | undefined }) => {
     if (dayBusTime === undefined) {
         return (
             <div>undifined</div>
@@ -33,8 +36,8 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
         const hour = element[0]
         const busArray = element[1]
         if (Array.isArray(busArray) && busArray.length > 0) {
-            if ((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0) {
-                const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, index) => ShowOneRowBusTime(value, index, Number(hour)))}</div>
+            if ((typeof busArray !== 'string' || typeof busArray !== 'number') && busArray.length > 0) {
+                const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
@@ -46,65 +49,75 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
-const ShowOneDayBusTime = (timeTable: TimeTable) => {
+const isHolyday = () => {
+    let holyday = false
+    const dayOfWeek = new Date().getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+        holyday = true
+    }
+    return holyday
+}
+
+export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
     return (
         <div>
             <div>
-                from: {timeTable.from}
+                from: {timeTable.fr}
             </div>
             <div>
                 to: {timeTable.to}
             </div>
             <div>
-                {ShowOneCategoryDayBusTime(timeTable.weekdays)}
-            </div>
-            <div>
-                {ShowOneCategoryDayBusTime(timeTable.holidays)}
+                {isHolyday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
             </div>
         </div>
     )
 }
 
+const fetchTimeTable = async (fr: AllBusStopsType, to: AllBusStopsType) => {
+    const response = await ApiClient.get<TimeTableResponse>(`/timetable?fr=${fr}&to=${to}`)
+    const data = response.data
+    const addTimeTable: TimeTable = Object.assign({}, data)
+    addTimeTable.fr = fr
+    addTimeTable.to = to
+    return (addTimeTable)
+}
+
 export const ShowTimeTable = () => {
-    const [{ timeTables, isLoading, isError, doFetch, selectBusStop }] = TimeTableManager()
+    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
+    const AllBusStopList = useRecoilValue(getAllBusStopList)
+
+    useEffect(() => {
+        AllBusStopList.forEach((BusStop) => {
+            if (BusStop.TimeTableData === undefined) {
+                fetchTimeTable(BusStop.fr, BusStop.to).then((timetable) => {
+                    const addBusStopListAtom: busStopListAtomType = {
+                        fr: BusStop.fr,
+                        to: BusStop.to,
+                        ShowTimeTable: true,
+                        ShowBusCard: false,
+                        TimeTableData: timetable,
+                        BusCardData: undefined
+                    }
+                    addAllBusStopList([addBusStopListAtom])
+                })
+            }
+        })
+    }, [])
+
     return (
-        <div className="m-4">
-            {selectBusStop()}
-            <div onClick={() => { doFetch() }} className="bg-blue-100">
-                検索！！！！
-            </div>
-            {
-                (() => {
-                    if (timeTables === undefined) {
+        <div>
+            <div className='m-4 flex w-max'>
+                {
+                    AllBusStopList.map((BusStop, i) => {
                         return (
-                            <div>検索してください</div>
-                        )
-                    }
-                    else if (isLoading) {
-                        return (
-                            <div>検索中...</div>
-                        )
-                    }
-                    else if (isError) {
-                        return (
-                            <div>Error. Try again a few minutes later</div>
-                        )
-                    }
-                    else {
-                        return (
-                            <div className='flex w-max'>
-                                {timeTables.map((timeTable, idx) => {
-                                    return (
-                                        <div key={idx}>
-                                            {ShowOneDayBusTime(timeTable)}
-                                        </div>
-                                    )
-                                })}
+                            <div key={i} className='timetable'>
+                                {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
                             </div>
                         )
-                    }
-                })()
-            }
+                    })
+                }
+            </div>
         </div>
     )
 }

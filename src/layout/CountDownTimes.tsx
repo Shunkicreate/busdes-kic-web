@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { useState, useEffect } from 'react';
 
 type Times = {
@@ -39,7 +39,7 @@ const CountDownTimes = (dep_times: Times) => {
     }
 
     return (
-        <div className="text-4xl py-0.5 pt-3">{count_hour}:{('00' + count_min).slice(-2)}:{('00' + count_sec).slice(-2)}</div>
+        <div className='text-4xl py-0.5 pt-3'>{count_hour}:{('00' + count_min).slice(-2)}:{('00' + count_sec).slice(-2)}</div>
     )
 
 }
