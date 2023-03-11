@@ -12,9 +12,9 @@ const strictEntries = <T extends Record<string, any>>(
     return Object.entries(object);
 };
 
-const ShowOneRowBusTime = (oneBusTime: OneBusTime, index: number, hour: number) => {
+const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour: number }) => {
     return (
-        <div key={index} className='text-left pl-10'>
+        <div className='text-left pl-10'>
             <div><span className='pr-3'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-3'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
         </div>
     )
@@ -24,7 +24,7 @@ const zeroPadding = (num: number, len: number) => {
     return (Array(len).join('0') + num).slice(-len)
 }
 
-const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | undefined) => {
+const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, OneBusTime[]> | undefined }) => {
     if (dayBusTime === undefined) {
         return (
             <div>undifined</div>
@@ -37,7 +37,7 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
         const busArray = element[1]
         if (Array.isArray(busArray) && busArray.length > 0) {
             if ((typeof busArray !== 'string' || typeof busArray !== 'number') && busArray.length > 0) {
-                const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, index) => ShowOneRowBusTime(value, index, Number(hour)))}</div>
+                const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
@@ -49,12 +49,16 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
     )
 }
 
-export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
-    const dayOfWeek = new Date().getDay();
+const isHolyday = () => {
     let holyday = false
+    const dayOfWeek = new Date().getDay();
     if (dayOfWeek === 0 || dayOfWeek === 6) {
         holyday = true
     }
+    return holyday
+}
+
+export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
     return (
         <div>
             <div>
@@ -64,7 +68,7 @@ export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
                 to: {timeTable.to}
             </div>
             <div>
-                {holyday ? ShowOneCategoryDayBusTime(timeTable.holidays) : ShowOneCategoryDayBusTime(timeTable.weekdays)}
+                {isHolyday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
             </div>
         </div>
     )
