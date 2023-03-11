@@ -4,7 +4,10 @@ import busRouteAtom from '../atoms/busRoute'
 
 const checkStation = (route: busRouteAtomType) => {
     // debugger; // eslint-disable-line no-debugger
-    if ((route.fr === "立命館大学前" && route.to !== "立命館大学") || (route.fr !== "立命館大学前" && route.to === "立命館大学")) {
+    if (route.fr === '立命館大学前' && route.to !== '立命館大学') {
+        return true
+    }
+    else if (route.fr !== '立命館大学前' && route.to === '立命館大学') {
         return true
     }
     return false
@@ -13,13 +16,13 @@ const checkStation = (route: busRouteAtomType) => {
 const swapRits = (routeElem: AllBusStopsType, mode: 'fr' | 'to') => {
     let returnSta: AllBusStopsType = routeElem
     if (mode === 'fr') {
-        if (returnSta === "立命館大学前") {
-            returnSta = "立命館大学"
+        if (returnSta === '立命館大学前') {
+            returnSta = '立命館大学'
         }
     }
     else if (mode === 'to') {
-        if (returnSta === "立命館大学") {
-            returnSta = "立命館大学前"
+        if (returnSta === '立命館大学') {
+            returnSta = '立命館大学前'
         }
     }
     return (returnSta)

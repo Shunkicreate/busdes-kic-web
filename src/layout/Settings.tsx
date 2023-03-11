@@ -14,7 +14,7 @@ const Settings = () => {
             <div className='p-4'>
                 {AllBusStopList.map((BusStop, i) => {
                     return (
-                        <div key={i} className="even:bg-stone-200 odd:bg-stone-300">
+                        <div key={i} className='even:bg-stone-200 odd:bg-stone-300'>
                             <span>fr: </span>
                             <span>{BusStop.fr}</span>
                             <span>to: </span>

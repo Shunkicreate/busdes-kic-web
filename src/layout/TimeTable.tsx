@@ -2,7 +2,7 @@ import React from 'react';
 import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
-import { useEffect } from "react"
+import { useEffect } from 'react'
 import { ApiClient } from '../lib/api-client';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 
@@ -14,7 +14,7 @@ const strictEntries = <T extends Record<string, any>>(
 
 const ShowOneRowBusTime = (oneBusTime: OneBusTime, index: number, hour: number) => {
     return (
-        <div key={index} className="text-left pl-10">
+        <div key={index} className='text-left pl-10'>
             <div><span className='pr-3'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-3'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
         </div>
     )
@@ -36,7 +36,7 @@ const ShowOneCategoryDayBusTime = (dayBusTime: Map<unionDays, OneBusTime[]> | un
         const hour = element[0]
         const busArray = element[1]
         if (Array.isArray(busArray) && busArray.length > 0) {
-            if ((typeof busArray !== "string" || typeof busArray !== "number") && busArray.length > 0) {
+            if ((typeof busArray !== 'string' || typeof busArray !== 'number') && busArray.length > 0) {
                 const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, index) => ShowOneRowBusTime(value, index, Number(hour)))}</div>
                 jsxBusTime.push(oneHourList)
             }
@@ -103,11 +103,11 @@ export const ShowTimeTable = () => {
 
     return (
         <div>
-            <div className="m-4 flex w-max">
+            <div className='m-4 flex w-max'>
                 {
                     AllBusStopList.map((BusStop, i) => {
                         return (
-                            <div key={i} className="timetable">
+                            <div key={i} className='timetable'>
                                 {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
                             </div>
                         )

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { useModal } from 'react-hooks-use-modal';
 import { useState } from 'react';
 import { AllBusStopsType, AllBusStops, busRouteAtomType, busStopListAtomType } from '../types/Bus.type';
@@ -20,7 +20,7 @@ const SettingModal = () => {
     const busRoute = useRecoilValue<busRouteAtomType>(busRouteAtom)
     const swapBusRoute = useSetRecoilState(swapBusRouteSelector)
     const setBusRoute = useSetRecoilState(setpBusRouteSelector)
-    const [select, setSelect] = useState("")
+    const [select, setSelect] = useState('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
 
 
@@ -64,7 +64,7 @@ const SettingModal = () => {
             <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
             <button onClick={open} className='bg-red-100'>新しい駅を追加</button>
             <Modal>
-                <button onClick={close} className="text-white">CLOSE</button>
+                <button onClick={close} className='text-white'>CLOSE</button>
                 <div style={modalStyle}>
                     <div onClick={() => { swapBusRoute(busRoute) }}>
                         入れ替え
@@ -74,8 +74,8 @@ const SettingModal = () => {
                     </div>
                     <div>
                         <div>到着: {busRoute.to}</div>
-                        <label htmlFor="bus-stop-choice">Choose a Bus Stop:</label>
-                        <input type="text" list="bus-stop-list" id="bus-stop-choice" name="bus-stop-choice" value={select} onChange={(event) => upDateStation(event.target.value)} placeholder="駅名を入力" onClick={() => { onClickEventHandle() }}></input>
+                        <label htmlFor='bus-stop-choice'>Choose a Bus Stop:</label>
+                        <input type='text' list='bus-stop-list' id='bus-stop-choice' name='bus-stop-choice' value={select} onChange={(event) => upDateStation(event.target.value)} placeholder='駅名を入力' onClick={() => { onClickEventHandle() }}></input>
                         <div onClick={addSettingList}>
                             追加
                         </div>

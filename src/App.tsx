@@ -11,25 +11,25 @@ import React from 'react';
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <div className="App">
+        <div className='App'>
             <RecoilRoot>
                 <Header></Header>
-                <div className='border-2' style={{ background: "white" }}>
+                <div className='border-2' style={{ background: 'white' }}>
                     {
                         (() => {
-                            if (mode === "NextBus") {
+                            if (mode === 'NextBus') {
                                 return (
                                     <BusCard></BusCard>
                                 )
                             }
-                            else if (mode === "TimeTable") {
+                            else if (mode === 'TimeTable') {
                                 return (
                                     <div>
                                         <ShowTimeTable></ShowTimeTable>
                                     </div>
                                 )
                             }
-                            else if (mode === "Settings") {
+                            else if (mode === 'Settings') {
                                 return (
                                     <Settings></Settings>
                                 )

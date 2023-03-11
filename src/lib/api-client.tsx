@@ -1,5 +1,5 @@
-import axios from "axios";
-const baseURL = "https://bustimer.azurewebsites.net/";
+import axios from 'axios';
+const baseURL = 'https://bustimer.azurewebsites.net/';
 const headers = {
 };
 // axiosの初期設定
@@ -18,10 +18,10 @@ ApiClient.interceptors.response.use(
             case 404:
                 break;
             default:
-                console.log("== internal server error");
+                console.log('== internal server error');
         }
 
-        const errorMessage = (error.response?.data?.message || "").split(",");
+        const errorMessage = (error.response?.data?.message || '').split(',');
         throw new Error(errorMessage);
     }
 )
@@ -29,6 +29,6 @@ ApiClient.interceptors.response.use(
 // ApiClient.interceptors.request.use(async (request: any) => {
     // アクセストークンを取得し共通headerに格納
     // const accessToken = getAccessToken();
-    // request.headers["access-token"] = accessToken
+    // request.headers['access-token'] = accessToken
     // return request;
 // });

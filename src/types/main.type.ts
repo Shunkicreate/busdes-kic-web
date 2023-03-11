@@ -1,1 +1,1 @@
-export type mode = "TimeTable" | "NextBus" | "Settings"
+export type mode = 'TimeTable' | 'NextBus' | 'Settings'
