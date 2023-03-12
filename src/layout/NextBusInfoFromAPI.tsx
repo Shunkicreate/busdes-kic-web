@@ -12,6 +12,11 @@ type Props = {
     approch: string
 }
 
+type Props2 = {
+    from_bus : string
+    to_bus : string
+}
+
 const NextBusInfo = (prop: Props) => {
 
     return (
@@ -19,33 +24,19 @@ const NextBusInfo = (prop: Props) => {
     )
 }
 
-const NextBusAPI = () => {
+const NextBusInfoFromAPI = (prop : Props2) => {
 
-    const baseURL = 'https://bustimer.azurewebsites.net/nextbus?fr=堀川三条&to=京都駅前';
-
-    useEffect(() => {
-        axios.get(baseURL)
-            .then(response => {
-                const BusInfo = response.data
-            })
-            .catch(error => console.log(error))
-    }, [])
-
-}
-
-const NextThreeBusInfo = () => {
-
-    const inputData: ApproachInfos = {
+    const TestData: ApproachInfos = {
 
         'approach_infos': [
             {
                 'more_min': '約n分後に到着',
-                'real_arrival_time': '09:30',
+                'real_arrival_time': 'hh:mm',
                 'direction': '京都駅前',
-                'bus_name': '50号系統',
-                'scheduled_time': '06:10',
+                'bus_name': 'n号系統',
+                'scheduled_time': 'hh:mm',
                 'delay': '定時運行',
-                'bus_stop': '1',
+                'bus_stop': 'n',
                 'required_time': 20
             },
             {
@@ -89,7 +80,24 @@ const NextThreeBusInfo = () => {
 
     }
 
-    const NextThreeBus = inputData.approach_infos.map((info, index) => {
+    const [BusInfo, setBusInfo] = useState<ApproachInfos>(TestData); 
+
+    useEffect(() => {
+        axios.get('https://bustimer.azurewebsites.net/nextbus', {
+            params: {
+                fr: prop.from_bus,
+                to: prop.to_bus
+            }
+        })
+            .then(response => {
+                setBusInfo(response.data)
+            })
+            .catch(error => console.log(error))
+    }, [])
+
+    console.log(BusInfo)
+
+    const NextThreeBus = BusInfo.approach_infos.map((info, index) => {
 
         const dep_time = info.real_arrival_time.split(':')
         const dep_hour = Number(dep_time[0])
@@ -126,13 +134,13 @@ const NextThreeBusInfo = () => {
 
     return (
         <div>
-            <div className='text-center' key={inputData.approach_infos[selectedline].bus_name}>
-                <CountDownTimes dep_time={inputData.approach_infos[selectedline].real_arrival_time} />
-                <div className='pt-1'>{inputData.approach_infos[selectedline].bus_name} {inputData.approach_infos[selectedline].bus_stop}番乗り場</div>
+            <div className='text-center' key={BusInfo.approach_infos[selectedline].bus_name}>
+                <CountDownTimes dep_time={BusInfo.approach_infos[selectedline].real_arrival_time} />
+                <div className='pt-1'>{BusInfo.approach_infos[selectedline].bus_name} {BusInfo.approach_infos[selectedline].bus_stop}番乗り場</div>
             </div>
             <div>{NextThreeBus}</div>
         </div>
     )
 }
 
-export default NextThreeBusInfo
+export default NextBusInfoFromAPI
