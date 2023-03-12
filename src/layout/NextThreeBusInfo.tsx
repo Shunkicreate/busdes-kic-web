@@ -19,20 +19,6 @@ const NextBusInfo = (prop: Props) => {
     )
 }
 
-const NextBusAPI = () => {
-
-    const baseURL = 'https://bustimer.azurewebsites.net/nextbus?fr=堀川三条&to=京都駅前';
-
-    useEffect(() => {
-        axios.get(baseURL)
-            .then(response => {
-                const BusInfo = response.data
-            })
-            .catch(error => console.log(error))
-    }, [])
-
-}
-
 const NextThreeBusInfo = () => {
 
     const inputData: ApproachInfos = {

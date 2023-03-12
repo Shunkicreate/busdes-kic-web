@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { ApproachInfos } from '../types/Bus.type'
 import CountDownTimes from './CountDownTimes';
+import { AllBusStopsType } from '../types/Bus.type';
+
 
 type Props = {
     textColor: string
@@ -13,8 +15,8 @@ type Props = {
 }
 
 type Props2 = {
-    from_bus : string
-    to_bus : string
+    from_bus : AllBusStopsType
+    to_bus : AllBusStopsType
 }
 
 const NextBusInfo = (prop: Props) => {
