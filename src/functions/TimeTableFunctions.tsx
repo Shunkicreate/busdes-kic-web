@@ -14,7 +14,7 @@ const strictEntries = <T extends Record<string, any>>(
 
 const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour: number }) => {
     return (
-        <div className='text-left pl-12'>
+        <div className='text-left pl-16'>
             <div><span className='pr-4'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-4'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
         </div>
     )
@@ -60,7 +60,7 @@ const isHolyday = () => {
 
 export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
     return (
-        <div className=' w-[calc(100vw-2rem)] px-4 py-2'>
+        <div className=' w-[calc(100vw-2rem)] py-2'>
             <div>
                 from: {timeTable.fr}
             </div>
