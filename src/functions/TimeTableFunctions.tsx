@@ -49,13 +49,13 @@ const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, 
     )
 }
 
-const isHoliyday = () => {
-    let holiyday = false
+const isHoliday = () => {
+    let holiday = false
     const dayOfWeek = new Date().getDay();
     if (dayOfWeek === 0 || dayOfWeek === 6) {
-        holiyday = true
+        holiday = true
     }
-    return holiyday
+    return holiday
 }
 
 export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
@@ -68,7 +68,7 @@ export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
                 to: {timeTable.to}
             </div>
             <div>
-                {isHoliyday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
+                {isHoliday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
             </div>
         </div>
     )
