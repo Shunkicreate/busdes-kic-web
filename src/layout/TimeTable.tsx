@@ -60,7 +60,7 @@ export const ShowTimeTable = () => {
     }, [])
 
     return (
-        <div className='m-4'>
+        <div className='mx-4'>
             <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
             <div className="flex bg-white overflow-scroll whitespace-normal">
                 {
