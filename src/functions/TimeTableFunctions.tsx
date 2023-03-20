@@ -37,7 +37,7 @@ const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, 
         const busArray = element[1]
         if (Array.isArray(busArray) && busArray.length > 0) {
             if ((typeof busArray !== 'string' || typeof busArray !== 'number') && busArray.length > 0) {
-                const oneHourList = <div key={idx} className='border-b'><div className='pl-4'>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
+                const oneHourList = <div key={idx} className='border-b border-border py-2'><div className='pl-4'>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
