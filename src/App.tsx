@@ -11,10 +11,10 @@ import React from 'react';
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <div className='App'>
+        <div className='App bg-main'>
             <RecoilRoot>
                 <Header></Header>
-                <div className='border-2' style={{ background: 'white' }}>
+                <div className='pb-24'>
                     {
                         (() => {
                             if (mode === 'NextBus') {
