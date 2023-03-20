@@ -1,91 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useEffect } from 'react'
 import { ApiClient } from '../lib/api-client';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
+import { fetchTimeTable, ShowOneDayBusTime } from '../functions/TimeTableFunctions';
+import Arrow from '../images/Arrow.svg'
 
-const strictEntries = <T extends Record<string, any>>(
-    object: T
-): [keyof T, T[keyof T]][] => {
-    return Object.entries(object);
-};
-
-const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour: number }) => {
+const TimeTableHeader = ({ fr, to }: { fr: AllBusStopsType, to: AllBusStopsType }) => {
     return (
-        <div className='text-left pl-10'>
-            <div><span className='pr-3'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-3'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
-        </div>
-    )
-}
-
-const zeroPadding = (num: number, len: number) => {
-    return (Array(len).join('0') + num).slice(-len)
-}
-
-const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, OneBusTime[]> | undefined }) => {
-    if (dayBusTime === undefined) {
-        return (
-            <div>undifined</div>
-        )
-    }
-    const jsxBusTime: JSX.Element[] = []
-    const entities = strictEntries(dayBusTime)
-    entities.forEach((element, idx) => {
-        const hour = element[0]
-        const busArray = element[1]
-        if (Array.isArray(busArray) && busArray.length > 0) {
-            if ((typeof busArray !== 'string' || typeof busArray !== 'number') && busArray.length > 0) {
-                const oneHourList = <div key={idx}><div>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
-                jsxBusTime.push(oneHourList)
-            }
-        }
-    });
-    return (
-        <>
-            {jsxBusTime}
-        </>
-    )
-}
-
-const isHolyday = () => {
-    let holyday = false
-    const dayOfWeek = new Date().getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-        holyday = true
-    }
-    return holyday
-}
-
-export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
-    return (
-        <div>
-            <div>
-                from: {timeTable.fr}
+        <div className='text-center'>
+            <div className='grid grid-cols-3'>
+                <div className=''>
+                    <strong>出発</strong>
+                </div>
+                <div className=''>
+                    <strong>{fr}</strong>
+                </div>
             </div>
             <div>
-                to: {timeTable.to}
+                <img src={Arrow} alt="Arrow image" className='m-auto my-1' />
             </div>
-            <div>
-                {isHolyday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
+            <div className='grid grid-cols-3'>
+                <div className=''>
+                    <strong>到着</strong>
+                </div>
+                <div className=''>
+                    <strong>{to}</strong>
+                </div>
             </div>
         </div>
     )
 }
 
-const fetchTimeTable = async (fr: AllBusStopsType, to: AllBusStopsType) => {
-    const response = await ApiClient.get<TimeTableResponse>(`/timetable?fr=${fr}&to=${to}`)
-    const data = response.data
-    const addTimeTable: TimeTable = Object.assign({}, data)
-    addTimeTable.fr = fr
-    addTimeTable.to = to
-    return (addTimeTable)
-}
 
 export const ShowTimeTable = () => {
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
+    const [currentFromBusStop, setCurrentFromBusStop] = useState<AllBusStopsType>(AllBusStopList[0].fr)
+    const [currenToBusStop, setCurrenToBusStop] = useState<AllBusStopsType>(AllBusStopList[0].to)
 
     useEffect(() => {
         AllBusStopList.forEach((BusStop) => {
@@ -106,8 +60,9 @@ export const ShowTimeTable = () => {
     }, [])
 
     return (
-        <div>
-            <div className='m-4 flex w-max'>
+        <div className='m-4'>
+            <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
+            <div className="flex bg-white overflow-scroll whitespace-normal">
                 {
                     AllBusStopList.map((BusStop, i) => {
                         return (
