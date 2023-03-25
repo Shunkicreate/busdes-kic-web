@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
-import SettingModal from './SettingModal';
+import useAddBusRouteModal from '../hooks/useModal';
 
 const Settings = () => {
     const AllBusStopList = useRecoilValue(getAllBusStopList)
+    const { AddBusRouteModal, open } = useAddBusRouteModal()
 
     return (
         <div>
@@ -23,7 +24,8 @@ const Settings = () => {
                     )
                 })}
             </div>
-            <SettingModal></SettingModal>
+            <div onClick={() => { open() }}>Open Modal</div>
+            <AddBusRouteModal></AddBusRouteModal>
         </div>
     )
 }

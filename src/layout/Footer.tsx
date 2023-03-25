@@ -1,14 +1,14 @@
 import { mode } from '../types/main.type'
 import { TabbarButton } from '../atom/TabbarButton'
 import React from 'react'
-
-
+import useAddBusRouteModal from '../hooks/useModal'
 import { AddButton } from '../atom/AddButton'
 
 export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React.SetStateAction<mode>>, currentMode: mode }) => {
     const switchMode = (mode: mode) => {
         setMode(mode)
     }
+    const { ModalOpenButon } = useAddBusRouteModal()
     const color = (mode: mode, currentMode: mode) => {
         if (mode === currentMode) {
             return 'bg-main'
@@ -25,6 +25,7 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
                 <TabbarButton mode='NextBus' modeName='次のバス' color={color('NextBus', currentMode)} switchMode={switchMode}></TabbarButton>
                 <TabbarButton mode='Settings' modeName='設定' color={color('Settings', currentMode)} switchMode={switchMode}></TabbarButton>
             </div>
+            <ModalOpenButon></ModalOpenButon>
         </div>
     )
 }

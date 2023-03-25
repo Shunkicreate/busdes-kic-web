@@ -7,8 +7,9 @@ import busRouteAtom from '../grobalState/atoms/busRoute';
 import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 import setpBusRouteSelector from '../grobalState/selectors/setBusRoute';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
+import { AddButton } from '../atom/AddButton';
 
-const SettingModal = () => {
+const useAddBusRouteModal = () => {
     const [Modal, open, close, isOpen] = useModal('root', {
         preventScroll: true
     })
@@ -22,7 +23,6 @@ const SettingModal = () => {
     const setBusRoute = useSetRecoilState(setpBusRouteSelector)
     const [select, setSelect] = useState('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
-
 
     const upDateStation = (value: string) => {
         setSelect(value)
@@ -59,38 +59,54 @@ const SettingModal = () => {
         close()
     }
 
-    return (
-        <div>
-            <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
-            <button onClick={open} className='bg-red-100'>新しい駅を追加</button>
-            <Modal>
-                <button onClick={close} className='text-white'>CLOSE</button>
-                <div style={modalStyle}>
-                    <div onClick={() => { swapBusRoute(busRoute) }}>
-                        入れ替え
-                    </div>
-                    <div>
-                        <div>出発: {busRoute.fr}</div>
-                    </div>
-                    <div>
-                        <div>到着: {busRoute.to}</div>
-                        <label htmlFor='bus-stop-choice'>Choose a Bus Stop:</label>
-                        <input type='text' list='bus-stop-list' id='bus-stop-choice' name='bus-stop-choice' value={select} onChange={(event) => upDateStation(event.target.value)} placeholder='駅名を入力' onClick={() => { onClickEventHandle() }}></input>
-                        <div onClick={addSettingList}>
-                            追加
-                        </div>
-                        <datalist id='bus-stop-list'>
-                            {AllBusStops.map((value, idx) => {
-                                return (
-                                    <option value={value} key={idx}></option>
-                                )
-                            })}
-                        </datalist>
-                    </div>
+    const AddBusRouteModal = () => (
+        <Modal>
+            <button onClick={() => { close() }} className='text-white'>CLOSE</button>
+            <div style={modalStyle}>
+                <div onClick={() => { swapBusRoute(busRoute) }}>
+                    入れ替え
                 </div>
-            </Modal>
+                <div>
+                    <div>出発: {busRoute.fr}</div>
+                </div>
+                <div>
+                    <div>到着: {busRoute.to}</div>
+                    <label htmlFor='bus-stop-choice'>Choose a Bus Stop:</label>
+                    <input type='text' list='bus-stop-list' id='bus-stop-choice' name='bus-stop-choice' value={select} onChange={(event) => upDateStation(event.target.value)} placeholder='駅名を入力' onClick={() => { onClickEventHandle() }}></input>
+                    <div onClick={addSettingList}>
+                        追加
+                    </div>
+                    <datalist id='bus-stop-list'>
+                        {AllBusStops.map((value, idx) => {
+                            return (
+                                <option value={value} key={idx}></option>
+                            )
+                        })}
+                    </datalist>
+                </div>
+            </div>
+        </Modal>
+    )
+
+    const ModalOpenButon = () => (
+        <div>
+            <div onClick={() => { open() }}>
+                <AddButton></AddButton>
+            </div>
+            <AddBusRouteModal></AddBusRouteModal>
         </div>
-    );
+    )
+
+    return (
+        {
+            AddBusRouteModal,
+            ModalOpenButon,
+            open,
+            close,
+            isOpen
+
+        }
+    )
 }
 
-export default SettingModal
+export default useAddBusRouteModal
