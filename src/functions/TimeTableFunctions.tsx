@@ -1,10 +1,6 @@
 import React from 'react';
-import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
-import { useEffect } from 'react'
+import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse } from '../types/Bus.type';
 import { ApiClient } from '../lib/api-client';
-import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T

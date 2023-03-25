@@ -1,9 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { TimeTable, OneBusTime, unionDays, AllBusStopsType, TimeTableResponse, busStopListAtomType } from '../types/Bus.type';
+import { AllBusStopsType, busStopListAtomType } from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useEffect } from 'react'
-import { ApiClient } from '../lib/api-client';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { fetchTimeTable, ShowOneDayBusTime } from '../functions/TimeTableFunctions';
 import Arrow from '../images/Arrow.svg'
@@ -13,22 +12,7 @@ import 'swiper/css';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { TimeTableTabStyle } from '../lib/muiTheme';
 
-const SwiperTab = () => {
-    return (
-        <Swiper
-            spaceBetween={50}
-            slidesPerView={1}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
-        >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-        </Swiper>
-    );
-};
 
 export const ShowTimeTable = () => {
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
@@ -51,10 +35,6 @@ export const ShowTimeTable = () => {
     };
 
     const TimeTableHeader = ({ fr, to }: { fr: AllBusStopsType, to: AllBusStopsType }) => {
-        // const [isRotated, setIsRotated] = useState(true);
-        // const handleAnimationEnd = () => {
-        //     setIsRotated(true);
-        // };
         return (
             <div className='text-center relative'>
                 <div className=''>
@@ -78,51 +58,49 @@ export const ShowTimeTable = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div
-                    className={`absolute top-4 right-4 w-fit h-fit box ${isRotated ? 'rotated' : ''}`}
-                    onAnimationEnd={handleAnimationEnd}
-                >
-                    dsfasfds
-                    <img src={ReverseButton} alt="" />
-                </div> */}
                 <div className='absolute top-4 right-4 w-fit h-fit'>
                     <img src={ReverseButton} alt="" />
                 </div>
-                <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 700 }}>
-                    <Tabs
-                        value={value}
-                        onChange={(e, newTab) => handleChange(newTab)}
-                        TabIndicatorProps={{ style: { backgroundColor: '#000' } }}
-                        centered
-                        variant="scrollable"
-                        allowScrollButtonsMobile
-                        sx={{
-                            color: '#000',
-                            fontWeight: 'bolder',
-                        }}
-                    >
-                        {
-                            AllBusStopList.map((BusStop, i) => {
-                                return (
-                                    <Tab
-                                        label={BusStop.to}
-                                        key={i}
-                                        value={i}
-                                        sx={{
-                                            color: '#0000004d',
-                                            fontWeight: 'bolder',
-                                            '&.Mui-selected': {
-                                                color: '#000',
-                                                borderColor: 'transparent',
-                                            },
-                                        }}
-                                    ></Tab>
-                                )
-                            })
-                        }
-                    </Tabs>
-                </Box>
             </div >
+        )
+    }
+
+    const SelectBox = () => {
+        return (
+            <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 'bolder' }}>
+                <Tabs
+                    value={value}
+                    onChange={(e, newTab) => handleChange(newTab)}
+                    TabIndicatorProps={{ style: { backgroundColor: '#000' } }}
+                    centered
+                    variant="scrollable"
+                    allowScrollButtonsMobile
+                    sx={{
+                        color: '#000',
+                        fontWeight: 'bolder',
+                    }}
+                >
+                    {
+                        AllBusStopList.map((BusStop, i) => {
+                            return (
+                                <Tab
+                                    label={BusStop.to}
+                                    key={i}
+                                    value={i}
+                                    sx={{
+                                        color: '#0000004d',
+                                        fontWeight: 'bolder',
+                                        '&.Mui-selected': {
+                                            color: '#000',
+                                            borderColor: 'transparent',
+                                        },
+                                    }}
+                                ></Tab>
+                            )
+                        })
+                    }
+                </Tabs>
+            </Box>
         )
     }
 
@@ -148,13 +126,13 @@ export const ShowTimeTable = () => {
     return (
         <div className=''>
             <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
+            <SelectBox></SelectBox>
             <div className="mx-4 flex bg-white overflow-scroll whitespace-normal">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
                     onSlideChange={(swiper) => { handleChange(swiper.activeIndex) }}
                     ref={swiperRef}
-                // onSwiper={(swiper) => console.log(swiper)}
                 >
                     {
                         AllBusStopList.map((BusStop, i) => {
