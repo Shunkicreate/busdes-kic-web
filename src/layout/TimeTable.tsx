@@ -13,6 +13,7 @@ import 'swiper/css';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { TimeTableTabStyle } from '../lib/muiTheme';
 
 const SwiperTab = () => {
     return (
@@ -87,7 +88,41 @@ export const ShowTimeTable = () => {
                 <div className='absolute top-4 right-4 w-fit h-fit'>
                     <img src={ReverseButton} alt="" />
                 </div>
-            </div>
+                <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 700 }}>
+                    <Tabs
+                        value={value}
+                        onChange={(e, newTab) => handleChange(newTab)}
+                        TabIndicatorProps={{ style: { backgroundColor: '#000' } }}
+                        centered
+                        variant="scrollable"
+                        allowScrollButtonsMobile
+                        sx={{
+                            color: '#000',
+                            fontWeight: 'bolder',
+                        }}
+                    >
+                        {
+                            AllBusStopList.map((BusStop, i) => {
+                                return (
+                                    <Tab
+                                        label={BusStop.to}
+                                        key={i}
+                                        value={i}
+                                        sx={{
+                                            color: '#0000004d',
+                                            fontWeight: 'bolder',
+                                            '&.Mui-selected': {
+                                                color: '#000',
+                                                borderColor: 'transparent',
+                                            },
+                                        }}
+                                    ></Tab>
+                                )
+                            })
+                        }
+                    </Tabs>
+                </Box>
+            </div >
         )
     }
 
@@ -110,32 +145,10 @@ export const ShowTimeTable = () => {
         })
     }, [])
 
-    const scrollToTimatable = (i: number) => {
-        timetableRefs.current[i].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
-    }
-
     return (
-        <div className='mx-4'>
+        <div className=''>
             <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
-            {
-                AllBusStopList.map((BusStop, i) => {
-                    return (
-                        <div key={i} onClick={() => { scrollToTimatable(i) }}>{BusStop.to}</div>
-                    )
-                })
-            }
-            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                <Tabs value={value} onChange={(e, newTab) => handleChange(newTab)} centered>
-                    {
-                        AllBusStopList.map((BusStop, i) => {
-                            return (
-                                <Tab label={BusStop.to} key={i} value={i} ></Tab>
-                            )
-                        })
-                    }
-                </Tabs>
-            </Box>
-            <div className="flex bg-white overflow-scroll whitespace-normal">
+            <div className="mx-4 flex bg-white overflow-scroll whitespace-normal">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
