@@ -68,7 +68,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
 
     const [BusInfo, setBusInfo] = useState<ApproachInfos>(TestData);
 
-    //リコリス　リコイルを使う　https://twitter.com/ArmandoValores/status/1635060404325060608?s=20
+    //リコリス リコイルを使う https://twitter.com/ArmandoValores/status/1635060404325060608?s=20
 
 
     useEffect(() => {
