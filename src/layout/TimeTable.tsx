@@ -23,7 +23,6 @@ export const ShowTimeTable = () => {
     const [value, setValue] = useState(0);
     const swiperRef = useRef<SwiperRef>(null);
     const handleChange = (i: number) => {
-        console.log('handle changed')
         setValue(i);
         changeSlide(i)
     }
@@ -72,7 +71,6 @@ export const ShowTimeTable = () => {
                     value={value}
                     onChange={(e, newTab) => handleChange(newTab)}
                     TabIndicatorProps={{ style: { backgroundColor: '#000' } }}
-                    centered
                     variant="scrollable"
                     allowScrollButtonsMobile
                     sx={{
