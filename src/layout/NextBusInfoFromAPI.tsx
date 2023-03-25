@@ -15,8 +15,8 @@ type Props = {
 }
 
 type Props2 = {
-    from_bus : AllBusStopsType
-    to_bus : AllBusStopsType
+    from_bus: AllBusStopsType
+    to_bus: AllBusStopsType
 }
 
 const NextBusInfo = (prop: Props) => {
@@ -26,7 +26,7 @@ const NextBusInfo = (prop: Props) => {
     )
 }
 
-const NextBusInfoFromAPI = (prop : Props2) => {
+const NextBusInfoFromAPI = (prop: Props2) => {
 
     const TestData: ApproachInfos = {
 
@@ -82,7 +82,7 @@ const NextBusInfoFromAPI = (prop : Props2) => {
 
     }
 
-    const [BusInfo, setBusInfo] = useState<ApproachInfos>(TestData); 
+    const [BusInfo, setBusInfo] = useState<ApproachInfos>(TestData);
 
     useEffect(() => {
         axios.get('https://bustimer.azurewebsites.net/nextbus', {
@@ -96,8 +96,6 @@ const NextBusInfoFromAPI = (prop : Props2) => {
             })
             .catch(error => console.log(error))
     }, [])
-
-    console.log(BusInfo)
 
     const NextThreeBus = BusInfo.approach_infos.map((info, index) => {
 

@@ -1,19 +1,34 @@
 import React from 'react';
 import { AllBusStopsType } from '../types/Bus.type';
 import BusCard from './BusCard';
+import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
+import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const RoundTripCard = () => {
 
-    //
+    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
+    const AllBusStopList = useRecoilValue(getAllBusStopList)
+
+    console.log(AllBusStopList)
+
+    const BusStops = AllBusStopList.map((busstop, i) => {
+
+        return (
+            <div key={i} className='flex justify-center p-2'>
+                <BusCard from={busstop.fr} to={busstop.to} />
+            </div>
+        )
+
+    })
 
 
-    return(
+    return (
 
         <div>
-            <BusCard from='立命館大学前' to='京都駅前'/>
-            <BusCard from='京都駅前' to='立命館大学'/>
+            {BusStops}
         </div>
-        
+
     )
 
 }
