@@ -25,7 +25,9 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
                 <TabbarButton mode='NextBus' modeName='次のバス' color={color('NextBus', currentMode)} switchMode={switchMode}></TabbarButton>
                 <TabbarButton mode='Settings' modeName='設定' color={color('Settings', currentMode)} switchMode={switchMode}></TabbarButton>
             </div>
-            <ModalOpenButon></ModalOpenButon>
+            <div className='fixed w-fit h-fit bottom-32 right-8'>
+                <ModalOpenButon></ModalOpenButon>
+            </div>
         </div>
     )
 }
