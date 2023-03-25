@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ApproachInfos } from '../types/Bus.type'
 import CountDownTimes from './CountDownTimes';
 import { AllBusStopsType } from '../types/Bus.type';
+import BusCard from './BusCard';
 
 
 type Props = {
@@ -28,6 +29,8 @@ const NextBusInfo = (prop: Props) => {
 
 const NextBusInfoFromAPI = (prop: Props2) => {
 
+
+
     const TestData: ApproachInfos = {
 
         'approach_infos': [
@@ -39,26 +42,6 @@ const NextBusInfoFromAPI = (prop: Props2) => {
                 'scheduled_time': 'hh:mm',
                 'delay': '定時運行',
                 'bus_stop': 'n',
-                'required_time': 20
-            },
-            {
-                'more_min': '約n分後に到着',
-                'real_arrival_time': '06:35',
-                'direction': '京都駅前',
-                'bus_name': '51号系統',
-                'scheduled_time': '06:35',
-                'delay': '定時運行',
-                'bus_stop': '2',
-                'required_time': 20
-            },
-            {
-                'more_min': '約n分後に到着',
-                'real_arrival_time': '16:15',
-                'direction': '京都駅前',
-                'bus_name': '52号系統',
-                'scheduled_time': '06:55',
-                'delay': '定時運行',
-                'bus_stop': '3',
                 'required_time': 20
             }
         ]
@@ -82,20 +65,37 @@ const NextBusInfoFromAPI = (prop: Props2) => {
 
     }
 
+
     const [BusInfo, setBusInfo] = useState<ApproachInfos>(TestData);
 
+    //リコリス　リコイルを使う　https://twitter.com/ArmandoValores/status/1635060404325060608?s=20
+
+
     useEffect(() => {
-        axios.get('https://bustimer.azurewebsites.net/nextbus', {
-            params: {
-                fr: prop.from_bus,
-                to: prop.to_bus
-            }
-        })
-            .then(response => {
-                setBusInfo(response.data)
+
+        // debugger;
+
+        if(BusInfo === TestData){
+
+            console.log(BusInfo , TestData)
+
+            axios.get('https://bustimer.azurewebsites.net/nextbus', {
+                params: {
+                    fr: prop.from_bus,
+                    to: prop.to_bus
+                }
             })
-            .catch(error => console.log(error))
+                .then(response => {
+                    setBusInfo(response.data)
+                })
+                .catch(error => console.log(error))
+
+
+        }
+
     }, [])
+
+
 
     const NextThreeBus = BusInfo.approach_infos.map((info, index) => {
 

@@ -10,8 +10,6 @@ const RoundTripCard = () => {
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
 
-    console.log(AllBusStopList)
-
     const BusStops = AllBusStopList.map((busstop, i) => {
 
         return (
