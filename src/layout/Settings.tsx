@@ -44,7 +44,10 @@ const Settings = () => {
                         items.map((item, i) => {
                             return (
                                 <div key={i} className='m-4 ml-8'>
-                                    <a href={item.url} className="block text-sm">
+                                    <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        href={item.url} className="block text-sm">
                                         {item.name}
                                     </a>
                                 </div>
