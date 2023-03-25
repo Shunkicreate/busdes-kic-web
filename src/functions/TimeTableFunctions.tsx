@@ -45,20 +45,20 @@ const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, 
     )
 }
 
-const isHolyday = () => {
-    let holyday = false
+const isHoliday = () => {
+    let holiday = false
     const dayOfWeek = new Date().getDay();
     if (dayOfWeek === 0 || dayOfWeek === 6) {
-        holyday = true
+        holiday = true
     }
-    return holyday
+    return holiday
 }
 
 export const ShowOneDayBusTime = ({ timeTable }: { timeTable: TimeTable }) => {
     return (
         <div className=' w-[calc(100vw-2rem)] py-2'>
             <div>
-                {isHolyday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
+                {isHoliday() ? <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime> : <ShowOneCategoryDayBusTime dayBusTime={timeTable.holidays}></ShowOneCategoryDayBusTime>}
             </div>
         </div>
     )
