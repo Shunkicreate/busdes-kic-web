@@ -13,7 +13,7 @@ export type busRouteAtomType = {
 }
 
 interface ApproachInfo {
-	more_min: string;
+	more_min: string | undefined;
 	real_arrival_time: string;
 	direction: string;
 	bus_name: string;

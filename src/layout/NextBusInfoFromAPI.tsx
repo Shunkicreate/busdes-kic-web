@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { ApproachInfos, busStopListAtomType, AllBusStopsType } from '../types/Bus.type'
 import CountDownTimes from './CountDownTimes';
-import BusCard from './BusCard';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import setBusArriveInfos from '../grobalState/selectors/setBusArriveInfos';
 
 
 type Props = {
@@ -29,6 +29,8 @@ const NextBusInfo = (prop: Props) => {
     )
 }
 
+
+
 const NextBusInfoFromAPI = (prop: Props2) => {
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
@@ -48,7 +50,9 @@ const NextBusInfoFromAPI = (prop: Props2) => {
             }
         ]
     }
-    const [BusInfo, setBusInfo] = useState<ApproachInfos>(TestData);
+
+    const BusInfo = useRecoilValue(setBusArriveInfos)
+    const getBusInfo = useSetRecoilState(setBusArriveInfos)
 
     const TextColorChange = (index: number) => {
         const red = 'text-red-500'
@@ -63,8 +67,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
     //リコリス リコイルを使う https://twitter.com/ArmandoValores/status/1635060404325060608?s=20
 
     useEffect(() => {
-        if (BusInfo === TestData) {
-            console.log(BusInfo, TestData)
+        if (BusInfo.approach_infos[0].more_min == undefined) {
             axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
                 params: {
                     fr: prop.from_bus,
@@ -80,7 +83,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
                         TimeTableData: undefined,
                         BusCardData: response.data,
                     }
-                    setBusInfo(response.data)
+                    getBusInfo(response.data)
                     addAllBusStopList([addBusStopListAtom])
                 })
                 .catch(error => console.log(error))
