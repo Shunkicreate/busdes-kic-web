@@ -7,6 +7,7 @@ import { Footer } from './layout/Footer';
 import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
+import './App.css'
 
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
