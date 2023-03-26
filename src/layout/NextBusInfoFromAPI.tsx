@@ -29,30 +29,13 @@ const NextBusInfo = (prop: Props) => {
     )
 }
 
-
-
 const NextBusInfoFromAPI = (prop: Props2) => {
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
-    const [selectedline, setLine] = useState(0);
-    const TestData: ApproachInfos = {
-        'approach_infos': [
-            {
-                'more_min': '約n分後に到着',
-                'real_arrival_time': 'hh:mm',
-                'direction': '京都駅前',
-                'bus_name': 'n号系統',
-                'scheduled_time': 'hh:mm',
-                'delay': '定時運行',
-                'bus_stop': 'n',
-                'required_time': 20
-            }
-        ]
-    }
-
     const BusInfo = useRecoilValue(setBusArriveInfos)
     const getBusInfo = useSetRecoilState(setBusArriveInfos)
+    const [selectedline, setLine] = useState(0);
 
     const TextColorChange = (index: number) => {
         const red = 'text-red-500'
@@ -120,15 +103,29 @@ const NextBusInfoFromAPI = (prop: Props2) => {
     }
     )
 
-    return (
-        <div>
-            <div className='text-center' key={BusInfo.approach_infos[selectedline].bus_name}>
-                <CountDownTimes dep_time={BusInfo.approach_infos[selectedline].real_arrival_time} />
-                <div className='pt-1'>{BusInfo.approach_infos[selectedline].bus_name} {BusInfo.approach_infos[selectedline].bus_stop}番乗り場</div>
+    if(BusInfo.approach_infos.length == 0){
+
+        return (
+            <div>
+                <div className='text-center pb-8 pt-10'>
+                    接近中のバスはありません
+                </div>
             </div>
-            <div>{NextThreeBus}</div>
-        </div>
-    )
+        )
+
+    } else {
+
+        return (
+            <div>
+                <div className='text-center' key={BusInfo.approach_infos[selectedline].bus_name}>
+                    <CountDownTimes dep_time={BusInfo.approach_infos[selectedline].real_arrival_time} from_bus={prop.from_bus} to_bus={prop.to_bus}/>
+                    <div className='pt-1'>{BusInfo.approach_infos[selectedline].bus_name} {BusInfo.approach_infos[selectedline].bus_stop}番乗り場</div>
+                </div>
+                <div>{NextThreeBus}</div>
+            </div>
+        )
+
+    }
 }
 
 export default NextBusInfoFromAPI
