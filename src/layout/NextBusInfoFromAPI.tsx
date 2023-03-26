@@ -21,6 +21,7 @@ type Props = {
 type Props2 = {
     from_bus: AllBusStopsType
     to_bus: AllBusStopsType
+    index: number
 }
 
 const NextBusInfo = (prop: Props) => {
@@ -75,9 +76,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
         }
     }, [])
 
-    console.log(BusInfo , AllBusStopList)
-
-    const NextThreeBus = BusInfo.approach_infos.map((info , i) => {
+    const NextThreeBus = AllBusStopList[prop.index].BusCardData?.approach_infos.map((info , i) => {
 
         const dep_time = info.real_arrival_time.split(':')
                 const dep_hour = Number(dep_time[0])
@@ -104,10 +103,9 @@ const NextBusInfoFromAPI = (prop: Props2) => {
                         <NextBusInfo textColor={TextColorChange(i)} deptime={info.real_arrival_time} hour={arrival_hour} min={arrival_min} approch={info.bus_name} />
                     </div>
                 )
-
     })
 
-    if (AllBusStopList.length == 0) {
+    if (AllBusStopList[prop.index].BusCardData?.approach_infos.length == 0) {
 
         return (
             <div>
@@ -121,9 +119,9 @@ const NextBusInfoFromAPI = (prop: Props2) => {
 
         return (
             <div>
-                <div className='text-center' key={BusInfo.approach_infos[selectedline].bus_name}>
+                <div className='text-center' key={selectedline}>
                     <CountDownTimes dep_time={BusInfo.approach_infos[selectedline].real_arrival_time} from_bus={prop.from_bus} to_bus={prop.to_bus} />
-                    <div className='pt-1'>{BusInfo.approach_infos[selectedline].bus_name} {BusInfo.approach_infos[selectedline].bus_stop}番乗り場</div>
+                    <div className='pt-1'>{AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].bus_name} {AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].bus_stop}番乗り場</div>
                 </div>
                 <div>{NextThreeBus}</div>
             </div>

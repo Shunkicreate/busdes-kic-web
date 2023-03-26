@@ -6,7 +6,7 @@ const busArrivalAtom = atom<ApproachInfos>({
     default:{
         approach_infos: [
         {
-                more_min: undefined,
+                more_min: 'TESTDATA',
                 real_arrival_time: 'hh:mm',
                 direction: '京都駅前',
                 bus_name: 'n号系統',

@@ -16,7 +16,7 @@ const RoundTripCard = () => {
 
         return (
             <div key={i} className='flex justify-center p-2'>
-                <BusCard from={busstop.fr} to={busstop.to} />
+                <BusCard from={busstop.fr} to={busstop.to} index={i}/>
             </div>
         )
 
