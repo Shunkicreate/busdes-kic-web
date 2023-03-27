@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import setBusArriveInfos from '../grobalState/selectors/setBusArriveInfos';
 import { ApproachInfos, busStopListAtomType, AllBusStopsType } from '../types/Bus.type'
 
 type Props = {

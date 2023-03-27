@@ -6,7 +6,6 @@ import CountDownTimes from './CountDownTimes';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import setBusArriveInfos from '../grobalState/selectors/setBusArriveInfos';
 import { info } from 'console';
 
 
