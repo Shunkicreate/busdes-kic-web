@@ -8,14 +8,15 @@ import { Footer } from './layout/Footer';
 import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
+import './App.css'
 
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <div className='App'>
+        <div className='App bg-main'>
             <RecoilRoot>
                 <Header></Header>
-                <div className='border-2' style={{ background: 'white' }}>
+                <div className='pb-24'>
                     {
                         (() => {
                             if (mode === 'NextBus') {

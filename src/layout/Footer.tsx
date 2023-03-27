@@ -11,10 +11,10 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
     }
     const color = (mode: mode, currentMode: mode) => {
         if (mode === currentMode) {
-            return 'bg-yellow-300'
+            return 'bg-main'
         }
         else {
-            return 'bg-gray-100'
+            return 'bg-bgColor'
         }
     }
 

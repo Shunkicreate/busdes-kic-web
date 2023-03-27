@@ -37,6 +37,7 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             TimeTableData: undefined,
             BusCardData: TestData
         }
+
     ]
 })
 
