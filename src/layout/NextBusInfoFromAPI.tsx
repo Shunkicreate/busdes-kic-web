@@ -63,7 +63,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
                         fr: prop.from_bus,
                         to: prop.to_bus,
                         ShowTimeTable: true,
-                        ShowBusCard: false,
+                        ShowBusCard: true,
                         TimeTableData: undefined,
                         BusCardData: response.data,
                     }

@@ -37,13 +37,18 @@ const CountDownTimes = (prop: Props) => {
         count_hour -= 1
         count_min += 60
 
+    } else if(count_hour < 0)
+    {
+        count_hour = 0
+        count_min = 0
+        count_sec = 0
     }
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
 
     useEffect(() => {
 
-        if (count_hour <= 0 && count_min < 0 || count_hour < 0) {
+        if (count_hour <= 0 && count_min < 0) {
 
             count_hour = 0
             count_min = 0
@@ -60,7 +65,7 @@ const CountDownTimes = (prop: Props) => {
                         fr: prop.from_bus,
                         to: prop.to_bus,
                         ShowTimeTable: true,
-                        ShowBusCard: false,
+                        ShowBusCard: true,
                         TimeTableData: undefined,
                         BusCardData: response.data,
                     }

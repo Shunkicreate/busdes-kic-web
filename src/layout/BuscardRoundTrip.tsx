@@ -12,11 +12,15 @@ const RoundTripCard = () => {
 
     const BusStops = AllBusStopList.map((busstop, i) => {
 
-        return (
-            <div key={i} className='flex justify-center p-2'>
-                <BusCard from={busstop.fr} to={busstop.to} index={i}/>
-            </div>
-        )
+        if (busstop.ShowBusCard == true){
+
+            return (
+                <div key={i} className='flex justify-center p-2'>
+                    <BusCard from={busstop.fr} to={busstop.to} index={i}/>
+                </div>
+
+            )
+        }
 
     })
 

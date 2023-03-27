@@ -112,7 +112,7 @@ export const ShowTimeTable = () => {
                         fr: BusStop.fr,
                         to: BusStop.to,
                         ShowTimeTable: true,
-                        ShowBusCard: false,
+                        ShowBusCard: true,
                         TimeTableData: timetable,
                         BusCardData: TestData
                     }

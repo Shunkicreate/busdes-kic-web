@@ -68,7 +68,7 @@ const SettingModal = () => {
             fr: busRoute.fr,
             to: busRoute.to,
             ShowTimeTable: true,
-            ShowBusCard: false,
+            ShowBusCard: true,
             TimeTableData: undefined,
             BusCardData: TestData,
         }]
