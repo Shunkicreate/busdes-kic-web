@@ -29,7 +29,7 @@ const SettingModal = () => {
         'approach_infos': [
             {
                 more_min: undefined,
-                real_arrival_time: '09:30',
+                real_arrival_time: '99:30',
                 direction: '京都駅前',
                 bus_name: '50号系統',
                 scheduled_time: '06:10',
