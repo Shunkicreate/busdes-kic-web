@@ -114,7 +114,7 @@ export const ShowTimeTable = () => {
                         ShowTimeTable: true,
                         ShowBusCard: true,
                         TimeTableData: timetable,
-                        BusCardData: TestData
+                        BusCardData: BusStop.BusCardData
                     }
                     addAllBusStopList([addBusStopListAtom])
                 })
@@ -129,7 +129,7 @@ export const ShowTimeTable = () => {
                     AllBusStopList.map((BusStop, i) => {
                         return (
                             <div key={i} className='timetable'>
-                                {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData}></ShowOneDayBusTime> : <></>}
+                                {BusStop.TimeTableData ? <ShowOneDayBusTime timeTable={BusStop.TimeTableData} ></ShowOneDayBusTime> : <></>}
                             </div>
                         )
                     })

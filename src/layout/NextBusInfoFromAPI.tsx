@@ -117,7 +117,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
         return (
             <div>
                 <div className='text-center' key={selectedline}>
-                    <CountDownTimes dep_time={AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].real_arrival_time} from_bus={prop.from_bus} to_bus={prop.to_bus} />
+                    <CountDownTimes dep_time={AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].real_arrival_time} from_bus={prop.from_bus} to_bus={prop.to_bus} index={prop.index}/>
                     <div className='pt-1'>{AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].bus_name} {AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].bus_stop}番乗り場</div>
                 </div>
                 <div>{NextThreeBus}</div>

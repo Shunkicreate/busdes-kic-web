@@ -9,6 +9,7 @@ type Props = {
     dep_time: string
     from_bus: AllBusStopsType
     to_bus: AllBusStopsType
+    index: number
 }
 
 const CountDownTimes = (prop: Props) => {
@@ -45,6 +46,7 @@ const CountDownTimes = (prop: Props) => {
     }
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
+    const AllBusStopList = useRecoilValue(addAllBusStopListSelector)
 
     useEffect(() => {
 
@@ -66,7 +68,7 @@ const CountDownTimes = (prop: Props) => {
                         to: prop.to_bus,
                         ShowTimeTable: true,
                         ShowBusCard: true,
-                        TimeTableData: undefined,
+                        TimeTableData: AllBusStopList[prop.index].TimeTableData,
                         BusCardData: response.data,
                     }
                     addAllBusStopList([addBusStopListAtom])
