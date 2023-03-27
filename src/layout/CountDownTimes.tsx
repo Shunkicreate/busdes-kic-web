@@ -32,56 +32,45 @@ const CountDownTimes = (prop: Props) => {
     let count_min = dep_min - date.getMinutes() - 1
     let count_sec = 59 - date.getSeconds()
 
-    // const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
-    // const BusInfo = useRecoilValue(setBusArriveInfos)
-    // const getBusInfo = useSetRecoilState(setBusArriveInfos)
-
     if (count_min < 0 && count_hour >= 1) {
 
         count_hour -= 1
         count_min += 60
 
-    } else if (count_hour <= 0 && count_min < 0 || count_hour < 0) {
-
-        count_hour = 0
-        count_min = 0
-        count_sec = 0
-
     }
 
-    // useEffect(() => {
-    //     if (count_min < 0 && count_hour >= 1) {
+    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
 
-    //         count_hour -= 1
-    //         count_min += 60
+    useEffect(() => {
 
-    //     } else if (count_hour <= 0 && count_min < 0 || count_hour < 0) {
+        if (count_hour <= 0 && count_min < 0 || count_hour < 0) {
 
-    //         count_hour = 0
-    //         count_min = 0
-    //         count_sec = 0
+            count_hour = 0
+            count_min = 0
+            count_sec = 0
 
-    //         axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
-    //             params: {
-    //                 fr: prop.from_bus,
-    //                 to: prop.to_bus
-    //             }
-    //         })
-    //             .then(response => {
-    //                 const addBusStopListAtom: busStopListAtomType = {
-    //                     fr: prop.from_bus,
-    //                     to: prop.to_bus,
-    //                     ShowTimeTable: true,
-    //                     ShowBusCard: false,
-    //                     TimeTableData: undefined,
-    //                     BusCardData: response.data,
-    //                 }
-    //                 getBusInfo(response.data)
-    //                 addAllBusStopList([addBusStopListAtom])
-    //             })
-    //             .catch(error => console.log(error))
-    //     }
-    // }, [count_sec])
+            axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
+                params: {
+                    fr: prop.from_bus,
+                    to: prop.to_bus
+                }
+            })
+                .then(response => {
+                    const addBusStopListAtom: busStopListAtomType = {
+                        fr: prop.from_bus,
+                        to: prop.to_bus,
+                        ShowTimeTable: true,
+                        ShowBusCard: false,
+                        TimeTableData: undefined,
+                        BusCardData: response.data,
+                    }
+                    addAllBusStopList([addBusStopListAtom])
+                })
+                .catch(error => console.log(error))
+
+        }
+
+    }, [count_min])
 
     return (
         <div className='text-4xl py-0.5 pt-3'>{count_hour}:{('00' + count_min).slice(-2)}:{('00' + count_sec).slice(-2)}</div>

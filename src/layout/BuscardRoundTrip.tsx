@@ -12,8 +12,6 @@ const RoundTripCard = () => {
 
     const BusStops = AllBusStopList.map((busstop, i) => {
 
-        console.log(busstop.fr, busstop.to)
-
         return (
             <div key={i} className='flex justify-center p-2'>
                 <BusCard from={busstop.fr} to={busstop.to} index={i}/>

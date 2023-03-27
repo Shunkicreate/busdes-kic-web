@@ -7,6 +7,7 @@ import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopLis
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { info } from 'console';
+import { preProcessFile } from 'typescript';
 
 
 type Props = {
@@ -33,7 +34,7 @@ const NextBusInfo = (prop: Props) => {
 const NextBusInfoFromAPI = (prop: Props2) => {
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
-    const AllBusStopList = useRecoilValue(getAllBusStopList)
+    const AllBusStopList = useRecoilValue(addAllBusStopListSelector)
     const [selectedline, setLine] = useState(0);
 
     const TextColorChange = (j: number) => {

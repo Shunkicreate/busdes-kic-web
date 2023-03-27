@@ -14,7 +14,6 @@ type Props = {
 
 const BusCard = (prop : Props) => {
 
-
   return (
 
     <div className='w-11/12 p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700'>
