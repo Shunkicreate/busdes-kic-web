@@ -5,6 +5,7 @@ import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useEffect } from 'react'
 import { ApiClient } from '../lib/api-client';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
+import { ApproachInfos } from '../types/Bus.type';
 
 const strictEntries = <T extends Record<string, any>>(
     object: T
@@ -87,6 +88,22 @@ export const ShowTimeTable = () => {
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
 
+    const TestData: ApproachInfos = {
+
+        'approach_infos': [
+            {
+                more_min: undefined,
+                real_arrival_time: '09:30',
+                direction: '京都駅前',
+                bus_name: '50号系統',
+                scheduled_time: '06:10',
+                delay: '定時運行',
+                bus_stop: '1',
+                required_time: 20
+            }
+        ]
+    }
+
     useEffect(() => {
         AllBusStopList.forEach((BusStop) => {
             if (BusStop.TimeTableData === undefined) {
@@ -97,7 +114,7 @@ export const ShowTimeTable = () => {
                         ShowTimeTable: true,
                         ShowBusCard: false,
                         TimeTableData: timetable,
-                        BusCardData: undefined
+                        BusCardData: TestData
                     }
                     addAllBusStopList([addBusStopListAtom])
                 })

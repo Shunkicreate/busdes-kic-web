@@ -35,8 +35,6 @@ const NextBusInfoFromAPI = (prop: Props2) => {
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
-    const BusInfo = useRecoilValue(setBusArriveInfos)
-    const setBusInfo = useSetRecoilState(setBusArriveInfos)
     const [selectedline, setLine] = useState(0);
 
     const TextColorChange = (j: number) => {
@@ -53,7 +51,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
     //この辺を書き直す必要あり
 
     useEffect(() => {
-        if (AllBusStopList[0].BusCardData == undefined) {
+        if (AllBusStopList[prop.index].BusCardData.approach_infos[0].more_min == undefined) {
             axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
                 params: {
                     fr: prop.from_bus,
@@ -70,7 +68,6 @@ const NextBusInfoFromAPI = (prop: Props2) => {
                         BusCardData: response.data,
                     }
                     addAllBusStopList([addBusStopListAtom])
-                    setBusInfo(response.data)
                 })
                 .catch(error => console.log(error))
         }
@@ -120,7 +117,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
         return (
             <div>
                 <div className='text-center' key={selectedline}>
-                    <CountDownTimes dep_time={BusInfo.approach_infos[selectedline].real_arrival_time} from_bus={prop.from_bus} to_bus={prop.to_bus} />
+                    <CountDownTimes dep_time={AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].real_arrival_time} from_bus={prop.from_bus} to_bus={prop.to_bus} />
                     <div className='pt-1'>{AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].bus_name} {AllBusStopList[prop.index].BusCardData?.approach_infos[selectedline].bus_stop}番乗り場</div>
                 </div>
                 <div>{NextThreeBus}</div>
