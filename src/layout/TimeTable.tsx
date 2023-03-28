@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { AllBusStopsType, busStopListAtomType } from '../types/Bus.type';
+import { AllBusStopsType, busStopListAtomType , ApproachInfos} from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useEffect } from 'react'
@@ -102,7 +102,9 @@ export const ShowTimeTable = () => {
         )
     }
 
+
     //ここの処理を非同期で上手くリファクタする！！！！！
+
     useEffect(() => {
         AllBusStopList.forEach((BusStop) => {
             if (BusStop.TimeTableData === undefined) {
@@ -111,9 +113,9 @@ export const ShowTimeTable = () => {
                         fr: BusStop.fr,
                         to: BusStop.to,
                         ShowTimeTable: true,
-                        ShowBusCard: false,
+                        ShowBusCard: true,
                         TimeTableData: timetable,
-                        BusCardData: undefined
+                        BusCardData: BusStop.BusCardData
                     }
                     addAllBusStopList([addBusStopListAtom])
                 })

@@ -1,5 +1,22 @@
 import { atom } from 'recoil'
 import { busStopListAtomType } from '../../types/Bus.type'
+import { ApproachInfos } from '../../types/Bus.type'
+
+const TestData: ApproachInfos = {
+
+    'approach_infos': [
+        {
+            more_min: undefined,
+            real_arrival_time: '99:00',
+            direction: '京都駅前',
+            bus_name: '50号系統',
+            scheduled_time: '99:00',
+            delay: '定時運行',
+            bus_stop: '1',
+            required_time: 20
+        }
+    ]
+}
 
 const busStopListAtom = atom<busStopListAtomType[]>({
     key: 'busStopListAtom',
@@ -10,7 +27,7 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             ShowTimeTable: true,
             ShowBusCard: true,
             TimeTableData: undefined,
-            BusCardData: undefined
+            BusCardData: TestData
         },
         {
             fr: '京都駅前',
@@ -18,32 +35,9 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             ShowTimeTable: true,
             ShowBusCard: true,
             TimeTableData: undefined,
-            BusCardData: undefined
-        },
-        {
-            fr: '立命館大学前',
-            to: '四条河原町',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: undefined
-        },
-        {
-            fr: '立命館大学前',
-            to: '二条城前',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: undefined
-        },
-        {
-            fr: '立命館大学前',
-            to: '四条堀川',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: undefined
-        },
+            BusCardData: TestData
+        }
+
     ]
 })
 

@@ -1,4 +1,5 @@
 import BusCard from './layout/BusCard';
+import RoundTripCard from './layout/BuscardRoundTrip'
 import { ShowTimeTable } from './layout/TimeTable';
 import { useState } from 'react'
 import { mode } from './types/main.type';
@@ -20,7 +21,7 @@ const App = () => {
                         (() => {
                             if (mode === 'NextBus') {
                                 return (
-                                    <BusCard></BusCard>
+                                    <RoundTripCard/>
                                 )
                             }
                             else if (mode === 'TimeTable') {

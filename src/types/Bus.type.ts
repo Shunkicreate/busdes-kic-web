@@ -4,7 +4,7 @@ export type busStopListAtomType = {
 	ShowTimeTable: boolean
 	ShowBusCard: boolean
 	TimeTableData: TimeTable | undefined
-	BusCardData: ApproachInfos | undefined
+	BusCardData: ApproachInfos
 }
 
 export type busRouteAtomType = {
@@ -13,7 +13,7 @@ export type busRouteAtomType = {
 }
 
 interface ApproachInfo {
-	more_min: string;
+	more_min: string | undefined;
 	real_arrival_time: string;
 	direction: string;
 	bus_name: string;

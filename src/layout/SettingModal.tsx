@@ -7,6 +7,7 @@ import busRouteAtom from '../grobalState/atoms/busRoute';
 import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 import setpBusRouteSelector from '../grobalState/selectors/setBusRoute';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
+import { ApproachInfos } from '../types/Bus.type';
 
 const SettingModal = () => {
     const [Modal, open, close, isOpen] = useModal('root', {
@@ -22,6 +23,22 @@ const SettingModal = () => {
     const setBusRoute = useSetRecoilState(setpBusRouteSelector)
     const [select, setSelect] = useState('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
+
+    const TestData: ApproachInfos = {
+
+        'approach_infos': [
+            {
+                more_min: undefined,
+                real_arrival_time: '99:30',
+                direction: '京都駅前',
+                bus_name: '50号系統',
+                scheduled_time: '06:10',
+                delay: '定時運行',
+                bus_stop: '1',
+                required_time: 20
+            }
+        ]
+    }
 
 
     const upDateStation = (value: string) => {
@@ -51,9 +68,9 @@ const SettingModal = () => {
             fr: busRoute.fr,
             to: busRoute.to,
             ShowTimeTable: true,
-            ShowBusCard: false,
+            ShowBusCard: true,
             TimeTableData: undefined,
-            BusCardData: undefined,
+            BusCardData: TestData,
         }]
         addAllBusStopList(addBusStop)
         close()
