@@ -78,8 +78,8 @@ const SettingModal = () => {
 
     return (
         <div>
-            <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
-            <button onClick={open} className='bg-red-100'>新しい駅を追加</button>
+            {/* <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div> */}
+            <button onClick={open} className='bg-main text-white font-thin text-4xl w-14 pb-2 h-14 rounded-full text-center shadow-md'>+</button>
             <Modal>
                 <button onClick={close} className='text-white'>CLOSE</button>
                 <div style={modalStyle}>

@@ -13,7 +13,7 @@ import './App.css'
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <div className='App bg-main'>
+        <div className='App bg-white'>
             <RecoilRoot>
                 <Header></Header>
                 <div className='pb-24 pt-14'>
