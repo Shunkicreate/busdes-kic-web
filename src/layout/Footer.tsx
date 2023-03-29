@@ -18,6 +18,21 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
         }
     }
 
+    const DisplayAddButton = () => {
+        if (currentMode == 'NextBus') {
+            return (
+                <div className='fixed bottom-24 right-0 p-5'>
+                    <AddButton></AddButton>
+                </div>
+            )
+        }
+        else {
+            return (
+                <></>
+            )
+        }
+    }
+
     return (
         <div>
             <DisplayAddButton></DisplayAddButton>
@@ -30,10 +45,3 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
     )
 }
 
-const DisplayAddButton = () => {
-    return (
-        <div className='fixed bottom-24 right-0 p-5'>
-            <AddButton></AddButton>
-        </div>
-    )
-}
