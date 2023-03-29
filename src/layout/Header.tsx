@@ -1,7 +1,7 @@
 import React from 'react'
 export const Header = () => {
     return (
-        <div className="font-semibold text-2xl text-center text-white bg-yellow-300">
+        <div className="text-2xl text-center text-contentText bg-main p-2 font-bold">
             Busdes!
         </div>
     )
