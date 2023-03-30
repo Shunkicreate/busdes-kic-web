@@ -57,8 +57,8 @@ export const ShowTimeTable = () => {
                         </div>
                     </div>
                 </div>
-                <div className='absolute top-4 right-4 w-fit h-fit'>
-                    <img src={ReverseButton} alt="" />
+                <div className='absolute top-8 right-8 w-fit h-fit'>
+                    <img src={ReverseButton} alt="" onClick={switchBusStop}/>
                 </div>
             </div >
         )
@@ -104,6 +104,11 @@ export const ShowTimeTable = () => {
         )
     }
 
+    const switchBusStop = () => {
+        const temp = currentFromBusStop;
+        setCurrentFromBusStop(currenToBusStop);
+        setCurrenToBusStop(temp);
+    }
 
     //ここの処理を非同期で上手くリファクタする！！！！！
 
