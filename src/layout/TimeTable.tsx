@@ -126,10 +126,10 @@ export const ShowTimeTable = () => {
     }, [])
 
     return (
-        <div className=''>
+        <div className='bg-bgColor'>
             <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
             <SelectBox></SelectBox>
-            <div className="mt-28 mx-4 flex bg-white overflow-scroll whitespace-normal">
+            <div className="mt-28 mx-4 flex overflow-scroll whitespace-normal">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}

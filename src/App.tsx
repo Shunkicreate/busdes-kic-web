@@ -16,12 +16,12 @@ const App = () => {
         <div className='App bg-white'>
             <RecoilRoot>
                 <Header></Header>
-                <div className='pb-24 pt-16'>
+                <div className='mb-20 pt-16'>
                     {
                         (() => {
                             if (mode === 'NextBus') {
                                 return (
-                                    <RoundTripCard/>
+                                    <RoundTripCard />
                                 )
                             }
                             else if (mode === 'TimeTable') {
