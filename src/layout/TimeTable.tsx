@@ -24,7 +24,13 @@ export const ShowTimeTable = () => {
     const swiperRef = useRef<SwiperRef>(null);
     const handleChange = (i: number) => {
         setValue(i);
-        changeSlide(i)
+        changeSlide(i);
+        if (currentFromBusStop == '立命館大学前') {
+            setCurrenToBusStop(AllBusStopList[i].to);
+        }
+        else {
+            setCurrentFromBusStop(AllBusStopList[i].to);
+        }
     }
 
     const changeSlide = (i: number) => {
@@ -58,7 +64,7 @@ export const ShowTimeTable = () => {
                     </div>
                 </div>
                 <div className='absolute top-8 right-8 w-fit h-fit'>
-                    <img src={ReverseButton} alt="" onClick={switchBusStop}/>
+                    <img src={ReverseButton} alt="" onClick={switchBusStop} />
                 </div>
             </div >
         )
