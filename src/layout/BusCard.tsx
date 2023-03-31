@@ -2,6 +2,8 @@ import React from 'react';
 import NextBusInfoFromAPI from './NextBusInfoFromAPI';
 import BusCardHeader from './BusCardHeader';
 import { AllBusStopsType } from '../types/Bus.type';
+import CardDisplayButton from '../atom/CardDisplayButton';
+import BusCardDisplaySetting from './BusCardDisplaySetteing';
 
 
 
@@ -20,6 +22,7 @@ const BusCard = (prop : Props) => {
       <BusCardHeader from_bus={prop.from} to_bus={prop.to} />
       <hr />
       <NextBusInfoFromAPI from_bus={prop.from} to_bus={prop.to} index={prop.index}/>
+      <BusCardDisplaySetting></BusCardDisplaySetting>
     </div>
   )
 }
