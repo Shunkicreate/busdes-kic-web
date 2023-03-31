@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { AllBusStopsType, busStopListAtomType , ApproachInfos} from '../types/Bus.type';
+import { AllBusStopsType, busStopListAtomType, ApproachInfos } from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useEffect } from 'react'
@@ -22,9 +22,13 @@ export const ShowTimeTable = () => {
     const timetableRefs = useRef<HTMLDivElement[]>([])
     const [value, setValue] = useState(0);
     const swiperRef = useRef<SwiperRef>(null);
+    
     const handleChange = (i: number) => {
         setValue(i);
-        changeSlide(i)
+        changeSlide(i);
+
+        setCurrenToBusStop(AllBusStopList[i].to);
+        setCurrentFromBusStop(AllBusStopList[i].fr);
     }
 
     const changeSlide = (i: number) => {
@@ -35,7 +39,7 @@ export const ShowTimeTable = () => {
 
     const TimeTableHeader = ({ fr, to }: { fr: AllBusStopsType, to: AllBusStopsType }) => {
         return (
-            <div className='text-center relative'>
+            <div className='w-full text-center fixed top-12 pt-4 z-50 bg-main'>
                 <div className=''>
                     <div className='grid grid-cols-3'>
                         <div className=''>
@@ -57,8 +61,8 @@ export const ShowTimeTable = () => {
                         </div>
                     </div>
                 </div>
-                <div className='absolute top-4 right-4 w-fit h-fit'>
-                    <img src={ReverseButton} alt="" />
+                <div className='absolute top-8 right-8 w-fit h-fit'>
+                    <img src={ReverseButton} alt="" onClick={switchBusStop} />
                 </div>
             </div >
         )
@@ -66,42 +70,49 @@ export const ShowTimeTable = () => {
 
     const SelectBox = () => {
         return (
-            <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 'bolder' }}>
-                <Tabs
-                    value={value}
-                    onChange={(e, newTab) => handleChange(newTab)}
-                    TabIndicatorProps={{ style: { backgroundColor: '#000' } }}
-                    variant="scrollable"
-                    allowScrollButtonsMobile
-                    sx={{
-                        color: '#000',
-                        fontWeight: 'bolder',
-                    }}
-                >
-                    {
-                        AllBusStopList.map((BusStop, i) => {
-                            return (
-                                <Tab
-                                    label={BusStop.to}
-                                    key={i}
-                                    value={i}
-                                    sx={{
-                                        color: '#0000004d',
-                                        fontWeight: 'bolder',
-                                        '&.Mui-selected': {
-                                            color: '#000',
-                                            borderColor: 'transparent',
-                                        },
-                                    }}
-                                ></Tab>
-                            )
-                        })
-                    }
-                </Tabs>
-            </Box>
+            <div className='fixed top-32 mt-2 z-40 bg-main w-full'>
+                <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 'bolder' }}>
+                    <Tabs
+                        value={value}
+                        onChange={(e, newTab) => handleChange(newTab)}
+                        TabIndicatorProps={{ style: { backgroundColor: '#000' } }}
+                        variant="scrollable"
+                        allowScrollButtonsMobile
+                        sx={{
+                            color: '#000',
+                            fontWeight: 'bolder',
+                        }}
+                    >
+                        {
+                            AllBusStopList.map((BusStop, i) => {
+                                return (
+                                    <Tab
+                                        label={BusStop.to}
+                                        key={i}
+                                        value={i}
+                                        sx={{
+                                            color: '#0000004d',
+                                            fontWeight: 'bolder',
+                                            '&.Mui-selected': {
+                                                color: '#000',
+                                                borderColor: 'transparent',
+                                            },
+                                        }}
+                                    ></Tab>
+                                )
+                            })
+                        }
+                    </Tabs>
+                </Box>
+            </div>
         )
     }
 
+    const switchBusStop = () => {
+        const temp = currentFromBusStop;
+        setCurrentFromBusStop(currenToBusStop);
+        setCurrenToBusStop(temp);
+    }
 
     //ここの処理を非同期で上手くリファクタする！！！！！
 
@@ -124,10 +135,10 @@ export const ShowTimeTable = () => {
     }, [])
 
     return (
-        <div className=''>
+        <div className='bg-bgColor'>
             <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
             <SelectBox></SelectBox>
-            <div className="mx-4 flex bg-white overflow-scroll whitespace-normal">
+            <div className="mt-28 mx-4 flex overflow-scroll whitespace-normal">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}

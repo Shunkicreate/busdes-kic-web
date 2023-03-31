@@ -8,6 +8,7 @@ import swapBusRouteSelector from '../grobalState/selectors/swapBusRoute';
 import setpBusRouteSelector from '../grobalState/selectors/setBusRoute';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { ApproachInfos } from '../types/Bus.type';
+import Addbutton from '../images/addButton.svg'
 
 const SettingModal = () => {
     const [Modal, open, close, isOpen] = useModal('root', {
@@ -78,8 +79,10 @@ const SettingModal = () => {
 
     return (
         <div>
-            <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div>
-            <button onClick={open} className='bg-red-100'>新しい駅を追加</button>
+            {/* <div>Modal is Open? {isOpen ? 'Yes' : 'No'}</div> */}
+            <button onClick={open}>
+                <img className="" src={Addbutton} alt="AddButton" width="50" />
+            </button>
             <Modal>
                 <button onClick={close} className='text-white'>CLOSE</button>
                 <div style={modalStyle}>

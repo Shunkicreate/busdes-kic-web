@@ -11,21 +11,36 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
     }
     const color = (mode: mode, currentMode: mode) => {
         if (mode === currentMode) {
-            return 'bg-main'
+            return 'bg-main text-white'
         }
         else {
             return 'bg-bgColor'
         }
     }
 
+    const DisplayAddButton = () => {
+        if (currentMode == 'NextBus') {
+            return (
+                <div className='fixed bottom-20 right-0 p-5'>
+                    <AddButton></AddButton>
+                </div>
+            )
+        }
+        else {
+            return (
+                <></>
+            )
+        }
+    }
+
     return (
         <div>
-            <div className="flex justify-center">
-                <TabbarButton mode="TimeTable" modeName='時刻表' color={color('TimeTable', currentMode)} switchMode={switchMode}></TabbarButton>
-                <TabbarButton mode="NextBus" modeName='次のバス' color={color('NextBus', currentMode)} switchMode={switchMode}></TabbarButton>
-                <TabbarButton mode="Settings" modeName='設定' color={color('Settings', currentMode)} switchMode={switchMode}></TabbarButton>
-                <AddButton></AddButton>
+            <DisplayAddButton></DisplayAddButton>
+            <div className='fixed bottom-0 w-full grid grid-cols-2 gap-4 pt-4 pb-4 px-8 bg-white z-50 border-t'>
+                <TabbarButton mode='NextBus' modeName='NextBus' color={color('NextBus', currentMode)} switchMode={switchMode}></TabbarButton>
+                <TabbarButton mode='TimeTable' modeName='Timetable' color={color('TimeTable', currentMode)} switchMode={switchMode}></TabbarButton>
             </div>
         </div>
     )
 }
+

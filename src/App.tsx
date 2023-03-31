@@ -13,15 +13,15 @@ import './App.css'
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <div className='App bg-main'>
+        <div className='App bg-white'>
             <RecoilRoot>
                 <Header></Header>
-                <div className='pb-24'>
+                <div className='mb-20 pt-16'>
                     {
                         (() => {
                             if (mode === 'NextBus') {
                                 return (
-                                    <RoundTripCard/>
+                                    <RoundTripCard />
                                 )
                             }
                             else if (mode === 'TimeTable') {

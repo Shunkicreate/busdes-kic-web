@@ -1,5 +1,5 @@
 import React from 'react';
-import BusArrow from './BusArrow.svg';
+import BusArrow from '../images/BusArrow.svg';
 import { AllBusStopsType } from '../types/Bus.type';
 
 type Props = {
