@@ -1,4 +1,5 @@
 import BusCard from './layout/BusCard';
+import RoundTripCard from './layout/BuscardRoundTrip'
 import { ShowTimeTable } from './layout/TimeTable';
 import { useState } from 'react'
 import { mode } from './types/main.type';
@@ -7,19 +8,20 @@ import { Footer } from './layout/Footer';
 import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
+import './App.css'
 
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
     return (
-        <div className='App bg-main'>
+        <div className='App bg-white'>
             <RecoilRoot>
                 <Header></Header>
-                <div className='pb-24'>
+                <div className='mb-20 pt-16'>
                     {
                         (() => {
                             if (mode === 'NextBus') {
                                 return (
-                                    <BusCard></BusCard>
+                                    <RoundTripCard />
                                 )
                             }
                             else if (mode === 'TimeTable') {
