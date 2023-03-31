@@ -22,15 +22,13 @@ export const ShowTimeTable = () => {
     const timetableRefs = useRef<HTMLDivElement[]>([])
     const [value, setValue] = useState(0);
     const swiperRef = useRef<SwiperRef>(null);
+    
     const handleChange = (i: number) => {
         setValue(i);
         changeSlide(i);
-        if (currentFromBusStop == '立命館大学前') {
-            setCurrenToBusStop(AllBusStopList[i].to);
-        }
-        else {
-            setCurrentFromBusStop(AllBusStopList[i].to);
-        }
+
+        setCurrenToBusStop(AllBusStopList[i].to);
+        setCurrentFromBusStop(AllBusStopList[i].fr);
     }
 
     const changeSlide = (i: number) => {
