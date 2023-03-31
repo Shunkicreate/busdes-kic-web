@@ -99,9 +99,9 @@ const useAddBusRouteModal = () => {
                         追加
                     </div>
                     <datalist id='bus-stop-list'>
-                        {AllBusStops.map((value, idx) => {
+                        {AllBusStops.map((AllBusStop, idx) => {
                             return (
-                                <option value={value} key={idx}></option>
+                                <option value={AllBusStop} key={idx}></option>
                             )
                         })}
                     </datalist>
