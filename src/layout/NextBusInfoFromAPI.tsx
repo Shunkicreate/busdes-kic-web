@@ -51,7 +51,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
     //この辺を書き直す必要あり
 
     useEffect(() => {
-        if (AllBusStopList[prop.index].BusCardData.approach_infos[0].more_min == undefined) {
+        if (AllBusStopList[prop.index].BusCardData?.approach_infos.length == 0) {
             axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
                 params: {
                     fr: prop.from_bus,
