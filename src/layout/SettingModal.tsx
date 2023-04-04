@@ -96,7 +96,7 @@ const SettingModal = () => {
                         </div>
                         <div className=''>
                             <div className='w-fit m-auto'>
-                                <input className='bg-border rounded-full py-2 px-8' type='text' list='bus-stop-list' id='bus-stop-choice' name='bus-stop-choice' value={select as AllBusStopsType} onChange={(event) => upDateStation(event.target.value as AllBusStopsType)} placeholder='駅名を入力' onClick={() => { onClickEventHandle() }} onKeyDown={addSettingList}></input>
+                                <input className='bg-border rounded-full py-2 px-8' type='text' list='bus-stop-list' id='bus-stop-choice' name='bus-stop-choice' value={select as AllBusStopsType} onChange={(event) => upDateStation(event.target.value as AllBusStopsType)} placeholder='駅名を入力' onClick={() => { onClickEventHandle() }} onKeyDown={(e) => { if (e.key === 'Enter') { addSettingList() } }}></input>
                             </div>
                             <datalist id='bus-stop-list'>
                                 {AllBusStops.filter(isNotRits).map((value, idx) => {
