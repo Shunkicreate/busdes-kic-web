@@ -52,7 +52,7 @@ const NextBusInfoFromAPI = (prop: Props2) => {
 
     useEffect(() => {
         if (AllBusStopList[prop.index].BusCardData.approach_infos[0].more_min == undefined) {
-            axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
+            axios.get<ApproachInfos>(`${process.env.REACT_APP_BASE_URL}/nextbus`, {
                 params: {
                     fr: prop.from_bus,
                     to: prop.to_bus

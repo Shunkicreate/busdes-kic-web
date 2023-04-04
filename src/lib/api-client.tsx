@@ -1,10 +1,9 @@
 import axios from 'axios';
-const baseURL = 'https://bustimer.azurewebsites.net/';
 const headers = {
 };
 // axiosの初期設定
+const baseURL = process.env.REACT_APP_BASE_URL
 export const ApiClient = axios.create({ baseURL, headers });
-
 // レスポンスのエラー判定処理
 ApiClient.interceptors.response.use(
     (response) => {
