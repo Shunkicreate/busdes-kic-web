@@ -22,13 +22,14 @@ export const ShowTimeTable = () => {
     const timetableRefs = useRef<HTMLDivElement[]>([])
     const [value, setValue] = useState(0);
     const swiperRef = useRef<SwiperRef>(null);
-    
-    const handleChange = (i: number) => {
-        setValue(i);
-        changeSlide(i);
 
-        setCurrenToBusStop(AllBusStopList[i].to);
-        setCurrentFromBusStop(AllBusStopList[i].fr);
+    const handleChange = (i: number) => {
+        // debugger; // eslint-disable-line no-debugger
+        changeSlide(i);
+        setValue(i);
+
+        setCurrenToBusStop(switchShowElem()[i].to);
+        setCurrentFromBusStop(switchShowElem()[i].fr);
     }
 
     const changeSlide = (i: number) => {
@@ -84,10 +85,11 @@ export const ShowTimeTable = () => {
                         }}
                     >
                         {
-                            AllBusStopList.map((BusStop, i) => {
+                            switchShowElem().map((BusStop, i) => {
+                                const label = fromIsRits(BusStop.fr) ? BusStop.to : BusStop.fr
                                 return (
                                     <Tab
-                                        label={BusStop.to}
+                                        label={label}
                                         key={i}
                                         value={i}
                                         sx={{
@@ -108,10 +110,50 @@ export const ShowTimeTable = () => {
         )
     }
 
+    const fromIsRits = (BusStop: AllBusStopsType) => {
+        if (BusStop === '立命館大学前') {
+            return true
+        }
+        return false
+    }
+
+    const toIsRits = (BusStop: AllBusStopsType) => {
+        if (BusStop === '立命館大学') {
+            return true
+        }
+        return false
+    }
+
+    const switchShowElem = () => {
+        if (fromIsRits(currentFromBusStop)) {
+            return AllBusStopList.filter((BusStop) => fromIsRits(BusStop.fr))
+        }
+        else if (toIsRits(currenToBusStop)) {
+            return AllBusStopList.filter((BusStop) => toIsRits(BusStop.to))
+        }
+        else {
+            return []
+        }
+    }
+
+    const swapRits = (routeElem: AllBusStopsType, mode: 'fr' | 'to') => {
+        let returnSta: AllBusStopsType = routeElem
+        if (mode === 'fr') {
+            if (returnSta === '立命館大学前') {
+                returnSta = '立命館大学'
+            }
+        }
+        else if (mode === 'to') {
+            if (returnSta === '立命館大学') {
+                returnSta = '立命館大学前'
+            }
+        }
+        return (returnSta)
+    }
+
     const switchBusStop = () => {
-        const temp = currentFromBusStop;
-        setCurrentFromBusStop(currenToBusStop);
-        setCurrenToBusStop(temp);
+        setCurrentFromBusStop(swapRits(currenToBusStop, 'to'));
+        setCurrenToBusStop(swapRits(currentFromBusStop, 'fr'));
     }
 
     //ここの処理を非同期で上手くリファクタする！！！！！
@@ -146,7 +188,7 @@ export const ShowTimeTable = () => {
                     ref={swiperRef}
                 >
                     {
-                        AllBusStopList.map((BusStop, i) => {
+                        switchShowElem().map((BusStop, i) => {
                             return (
                                 <SwiperSlide key={i} >
                                     <div className='timetable' ref={(el) => {
