@@ -56,7 +56,7 @@ const CountDownTimes = (prop: Props) => {
             count_min = 0
             count_sec = 0
 
-            axios.get<ApproachInfos>('https://bustimer.azurewebsites.net/nextbus', {
+            axios.get<ApproachInfos>(`${process.env.REACT_APP_BASE_URL}/nextbus`, {
                 params: {
                     fr: prop.from_bus,
                     to: prop.to_bus
