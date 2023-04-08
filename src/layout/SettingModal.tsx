@@ -1,5 +1,6 @@
 import React from 'react';
-import { useModal } from 'react-hooks-use-modal';
+// import { useModal } from 'react-hooks-use-modal';
+import useModal from '../hooks/useModal';
 import { useState } from 'react';
 import { AllBusStopsType, AllBusStops, busStopListAtomType } from '../types/Bus.type';
 import { useSetRecoilState } from 'recoil';
@@ -8,9 +9,7 @@ import { ApproachInfos } from '../types/Bus.type';
 import Addbutton from '../images/addButton.svg'
 
 const SettingModal = () => {
-    const [Modal, open, close] = useModal('root', {
-        preventScroll: true
-    })
+    const { Modal, isOpen, openModal, closeModal } = useModal();
     const [select, setSelect] = useState<AllBusStopsType | ''>('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const TestData: ApproachInfos = {
@@ -62,7 +61,7 @@ const SettingModal = () => {
                 BusCardData: TestData,
             }]
             addAllBusStopList(addBusStop)
-            close()
+            closeModal()
         }
     }
 
@@ -77,13 +76,13 @@ const SettingModal = () => {
 
     return (
         <div>
-            <button onClick={open}>
+            <button onClick={openModal}>
                 <img className="" src={Addbutton} alt="AddButton" width="50" />
             </button>
             <Modal>
-                <div className="bg-main rounded-2xl w-[calc(100vw-4rem)] m-4">
+                <div className="bg-main rounded-2xl w-[calc(100vw-4rem)] m-auto">
                     <div className='text-center font-bold py-4 relative'>
-                        <button onClick={close} className='absolute w-fit h-fit top-0 bottom-0 left-6 m-auto'>
+                        <button onClick={closeModal} className='absolute w-fit h-fit top-0 bottom-0 left-6 m-auto'>
                             戻る
                         </button>
                         <div>
