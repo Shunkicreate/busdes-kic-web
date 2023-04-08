@@ -7,7 +7,6 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const RoundTripCard = () => {
 
-    const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
 
     const BusStops = AllBusStopList.map((busstop, i) => {

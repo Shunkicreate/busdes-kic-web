@@ -165,8 +165,8 @@ export const ShowTimeTable = () => {
                     const addBusStopListAtom: busStopListAtomType = {
                         fr: BusStop.fr,
                         to: BusStop.to,
-                        ShowTimeTable: true,
-                        ShowBusCard: true,
+                        ShowTimeTable: BusStop.ShowTimeTable,
+                        ShowBusCard: BusStop.ShowBusCard,
                         TimeTableData: timetable,
                         BusCardData: BusStop.BusCardData
                     }

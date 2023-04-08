@@ -66,8 +66,8 @@ const CountDownTimes = (prop: Props) => {
                     const addBusStopListAtom: busStopListAtomType = {
                         fr: prop.from_bus,
                         to: prop.to_bus,
-                        ShowTimeTable: true,
-                        ShowBusCard: true,
+                        ShowTimeTable: AllBusStopList[prop.index].ShowTimeTable,
+                        ShowBusCard: AllBusStopList[prop.index].ShowBusCard,
                         TimeTableData: AllBusStopList[prop.index].TimeTableData,
                         BusCardData: response.data,
                     }
