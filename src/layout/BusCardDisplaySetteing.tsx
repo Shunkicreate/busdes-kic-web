@@ -11,12 +11,6 @@ const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
         preventScroll: true
     })
 
-    const modalStyle: React.CSSProperties = {
-        backgroundColor: '#fff',
-        padding: '60px 100px',
-        borderRadius: '10px',
-    };
-
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(addAllBusStopListSelector)
 
@@ -32,7 +26,6 @@ const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
         }]
 
         addAllBusStopList(addBusStop)
-        console.log(AllBusStopList)
         close()
 
     }
@@ -43,7 +36,7 @@ const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
                 <CardDisplayButton></CardDisplayButton>
             </button>
             <Modal>
-                <div style={modalStyle} className='text-center'>
+                <div className='p-16 text-center bg-white rounded-2xl'>
                     <div className='p-4 text-xl'>削除しますか？</div>
                     <div className='grid grid-cols-5 text-2xl'>
                         <button className='col-start-1 col-span-2' onClick={DeleteBusCard}>はい</button>

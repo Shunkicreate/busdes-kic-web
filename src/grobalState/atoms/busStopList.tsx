@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 import { busStopListAtomType } from '../../types/Bus.type'
 import { ApproachInfos } from '../../types/Bus.type'
 
-const TestData: ApproachInfos = {
+const Empty: ApproachInfos = {
 
     'approach_infos': [
 
@@ -18,7 +18,7 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             ShowTimeTable: true,
             ShowBusCard: true,
             TimeTableData: undefined,
-            BusCardData: TestData
+            BusCardData: Empty
         },
         {
             fr: '京都駅前',
@@ -26,7 +26,7 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             ShowTimeTable: true,
             ShowBusCard: true,
             TimeTableData: undefined,
-            BusCardData: TestData
+            BusCardData: Empty
         }
 
     ]

@@ -25,7 +25,7 @@ const SettingModal = () => {
     const [select, setSelect] = useState('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
 
-    const TestData: ApproachInfos = {
+    const Empty : ApproachInfos = {
 
         'approach_infos': [
 
@@ -62,7 +62,7 @@ const SettingModal = () => {
             ShowTimeTable: true,
             ShowBusCard: true,
             TimeTableData: undefined,
-            BusCardData: TestData,
+            BusCardData: Empty,
         }]
         addAllBusStopList(addBusStop)
         close()

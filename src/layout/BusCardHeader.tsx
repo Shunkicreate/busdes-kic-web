@@ -10,7 +10,7 @@ type Props = {
 const BusCardHeader = (props: Props) => {
 
     return (
-        <div className='grid grid-cols-5 h-16 pr-2 pl-2 place-content-center text-center'>
+        <div className='grid grid-cols-5 h-16 px-2 place-content-center text-center'>
             <div className='text-xl col-start-1 col-span-2'>{props.from_bus}</div>
             <div className='flex justify-center'>
                 <img className='' src={BusArrow} alt='BusArrow' width='45' />
