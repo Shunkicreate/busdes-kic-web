@@ -24,7 +24,7 @@ const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
         }]
 
         addAllBusStopList(addBusStop)
-        close()
+        closeModal()
 
     }
 
