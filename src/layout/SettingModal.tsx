@@ -12,18 +12,11 @@ const SettingModal = () => {
     const { Modal, isOpen, openModal, closeModal } = useModal();
     const [select, setSelect] = useState<AllBusStopsType | ''>('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
-    const TestData: ApproachInfos = {
+
+    const Empty : ApproachInfos = {
+
         'approach_infos': [
-            {
-                more_min: undefined,
-                real_arrival_time: '99:30',
-                direction: '京都駅前',
-                bus_name: '50号系統',
-                scheduled_time: '06:10',
-                delay: '定時運行',
-                bus_stop: '1',
-                required_time: 20
-            }
+
         ]
     }
 
@@ -49,7 +42,7 @@ const SettingModal = () => {
                 ShowTimeTable: true,
                 ShowBusCard: true,
                 TimeTableData: undefined,
-                BusCardData: TestData,
+                BusCardData: Empty,
             }]
             addAllBusStopList(addBusStop)
             addBusStop = [{
@@ -58,7 +51,7 @@ const SettingModal = () => {
                 ShowTimeTable: true,
                 ShowBusCard: true,
                 TimeTableData: undefined,
-                BusCardData: TestData,
+                BusCardData: Empty,
             }]
             addAllBusStopList(addBusStop)
             closeModal()
