@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState, useCallback } from 'react';
+import React, { ReactNode, useRef, useState, useCallback } from 'react';
 
 type ModalProps = {
     children: ReactNode;
@@ -6,9 +6,17 @@ type ModalProps = {
 
 const useModal = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const openModal = useCallback(() => { setIsOpen(true); console.log('open!!', isOpen); }, []);
-    const closeModal = useCallback(() => { setIsOpen(false); console.log('close!!', isOpen) }, []);
+    const openModal = useCallback(() => {
+        setIsOpen(true)
+        setBodyOverflowStyle(document.body.style.overflow);
+        document.body.style.overflow = 'hidden';
+    }, []);
+    const closeModal = useCallback(() => {
+        setIsOpen(false)
+        document.body.style.overflow = bodyOverflowStyle
+    }, []);
     const ref = useRef<HTMLDivElement>(null);
+    const [bodyOverflowStyle, setBodyOverflowStyle] = useState('');
 
     //モーダル画面外をクリックしたらモーダルを閉じるようにする仕掛け。
     //でもreactは仮想DOMを使ってて、入れ子になっている子要素は上手くハンドリングできてないっぽい。今回の場合、ネストされて子要素の構造になっていて、ref.current.contains(e.target as Node)が上手く働いてくれない。これを解決するにはmodalのコンポーネント内でバス停のリストを作成して、それを直接userefすればいいと思う。
@@ -40,12 +48,11 @@ const useModal = () => {
 
         return (
             <div
-                className={`${isOpen ? 'fixed' : 'hidden'
-                    } top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50`}
+                className={`${isOpen ? 'fixed' : 'hidden'} top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-[51]`}
             >
                 <div
                     ref={ref}
-                    className='p-1 w-fit bg-red-900'
+                    className='w-fit'
                 >
                     {children}
                 </div>

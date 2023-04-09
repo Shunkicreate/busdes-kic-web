@@ -80,7 +80,7 @@ const SettingModal = () => {
                 <img className="" src={Addbutton} alt="AddButton" width="50" />
             </button>
             <Modal>
-                <div className="bg-main rounded-2xl w-[calc(100vw-4rem)] m-auto">
+                <div className="bg-main rounded-2xl w-[calc(100vw-2rem)] mx-auto">
                     <div className='text-center font-bold py-4 relative'>
                         <button onClick={closeModal} className='absolute w-fit h-fit top-0 bottom-0 left-6 m-auto'>
                             戻る
@@ -89,7 +89,7 @@ const SettingModal = () => {
                             路線の追加
                         </div>
                     </div>
-                    <div className='bg-white h-[calc(100vh-12rem)] rounded-b-2xl'>
+                    <div className='bg-white h-[calc(100svh-12rem)] rounded-b-2xl'>
                         <div className='text-center p-4 text-lg'>
                             どこからバスに乗りますか？
                         </div>
@@ -105,7 +105,7 @@ const SettingModal = () => {
                                 })}
                             </datalist>
                         </div>
-                        <div className='m-4 overflow-scroll h-[calc(100vh-24rem)]'>
+                        <div className='m-4 overflow-scroll h-[calc(100svh-24rem)]'>
                             {
                                 AllBusStops.filter(isNotRits).map((BusStop, i) => {
                                     return (
