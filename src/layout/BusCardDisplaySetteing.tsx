@@ -1,15 +1,13 @@
 import React from 'react';
 import CardDisplayButton from '../atom/CardDisplayButton'
-import { useModal } from 'react-hooks-use-modal';
+import useModal from '../hooks/useModal';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {busStopListAtomType} from '../types/Bus.type';
 
 const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
 
-    const [Modal, open, close, isOpen] = useModal('root', {
-        preventScroll: true
-    })
+    const {Modal, openModal, closeModal, isOpen} = useModal()
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(addAllBusStopListSelector)
@@ -26,13 +24,13 @@ const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
         }]
 
         addAllBusStopList(addBusStop)
-        close()
+        closeModal()
 
     }
 
     return (
         <div className='h-6 pr-72 object-center'>
-            <button className='w-6' onClick={open}>
+            <button className='w-6' onClick={openModal}>
                 <CardDisplayButton></CardDisplayButton>
             </button>
             <Modal>
@@ -40,7 +38,7 @@ const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
                     <div className='p-4 text-xl'>削除しますか？</div>
                     <div className='grid grid-cols-5 text-2xl'>
                         <button className='col-start-1 col-span-2' onClick={DeleteBusCard}>はい</button>
-                        <button className='col-start-4 col-span-2' onClick={close}>いいえ</button>
+                        <button className='col-start-4 col-span-2' onClick={closeModal}>いいえ</button>
                     </div>
                 </div>
             </Modal>
