@@ -3,13 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <HelmetProvider >
+      <Helmet>
+        <title>京都バスです！</title>
+        <meta name="theme-color" content="#fff"></meta>
+        <meta name="apple-mobile-web-app-status-bar-style" content="white"></meta>
+      </Helmet>
+      <App />
+    </HelmetProvider>
   </React.StrictMode>
 );
 
