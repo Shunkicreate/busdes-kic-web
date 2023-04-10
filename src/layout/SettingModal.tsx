@@ -1,43 +1,48 @@
 import React from 'react';
-// import { useModal } from 'react-hooks-use-modal';
 import useModal from '../hooks/useModal';
-import { useState } from 'react';
 import { AllBusStopsType, AllBusStops, busStopListAtomType } from '../types/Bus.type';
 import { useSetRecoilState } from 'recoil';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { ApproachInfos } from '../types/Bus.type';
 import Addbutton from '../images/addButton.svg'
+import { useForm, Controller } from 'react-hook-form';
+import {
+    Box,
+    TextField,
+    Autocomplete,
+} from '@mui/material'
 
 const SettingModal = () => {
     const { Modal, isOpen, openModal, closeModal } = useModal();
-    const [select, setSelect] = useState<AllBusStopsType | ''>('')
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
+    interface IFormInput {
+        BusStop: AllBusStopsType | null;
+    }
+    const { control, handleSubmit, setValue, getValues } = useForm<IFormInput>({
+        mode: 'onChange',
+        defaultValues: {
+            BusStop: null,
+        },
+    });
 
-    const Empty : ApproachInfos = {
+    const Empty: ApproachInfos = {
 
         'approach_infos': [
 
         ]
     }
 
-    const upDateStation = (value: AllBusStopsType) => {
-        setSelect(value)
-    }
-
-    const onClickEventHandle = () => {
-        setSelect('')
-    }
-
     const addSettingList = () => {
-        if (!select) {
+        const BusStop = getValues().BusStop
+        if (!BusStop) {
             alert('バス停を選択してください')
         }
-        else if (!(AllBusStops.includes(select))) {
+        else if (!(AllBusStops.includes(BusStop))) {
             alert('正式なバス停の名前を選択してください。')
         }
         else {
             let addBusStop: busStopListAtomType[] = [{
-                fr: select,
+                fr: BusStop,
                 to: '立命館大学',
                 ShowTimeTable: true,
                 ShowBusCard: true,
@@ -47,7 +52,7 @@ const SettingModal = () => {
             addAllBusStopList(addBusStop)
             addBusStop = [{
                 fr: '立命館大学前',
-                to: select,
+                to: BusStop,
                 ShowTimeTable: true,
                 ShowBusCard: true,
                 TimeTableData: undefined,
@@ -86,32 +91,40 @@ const SettingModal = () => {
                         <div className='text-center p-4 text-lg'>
                             どこからバスに乗りますか？
                         </div>
-                        <div className=''>
-                            <div className='w-fit m-auto'>
-                                <input className='bg-border rounded-full py-2 px-8' type='text' list='bus-stop-list' id='bus-stop-choice' name='bus-stop-choice' value={select as AllBusStopsType} onChange={(event) => upDateStation(event.target.value as AllBusStopsType)} placeholder='駅名を入力' onClick={() => { onClickEventHandle() }} onKeyDown={(e) => { if (e.key === 'Enter') { addSettingList() } }}></input>
-                            </div>
-                            <datalist id='bus-stop-list'>
-                                {AllBusStops.filter(isNotRits).map((value, idx) => {
-                                    return (
-                                        <option value={value} key={idx}></option>
-                                    )
-                                })}
-                            </datalist>
+                        <div className='w-fit m-auto'>
+                            <Box
+                                sx={{
+                                    width: 300,
+                                }}
+                            >
+                                <form onSubmit={handleSubmit(addSettingList)}>
+                                    <Controller
+                                        control={control}
+                                        name='BusStop'
+                                        render={() => (
+                                            <Autocomplete
+                                                fullWidth
+                                                options={AllBusStops.filter(isNotRits)}
+                                                renderInput={(params) => <TextField {...params} label='バス停' />}
+                                                onChange={(event, value) => {
+                                                    if (value) {
+                                                        setValue('BusStop', value, {
+                                                            shouldValidate: true,
+                                                            shouldDirty: true,
+                                                            shouldTouch: true,
+                                                        });
+                                                    }
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                    <Box sx={{ mt: 5 }} />
+                                </form>
+                            </Box>
                         </div>
-                        <div className='m-4 overflow-scroll h-[calc(100svh-24rem)]'>
-                            {
-                                AllBusStops.filter(isNotRits).map((BusStop, i) => {
-                                    return (
-                                        <div key={i} className='m-4 text-sm' onClick={() => { setSelect(BusStop) }}>
-                                            {BusStop}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                        <div className='text-center m-8' onClick={addSettingList}>
+                        <button className='text-center m-8' onClick={addSettingList}>
                             追加
-                        </div>
+                        </button>
                     </div>
                 </div>
             </Modal>
