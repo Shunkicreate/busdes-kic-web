@@ -84,7 +84,7 @@ export const ShowTimeTable = () => {
                     >
                         {
                             switchShowElem().map((BusStop, i) => {
-                                const label = fromIsRits(BusStop.fr) ? BusStop.to : BusStop.fr
+                                const label = fromIsRits(BusStop.fr) ? BusStop.to.slice(0, 5) : BusStop.fr.slice(0, 5)
                                 return (
                                     <Tab
                                         label={label}
