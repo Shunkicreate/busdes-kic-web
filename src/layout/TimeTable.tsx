@@ -40,26 +40,24 @@ export const ShowTimeTable = () => {
 
     const TimeTableHeader = ({ fr, to }: { fr: AllBusStopsType, to: AllBusStopsType }) => {
         return (
-            <div className='w-full text-center fixed top-12 pt-4 z-50 bg-main'>
-                <div className=''>
-                    <div className='grid grid-cols-3'>
-                        <div className=''>
-                            <strong>出発</strong>
-                        </div>
-                        <div className=''>
-                            <strong>{fr}</strong>
-                        </div>
+            <div className='w-full text-center top-12 pt-4 z-50 bg-main'>
+                <div className='grid grid-cols-3'>
+                    <div className=''>
+                        <strong>出発</strong>
                     </div>
-                    <div>
-                        <img src={Arrow} alt="Arrow image" className='m-auto my-1' />
+                    <div className=''>
+                        <strong>{fr}</strong>
                     </div>
-                    <div className='grid grid-cols-3'>
-                        <div className=''>
-                            <strong>到着</strong>
-                        </div>
-                        <div className=''>
-                            <strong>{to}</strong>
-                        </div>
+                </div>
+                <div>
+                    <img src={Arrow} alt="Arrow image" className='m-auto my-1' />
+                </div>
+                <div className='grid grid-cols-3'>
+                    <div className=''>
+                        <strong>到着</strong>
+                    </div>
+                    <div className=''>
+                        <strong>{to}</strong>
                     </div>
                 </div>
                 <div className='absolute top-8 right-8 w-fit h-fit'>
@@ -71,7 +69,7 @@ export const ShowTimeTable = () => {
 
     const SelectBox = () => {
         return (
-            <div className='fixed top-32 mt-2 z-40 bg-main w-full'>
+            <div className='z-40 bg-main w-full'>
                 <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 'bolder' }}>
                     <Tabs
                         value={value}
@@ -178,9 +176,11 @@ export const ShowTimeTable = () => {
 
     return (
         <div className='bg-bgColor'>
-            <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
-            <SelectBox></SelectBox>
-            <div className="mt-28 mx-4 flex overflow-scroll whitespace-normal">
+            <div className='sticky top-16 z-10'>
+                <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop}></TimeTableHeader>
+                <SelectBox></SelectBox>
+            </div>
+            <div className="mx-4 overflow-scroll whitespace-normal">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
