@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
     <HelmetProvider >
       <Helmet>
-        <title>京都バスです！</title>
+        <title>busdes!</title>
         <meta name="theme-color" content="#fff"></meta>
         <meta name="apple-mobile-web-app-status-bar-style" content="white"></meta>
         <meta name="apple-mobile-web-app-capable" content="yes" />
