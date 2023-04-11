@@ -28,9 +28,9 @@ const NextBusInfo = (prop: Props) => {
 
     return (
         <button className={`w-full text-base py-0.5 ${prop.textColor}`}>
-            <div className='flex w-full px-8 gap-8'>
-                <div className='text-left'>{`${prop.deptime} → ${('00' + prop.hour).slice(-2)}:${('00' + prop.min).slice(-2)}`}</div>
-                <div className='text-center'>{`${prop.approch}`}</div>
+            <div className='grid grid-cols-5 w-full px-4'>
+                <div className='text-center col-span-2'>{`${prop.deptime} → ${('00' + prop.hour).slice(-2)}:${('00' + prop.min).slice(-2)}`}</div>
+                <div className='text-left col-span-3 pl-4'>{`${prop.approch}`}</div>
             </div>
         </button>
     )
