@@ -28,22 +28,6 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             TimeTableData: undefined,
             BusCardData: Empty
         },
-        {
-            fr: '立命館大学前',
-            to: '北大路バスターミナル《地下鉄北大路駅》',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: Empty
-        },
-        {
-            fr: '北大路バスターミナル《地下鉄北大路駅》',
-            to: '立命館大学',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: Empty
-        },
 
     ]
 })
