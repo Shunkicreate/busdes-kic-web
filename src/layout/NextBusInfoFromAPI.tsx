@@ -27,7 +27,12 @@ type Props2 = {
 const NextBusInfo = (prop: Props) => {
 
     return (
-        <button className={`text-xl py-0.5 ${prop.textColor}`}>{`${prop.deptime} → ${('00' + prop.hour).slice(-2)}:${('00' + prop.min).slice(-2)} ${prop.approch}`}</button>
+        <button className={`w-full text-base py-0.5 ${prop.textColor}`}>
+            <div className='flex w-full px-8 gap-8'>
+                <div className='text-left'>{`${prop.deptime} → ${('00' + prop.hour).slice(-2)}:${('00' + prop.min).slice(-2)}`}</div>
+                <div className='text-center'>{`${prop.approch}`}</div>
+            </div>
+        </button>
     )
 }
 
