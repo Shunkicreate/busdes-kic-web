@@ -27,7 +27,7 @@ const busStopListAtom = atom<busStopListAtomType[]>({
             ShowBusCard: true,
             TimeTableData: undefined,
             BusCardData: Empty
-        }
+        },
 
     ]
 })
