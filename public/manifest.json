@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "京都バスです！",
+  "name": "バスです for 衣笠キャンパス",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +21,11 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "categories": [
+    "education",
+    "travel",
+    "utilities"
+  ],
+  "description": "立命館大学衣笠キャンパスの学生のためのバス時刻表表示アプリケーションです"
 }
