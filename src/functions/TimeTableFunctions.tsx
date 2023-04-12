@@ -11,7 +11,7 @@ const strictEntries = <T extends Record<string, any>>(
 const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour: number }) => {
     return (
         <div className='text-left pl-16'>
-            <div><span className='pr-4'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-4'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
+            <div><span className='pr-4'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-4'>{oneBusTime.bus_name}</span></div>
         </div>
     )
 }
