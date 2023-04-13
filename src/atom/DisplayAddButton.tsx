@@ -5,7 +5,7 @@ import React from 'react'
 const DisplayAddButton = ({currentMode}:{currentMode: mode}) => {
   if (currentMode == 'NextBus') {
       return (
-          <div className='fixed bottom-20 right-0 p-5'>
+          <div className='absolute bottom-20 right-0 p-5'>
               <AddButton></AddButton>
           </div>
       )
