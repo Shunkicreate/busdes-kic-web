@@ -40,7 +40,7 @@ export const ShowTimeTable = () => {
 
     const TimeTableHeader = ({ fr, to }: { fr: AllBusStopsType, to: AllBusStopsType }) => {
         return (
-            <div className='w-full text-center top-12 pt-4 z-50 bg-main'>
+            <div className='w-full text-center top-12 pt-4 bg-main'>
                 <div className='grid grid-cols-3'>
                     <div className=''>
                         <strong>出発</strong>
@@ -69,7 +69,7 @@ export const ShowTimeTable = () => {
 
     const SelectBox = () => {
         return (
-            <div className='z-40 bg-main w-full'>
+            <div className='bg-main w-full'>
                 <Box sx={{ width: '100%', indicatorColor: '#FFE600', color: '#FFE600', fontWeight: 'bolder' }}>
                     <Tabs
                         value={value}
