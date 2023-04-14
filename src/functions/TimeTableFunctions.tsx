@@ -10,9 +10,14 @@ const strictEntries = <T extends Record<string, any>>(
 
 const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour: number }) => {
     return (
-        <div className='text-left pl-16'>
-            <div><span className='pr-4'>{zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}</span><span className='pr-4'>{oneBusTime.via}</span><span>{oneBusTime.bus_stop}</span></div>
-        </div>
+        <>
+            <div className='col-start-3 col-span-1'>
+                {zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}
+            </div>
+            <div className='col-start-5 col-span-3'>
+                {oneBusTime.bus_stop}
+            </div>
+        </>
     )
 }
 
@@ -33,7 +38,7 @@ const ShowOneCategoryDayBusTime = ({ dayBusTime }: { dayBusTime: Map<unionDays, 
         const busArray = element[1]
         if (Array.isArray(busArray) && busArray.length > 0) {
             if ((typeof busArray !== 'string' || typeof busArray !== 'number') && busArray.length > 0) {
-                const oneHourList = <div key={idx} className='border-b border-border py-2'><div className='text-left pl-4'>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
+                const oneHourList = <div key={idx} className='border-b border-border py-2 grid grid-cols-10 text-left'><div className='text-left col-start-2 col-span-10'>{String(hour)}時</div>{busArray.map((value: OneBusTime, j) => <ShowOneRowBusTime key={j} oneBusTime={value} hour={Number(hour)}></ShowOneRowBusTime>)}</div>
                 jsxBusTime.push(oneHourList)
             }
         }
