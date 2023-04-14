@@ -15,7 +15,7 @@ const ShowOneRowBusTime = ({ oneBusTime, hour }: { oneBusTime: OneBusTime, hour:
                 {zeroPadding(hour, 2)}:{zeroPadding(Number(oneBusTime.min), 2)}
             </div>
             <div className='col-start-5 col-span-3'>
-                {oneBusTime.bus_stop}
+                {oneBusTime.bus_name}
             </div>
         </>
     )
