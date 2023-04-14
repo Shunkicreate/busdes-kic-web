@@ -16,7 +16,7 @@ const App = () => {
         <div className='App bg-white'>
             <RecoilRoot>
                 <Header></Header>
-                <div className=''>
+                <div className='pb-20'>
                     {
                         (() => {
                             if (mode === 'NextBus') {
