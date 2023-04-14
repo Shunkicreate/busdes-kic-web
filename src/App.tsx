@@ -9,7 +9,6 @@ import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
 import './App.css'
-import DisplayAddButton from './atom/DisplayAddButton';
 
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
@@ -17,7 +16,7 @@ const App = () => {
         <div className='App bg-white'>
             <RecoilRoot>
                 <Header></Header>
-                <div className=''>
+                <div className='pb-20'>
                     {
                         (() => {
                             if (mode === 'NextBus') {
@@ -45,7 +44,6 @@ const App = () => {
                         })()
                     }
                 </div>
-                <DisplayAddButton currentMode={mode}></DisplayAddButton>
                 <Footer setMode={setMode} currentMode={mode}></Footer>
             </RecoilRoot>
         </div>
