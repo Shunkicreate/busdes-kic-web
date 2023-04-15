@@ -10,12 +10,12 @@ type Props = {
 const BusCardHeader = (props: Props) => {
 
     return (
-        <div className='grid grid-cols-5 h-16 px-2 place-content-center text-center'>
-            <div className='text-xl col-start-1 col-span-2'>{props.from_bus}</div>
-            <div className='flex justify-center'>
+        <div className='grid grid-cols-7 gap-2 h-16 place-content-center text-center'>
+            <div className='text-xl col-span-3'>{props.from_bus}</div>
+            <div className='flex justify-center col-span-1'>
                 <img className='' src={BusArrow} alt='BusArrow' width='45' />
             </div>
-            <div className='text-xl col-start-4 col-span-2'>{props.to_bus}</div>
+            <div className='text-xl col-span-3'>{props.to_bus}</div>
         </div>
     )
 }
