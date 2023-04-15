@@ -8,7 +8,7 @@ export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React
         setMode(mode)
         const state = {}
         const unused = ''
-        history.pushState(state, unused, `?mode=${currentMode}`)
+        history.pushState(state, unused, `?mode=${mode}`)
     }
     const color = (mode: mode, currentMode: mode) => {
         if (mode === currentMode) {
