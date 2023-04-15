@@ -11,7 +11,12 @@ import React from 'react';
 import './App.css'
 
 const App = () => {
-    const [mode, setMode] = useState<mode>('NextBus')
+    const params = new URLSearchParams(document.location.search.substring(1));
+    let defaultMode = params.get('mode')
+    if(defaultMode === null){
+        defaultMode = 'NextBus'
+    }
+    const [mode, setMode] = useState<mode>(defaultMode as mode)
     return (
         <div className='App bg-white'>
             <RecoilRoot>
