@@ -6,6 +6,9 @@ import DisplayAddButton from '../atom/DisplayAddButton'
 export const Footer = ({ setMode, currentMode }: { setMode: React.Dispatch<React.SetStateAction<mode>>, currentMode: mode }) => {
     const switchMode = (mode: mode) => {
         setMode(mode)
+        const state = {}
+        const unused = ''
+        history.pushState(state, unused, `?mode=${currentMode}`)
     }
     const color = (mode: mode, currentMode: mode) => {
         if (mode === currentMode) {
