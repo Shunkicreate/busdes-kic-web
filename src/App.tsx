@@ -15,7 +15,7 @@ const App = () => {
     return (
         <div className='App bg-white'>
             <RecoilRoot>
-                <Header></Header>
+                <Header currentMode={mode}></Header>
                 <div className='pb-20'>
                     {
                         (() => {
