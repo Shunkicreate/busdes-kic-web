@@ -21,9 +21,7 @@ const App = () => {
                         (() => {
                             if (mode === 'NextBus') {
                                 return (
-                                    <div className='pt-2'>
                                     <RoundTripCard />
-                                    </div>
                                 )
                             }
                             else if (mode === 'TimeTable') {

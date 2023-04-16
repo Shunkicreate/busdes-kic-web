@@ -25,7 +25,7 @@ const RoundTripCard = () => {
 
     return (
 
-        <div>
+        <div className='pt-2'>
             {BusStops}
         </div>
 
