@@ -15,18 +15,18 @@ export const TabbarButton = ({ mode, currentMode, switchMode }: { mode: mode, cu
     }
     const selectIcon = (mode: mode, currentMode: mode) => {
         if (mode === 'TimeTable') {
-            if(mode==currentMode){
+            if (mode == currentMode) {
                 return timetableWhite;
             }
-            else{
+            else {
                 return timetableGray;
             }
         }
         else {
-            if(mode==currentMode){
+            if (mode == currentMode) {
                 return timerWhite;
             }
-            else{
+            else {
                 return timerGray;
             }
         }
@@ -35,7 +35,7 @@ export const TabbarButton = ({ mode, currentMode, switchMode }: { mode: mode, cu
         <div>
             <div className='text-base justify-center'>
                 <button onClick={() => { switchMode(mode); }} className={`${color(mode, currentMode)} font-medium w-full h-12 rounded-full grid grid-cols-4 px-6 py-2`}>
-                    <img className="col-span-1 h-6 object-contain m-auto" src={selectIcon(mode,currentMode)} alt="" />
+                    <img className="col-span-1 h-6 object-contain m-auto" src={selectIcon(mode, currentMode)} alt="" />
                     <div className="col-span-3 w-full h-full flex px-2">
                         <div className='m-auto'>{mode}</div>
                     </div>
