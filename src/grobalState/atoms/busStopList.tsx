@@ -1,6 +1,7 @@
 import { atom } from 'recoil'
 import { busStopListAtomType } from '../../types/Bus.type'
 import { ApproachInfos } from '../../types/Bus.type'
+import { getLocalStrageBusStops } from '../../functions/LocalStrageFuction'
 
 const Empty: ApproachInfos = {
 
@@ -9,9 +10,20 @@ const Empty: ApproachInfos = {
     ]
 }
 
+const LocalStrageBusStops = getLocalStrageBusStops()
+
 const busStopListAtom = atom<busStopListAtomType[]>({
     key: 'busStopListAtom',
-    default: [
+    default: LocalStrageBusStops ? LocalStrageBusStops.map((BusStop) => (
+        {
+            fr: BusStop.fr,
+            to: BusStop.to,
+            ShowTimeTable: true,
+            ShowBusCard: true,
+            TimeTableData: undefined,
+            BusCardData: Empty
+        }
+    )) : [
         {
             fr: '立命館大学前',
             to: '京都駅前',

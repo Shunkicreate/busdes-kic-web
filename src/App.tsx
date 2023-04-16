@@ -9,9 +9,38 @@ import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
 import './App.css'
+import { getLocalStrageBusStops, setLocalStrageBusStops } from './functions/LocalStrageFuction';
+import { ApproachInfos } from './types/Bus.type';
+
+const localStrageInit = () => {
+    const LocalStrageBusStops = getLocalStrageBusStops()
+    if (!LocalStrageBusStops) {
+        const Empty: ApproachInfos = {
+            'approach_infos': [
+            ]
+        }
+        setLocalStrageBusStops({
+            fr: '立命館大学前',
+            to: '京都駅前',
+            ShowTimeTable: true,
+            ShowBusCard: true,
+            TimeTableData: undefined,
+            BusCardData: Empty,
+        })
+        setLocalStrageBusStops({
+            fr: '京都駅前',
+            to: '立命館大学',
+            ShowTimeTable: true,
+            ShowBusCard: true,
+            TimeTableData: undefined,
+            BusCardData: Empty,
+        })
+    }
+}
 
 const App = () => {
     const [mode, setMode] = useState<mode>('NextBus')
+    localStrageInit()
     return (
         <div className='App bg-white'>
             <RecoilRoot>
