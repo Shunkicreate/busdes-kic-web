@@ -4,22 +4,15 @@ export const getLocalStrageBusStop = () => {
     const localData = localStorage.getItem('BusStops')
     let LocalBusStopList = null
     if (localData) {
-        LocalBusStopList = JSON.parse(localData) as AllBusStopsType[]
+        LocalBusStopList = JSON.parse(localData) as AllBusStopsType[][]
     }
     return LocalBusStopList
 }
 
-export const setLocalStrageBusStop = (BusStops: AllBusStopsType | AllBusStopsType[]) => {
+export const setLocalStrageBusStop = (BusStops: AllBusStopsType[]) => {
     const LocalBusStopList = getLocalStrageBusStop()
-    const addBusStop: AllBusStopsType[] = []
-    if (Array.isArray(BusStops)) {
-        BusStops.forEach((BusStop) => {
-            addBusStop.push(BusStop)
-        })
-    }
-    else {
-        addBusStop.push(BusStops)
-    }
+    const addBusStop: AllBusStopsType[][] = []
+    addBusStop.push(BusStops)
     if (LocalBusStopList) {
         LocalBusStopList.forEach((BusStop) => {
             addBusStop.push(BusStop)

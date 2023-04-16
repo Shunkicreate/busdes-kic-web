@@ -51,7 +51,7 @@ const SettingModal = () => {
                 BusCardData: Empty,
             }]
             addAllBusStopList(addBusStop)
-            setLocalStrageBusStop(BusStop)
+            setLocalStrageBusStop([BusStop, '立命館大学'])
             addBusStop = [{
                 fr: '立命館大学前',
                 to: BusStop,
@@ -61,6 +61,7 @@ const SettingModal = () => {
                 BusCardData: Empty,
             }]
             addAllBusStopList(addBusStop)
+            setLocalStrageBusStop(['立命館大学前', BusStop])
             closeModal()
         }
     }
