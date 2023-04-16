@@ -9,6 +9,12 @@ export const getLocalStrageBusStops = () => {
     return LocalBusStopList
 }
 
+export const initLocalStrageBusStops = () => {
+    const json = JSON.stringify([], undefined, 1)
+    localStorage.clear()
+    localStorage.setItem('BusStops', json)
+}
+
 export const setLocalStrageBusStops = (BusStops: busStopListAtomType) => {
     const LocalBusStopList = getLocalStrageBusStops()
     const addBusStop: busStopListAtomType[] = []

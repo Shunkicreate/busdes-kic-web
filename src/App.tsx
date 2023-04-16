@@ -1,6 +1,6 @@
 import BusCard from './layout/BusCard';
 import RoundTripCard from './layout/BuscardRoundTrip'
-import { ShowTimeTable } from './layout/TimeTable';
+import { TimeTableWrapper } from './layout/TimeTable';
 import { useState } from 'react'
 import { mode } from './types/main.type';
 import { Header } from './layout/Header';
@@ -9,34 +9,37 @@ import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
 import './App.css'
-import { getLocalStrageBusStops, setLocalStrageBusStops } from './functions/LocalStrageFuction';
+import { getLocalStrageBusStops, initLocalStrageBusStops, setLocalStrageBusStops } from './functions/LocalStrageFuction';
 import { ApproachInfos } from './types/Bus.type';
 
 const localStrageInit = () => {
     const LocalStrageBusStops = getLocalStrageBusStops()
-    if (!LocalStrageBusStops || LocalStrageBusStops?.length === 0) {
-        const Empty: ApproachInfos = {
-            'approach_infos': [
-            ]
-        }
-        setLocalStrageBusStops({
-            fr: '立命館大学前',
-            to: '京都駅前',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: Empty,
-        })
-        setLocalStrageBusStops({
-            fr: '京都駅前',
-            to: '立命館大学',
-            ShowTimeTable: true,
-            ShowBusCard: true,
-            TimeTableData: undefined,
-            BusCardData: Empty,
-        })
-        location.reload()
+    if (!LocalStrageBusStops) {
+        initLocalStrageBusStops()
     }
+    // if (!LocalStrageBusStops || LocalStrageBusStops?.length === 0) {
+    //     const Empty: ApproachInfos = {
+    //         'approach_infos': [
+    //         ]
+    //     }
+    //     setLocalStrageBusStops({
+    //         fr: '立命館大学前',
+    //         to: '京都駅前',
+    //         ShowTimeTable: true,
+    //         ShowBusCard: true,
+    //         TimeTableData: undefined,
+    //         BusCardData: Empty,
+    //     })
+    //     setLocalStrageBusStops({
+    //         fr: '京都駅前',
+    //         to: '立命館大学',
+    //         ShowTimeTable: true,
+    //         ShowBusCard: true,
+    //         TimeTableData: undefined,
+    //         BusCardData: Empty,
+    //     })
+    //     location.reload()
+    // }
 }
 
 const App = () => {
@@ -57,7 +60,7 @@ const App = () => {
                             else if (mode === 'TimeTable') {
                                 return (
                                     <div>
-                                        <ShowTimeTable></ShowTimeTable>
+                                        <TimeTableWrapper></TimeTableWrapper>
                                     </div>
                                 )
                             }
