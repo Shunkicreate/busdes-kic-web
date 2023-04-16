@@ -11,6 +11,7 @@ import {
     TextField,
     Autocomplete,
 } from '@mui/material'
+import { setLocalStrageBusStop } from '../functions/LocalStrageFuction';
 
 const SettingModal = () => {
     const { Modal, isOpen, openModal, closeModal } = useModal();
@@ -50,6 +51,7 @@ const SettingModal = () => {
                 BusCardData: Empty,
             }]
             addAllBusStopList(addBusStop)
+            setLocalStrageBusStop(BusStop)
             addBusStop = [{
                 fr: '立命館大学前',
                 to: BusStop,
