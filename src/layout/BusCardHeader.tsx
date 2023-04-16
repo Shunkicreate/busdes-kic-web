@@ -9,18 +9,13 @@ type Props = {
 
 const BusCardHeader = (props: Props) => {
 
-    const shortcutText = (str:string) => {
-        const short:string=str.substring( 0, 11 );
-        return str===short?short:short+'…';
-    }
-
     return (
         <div className='grid grid-cols-7 gap-2 h-16 place-content-center text-center'>
-            <div className='text-xl col-span-3 my-auto'>{shortcutText(props.from_bus)}</div>
+            <div className='text-xl col-span-3 my-auto line-clamp-2'>{props.from_bus}</div>
             <div className='flex justify-center col-span-1'>
                 <img className='' src={BusArrow} alt='BusArrow' width='45' />
             </div>
-            <div className='text-xl col-span-3 my-auto'>{shortcutText(props.to_bus)}</div>
+            <div className='text-xl col-span-3 my-auto line-clamp-2'>{props.to_bus}</div>
         </div>
     )
 }
