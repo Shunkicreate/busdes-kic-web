@@ -14,7 +14,7 @@ import { ApproachInfos } from './types/Bus.type';
 
 const localStrageInit = () => {
     const LocalStrageBusStops = getLocalStrageBusStops()
-    if (!LocalStrageBusStops) {
+    if (!LocalStrageBusStops || LocalStrageBusStops?.length === 0) {
         const Empty: ApproachInfos = {
             'approach_infos': [
             ]
@@ -35,6 +35,7 @@ const localStrageInit = () => {
             TimeTableData: undefined,
             BusCardData: Empty,
         })
+        location.reload()
     }
 }
 
