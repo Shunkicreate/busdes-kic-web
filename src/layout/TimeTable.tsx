@@ -14,7 +14,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 
-export const ShowTimeTable = () => {
+const ShowTimeTable = () => {
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
     const [currentFromBusStop, setCurrentFromBusStop] = useState<AllBusStopsType>(AllBusStopList[0].fr)
@@ -174,6 +174,7 @@ export const ShowTimeTable = () => {
         })
     }, [])
 
+
     return (
         <div className='bg-bgColor'>
             <div className='sticky top-16 z-10'>
@@ -205,5 +206,17 @@ export const ShowTimeTable = () => {
                 </Swiper>
             </div>
         </div>
+    )
+}
+
+export const TimeTableWrapper = () => {
+    const AllBusStopList = useRecoilValue(getAllBusStopList)
+    if (AllBusStopList.length === 0) {
+        return (
+            <div>バス停を追加してください</div>
+        )
+    }
+    return (
+        <ShowTimeTable></ShowTimeTable>
     )
 }

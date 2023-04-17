@@ -4,6 +4,7 @@ import useModal from '../hooks/useModal';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { busStopListAtomType } from '../types/Bus.type';
+import { deleteLocalStrageBusStops } from '../functions/LocalStrageFuction';
 
 const BusCardDisplaySetting = ({ buslistindex }: { buslistindex: number }) => {
 
@@ -24,6 +25,7 @@ const BusCardDisplaySetting = ({ buslistindex }: { buslistindex: number }) => {
         }]
 
         addAllBusStopList(addBusStop)
+        deleteLocalStrageBusStops(addBusStop[0])
         closeModal()
 
     }

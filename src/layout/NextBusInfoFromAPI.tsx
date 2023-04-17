@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react';
 import { ApproachInfos, busStopListAtomType, AllBusStopsType } from '../types/Bus.type'
 import CountDownTimes from './CountDownTimes';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
-import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { info } from 'console';
-import { preProcessFile } from 'typescript';
 
 
 type Props = {
