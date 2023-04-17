@@ -29,10 +29,10 @@ const toIsRits = (BusStop: AllBusStopsType) => {
 
 const switchShowElem = (currentFromBusStop: AllBusStopsType, currenToBusStop: AllBusStopsType, AllBusStopList: busStopListAtomType[]) => {
     if (fromIsRits(currentFromBusStop)) {
-        return AllBusStopList.filter((BusStop) => fromIsRits(BusStop.fr))
+        return AllBusStopList.filter((BusStop) => fromIsRits(BusStop.fr) && BusStop.ShowTimeTable)
     }
     else if (toIsRits(currenToBusStop)) {
-        return AllBusStopList.filter((BusStop) => toIsRits(BusStop.to))
+        return AllBusStopList.filter((BusStop) => toIsRits(BusStop.to) && BusStop.ShowTimeTable)
     }
     else {
         return []
