@@ -1,6 +1,5 @@
 import React from 'react'
 import refresh from '../images/refresh.svg'
-import { mode } from '../types/main.type'
 
 export const Header = () => {
 
@@ -9,11 +8,9 @@ export const Header = () => {
             <div>
                 Busdes!
             </div>
-            <div className='fixed w-fit h-fit right-8 top-4'>
+            <div className='absolute w-fit h-fit right-8 top-4'>
                 <button onClick={() => { location.reload() }}>
-                    {/* <a className='block' href={origin + '/' + currentMode}> */}
                     <img src={refresh} alt="refresh button" className='w-8 h-8' />
-                    {/* </a> */}
                 </button>
             </div>
         </div>
