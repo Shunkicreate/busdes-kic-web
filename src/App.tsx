@@ -1,7 +1,7 @@
 import BusCard from './layout/BusCard';
 import RoundTripCard from './layout/BuscardRoundTrip'
 import { TimeTableWrapper } from './layout/TimeTable';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { mode } from './types/main.type';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
@@ -24,9 +24,34 @@ const localStrageInit = () => {
     }
 }
 
+const getModeParam = () => {
+    const params = new URLSearchParams(document.location.search.substring(1));
+    const defaultMode = params.get('mode') as mode | null
+    return defaultMode
+}
+
 const App = () => {
-    const [mode, setMode] = useState<mode>('NextBus')
     localStrageInit()
+    let defaultMode = getModeParam()
+    if (defaultMode === null) {
+        defaultMode = 'NextBus'
+    }
+    const [mode, setMode] = useState<mode>(defaultMode as mode)
+    
+    useEffect(() => {
+        window.addEventListener('popstate', handlePopstate);
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, []);
+    
+    const handlePopstate = () => {
+        const returnModeParam = getModeParam()
+        if (returnModeParam) {
+            setMode(returnModeParam)
+        }
+    }
+
     return (
         <div className='App bg-white'>
             <RecoilRoot>
