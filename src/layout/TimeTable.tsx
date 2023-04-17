@@ -211,7 +211,7 @@ const ShowTimeTable = () => {
 
 const EmptyBusStop = () => {
     return (
-        <div className='relative items-center justify-center h-[calc(100vh-9rem)] bg-bgColor'>
+        <div className='fixed top-0 left-0 right-0 bottom-0 bg-bgColor'>
             <div className='absolute w-fit h-fit top-[50%] right-0 left-0 m-auto'>NextBusからバス停を追加してください</div>
         </div>
     )
