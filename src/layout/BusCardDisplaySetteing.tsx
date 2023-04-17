@@ -31,10 +31,12 @@ const BusCardDisplaySetting = ({ buslistindex }: { buslistindex: number }) => {
     }
 
     return (
-        <div className='h-6 pr-72 object-center'>
-            <button className='w-6' onClick={openModal}>
-                <CardDisplayButton></CardDisplayButton>
-            </button>
+        <div className='h-3 pr-72 object-center relative'>
+            <div className='absolute h-full flex right-2'>
+                <button className='w-6 my-auto' onClick={openModal}>
+                    <CardDisplayButton></CardDisplayButton>
+                </button>
+            </div>
             <Modal>
                 <div className='p-16 text-center bg-white rounded-2xl'>
                     <div className='p-4 text-xl'>削除しますか？</div>
