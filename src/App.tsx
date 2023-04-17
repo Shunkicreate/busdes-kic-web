@@ -15,31 +15,13 @@ import { ApproachInfos } from './types/Bus.type';
 const localStrageInit = () => {
     const LocalStrageBusStops = getLocalStrageBusStops()
     if (!LocalStrageBusStops) {
+        //ローカルストレージにデータがない状態でロードされたら京都駅のデータを追加．
         initLocalStrageBusStops()
     }
-    // if (!LocalStrageBusStops || LocalStrageBusStops?.length === 0) {
-    //     const Empty: ApproachInfos = {
-    //         'approach_infos': [
-    //         ]
-    //     }
-    //     setLocalStrageBusStops({
-    //         fr: '立命館大学前',
-    //         to: '京都駅前',
-    //         ShowTimeTable: true,
-    //         ShowBusCard: true,
-    //         TimeTableData: undefined,
-    //         BusCardData: Empty,
-    //     })
-    //     setLocalStrageBusStops({
-    //         fr: '京都駅前',
-    //         to: '立命館大学',
-    //         ShowTimeTable: true,
-    //         ShowBusCard: true,
-    //         TimeTableData: undefined,
-    //         BusCardData: Empty,
-    //     })
-    //     location.reload()
-    // }
+    else if (LocalStrageBusStops?.length === 0){
+        //入力が空の状態でロードされたらそのまま何もしない．
+        null
+    }
 }
 
 const App = () => {

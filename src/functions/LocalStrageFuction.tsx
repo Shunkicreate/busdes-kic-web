@@ -1,4 +1,5 @@
-import { AllBusStopsType, busStopListAtomType } from '../types/Bus.type'
+import { defaultBusData } from '../grobalState/atoms/busStopList'
+import { busStopListAtomType } from '../types/Bus.type'
 
 export const getLocalStrageBusStops = () => {
     const localData = localStorage.getItem('BusStops')
@@ -10,7 +11,7 @@ export const getLocalStrageBusStops = () => {
 }
 
 export const initLocalStrageBusStops = () => {
-    const json = JSON.stringify([], undefined, 1)
+    const json = JSON.stringify(defaultBusData, undefined, 1)
     localStorage.clear()
     localStorage.setItem('BusStops', json)
 }
@@ -31,7 +32,6 @@ export const setLocalStrageBusStops = (BusStops: busStopListAtomType) => {
 
 export const updateLocalStrageBusStops = (BusStops: busStopListAtomType) => {
     const LocalBusStopList = getLocalStrageBusStops()
-    console.log(LocalBusStopList)
     if (LocalBusStopList) {
         LocalBusStopList.forEach((BusStop) => {
             if (BusStop.fr === BusStops.fr && BusStop.to === BusStops.to) {
@@ -40,7 +40,6 @@ export const updateLocalStrageBusStops = (BusStops: busStopListAtomType) => {
             }
         })
     }
-    console.log(LocalBusStopList)
     const json = JSON.stringify(LocalBusStopList, undefined, 1)
     localStorage.clear()
     localStorage.setItem('BusStops', json)
@@ -48,7 +47,6 @@ export const updateLocalStrageBusStops = (BusStops: busStopListAtomType) => {
 
 export const deleteLocalStrageBusStops = (BusStops: busStopListAtomType) => {
     const LocalBusStopList = getLocalStrageBusStops()
-    console.log(LocalBusStopList)
     if (LocalBusStopList) {
         const newLocalBusStopList: busStopListAtomType[] = []
         LocalBusStopList.forEach((BusStop) => {
