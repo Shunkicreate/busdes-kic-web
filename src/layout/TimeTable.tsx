@@ -219,7 +219,11 @@ const EmptyBusStop = () => {
 
 export const TimeTableWrapper = () => {
     const AllBusStopList = useRecoilValue(getAllBusStopList)
-    if (AllBusStopList.length === 0) {
+    let emptyFlag = true
+    AllBusStopList.filter((BusStop) => BusStop.ShowTimeTable).forEach(() => {
+        emptyFlag = false
+    })
+    if (emptyFlag || AllBusStopList.length === 0) {
         return (
             <EmptyBusStop></EmptyBusStop>
         )
