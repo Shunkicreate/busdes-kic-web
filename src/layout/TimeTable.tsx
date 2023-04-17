@@ -173,9 +173,36 @@ const ShowTimeTable = () => {
         return (returnSta)
     }
 
+    const whichIsRits: () => 'fr' | 'to' = () => {
+        if (currentFromBusStop === '立命館大学前') {
+            return 'fr'
+        }
+        else
+            return 'to'
+    }
+
     const switchBusStop = () => {
-        setCurrentFromBusStop(swapRits(currenToBusStop, 'to'));
-        setCurrenToBusStop(swapRits(currentFromBusStop, 'fr'));
+        let switchFlag = false
+        const rits = whichIsRits()
+        if (rits === 'to') {
+            AllBusStopList.filter((BusStop) => fromIsRits(BusStop.fr) && BusStop.ShowTimeTable).forEach((BusStop) => {
+                console.log('from', BusStop.fr, BusStop.to)
+                switchFlag = true
+            })
+        }
+        else if (rits === 'fr') {
+            AllBusStopList.filter((BusStop) => toIsRits(BusStop.to) && BusStop.ShowTimeTable).forEach((BusStop) => {
+                console.log('to', BusStop.fr, BusStop.to)
+                switchFlag = true
+            })
+        }
+        if (switchFlag) {
+            setCurrentFromBusStop(swapRits(currenToBusStop, 'to'));
+            setCurrenToBusStop(swapRits(currentFromBusStop, 'fr'));
+        }
+        else {
+            alert('バス停を追加してください')
+        }
     }
 
     //ここの処理を非同期で上手くリファクタする！！！！！
