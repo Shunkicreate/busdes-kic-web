@@ -137,6 +137,31 @@ const SwiperTable = ({ BusStops, swiperRef, handleChange }: { BusStops: busStopL
         </Swiper>)
 }
 
+
+const whichIsRits: (currentFromBusStop: AllBusStopsType) => 'fr' | 'to' = (currentFromBusStop) => {
+    if (currentFromBusStop === '立命館大学前') {
+        return 'fr'
+    }
+    else
+        return 'to'
+}
+
+const makeSwitchFlag = (AllBusStopList: busStopListAtomType[], currentFromBusStop: AllBusStopsType) => {
+    let switchFlag = false
+    const rits = whichIsRits(currentFromBusStop)
+    if (rits === 'to') {
+        AllBusStopList.filter((BusStop) => fromIsRits(BusStop.fr) && BusStop.ShowTimeTable).forEach((BusStop) => {
+            switchFlag = true
+        })
+    }
+    else if (rits === 'fr') {
+        AllBusStopList.filter((BusStop) => toIsRits(BusStop.to) && BusStop.ShowTimeTable).forEach((BusStop) => {
+            switchFlag = true
+        })
+    }
+    return switchFlag
+}
+
 const ShowTimeTable = () => {
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(getAllBusStopList)
@@ -173,29 +198,8 @@ const ShowTimeTable = () => {
         return (returnSta)
     }
 
-    const whichIsRits: () => 'fr' | 'to' = () => {
-        if (currentFromBusStop === '立命館大学前') {
-            return 'fr'
-        }
-        else
-            return 'to'
-    }
-
     const switchBusStop = () => {
-        let switchFlag = false
-        const rits = whichIsRits()
-        if (rits === 'to') {
-            AllBusStopList.filter((BusStop) => fromIsRits(BusStop.fr) && BusStop.ShowTimeTable).forEach((BusStop) => {
-                console.log('from', BusStop.fr, BusStop.to)
-                switchFlag = true
-            })
-        }
-        else if (rits === 'fr') {
-            AllBusStopList.filter((BusStop) => toIsRits(BusStop.to) && BusStop.ShowTimeTable).forEach((BusStop) => {
-                console.log('to', BusStop.fr, BusStop.to)
-                switchFlag = true
-            })
-        }
+        const switchFlag = makeSwitchFlag(AllBusStopList, currentFromBusStop)
         if (switchFlag) {
             setCurrentFromBusStop(swapRits(currenToBusStop, 'to'));
             setCurrenToBusStop(swapRits(currentFromBusStop, 'fr'));
@@ -204,6 +208,14 @@ const ShowTimeTable = () => {
             alert('バス停を追加してください')
         }
     }
+
+    useEffect(() => {
+        const switchFlag = makeSwitchFlag(AllBusStopList, currentFromBusStop)
+        if (switchFlag) {
+            setCurrentFromBusStop(swapRits(currenToBusStop, 'to'));
+            setCurrenToBusStop(swapRits(currentFromBusStop, 'fr'));
+        }
+    }, [])
 
     //ここの処理を非同期で上手くリファクタする！！！！！
 
