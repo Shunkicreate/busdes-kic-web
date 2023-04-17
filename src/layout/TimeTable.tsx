@@ -209,11 +209,19 @@ const ShowTimeTable = () => {
     )
 }
 
+const EmptyBusStop = () => {
+    return (
+        <div className='relative items-center justify-center h-[calc(100vh-9rem)] bg-bgColor'>
+            <div className='absolute w-fit h-fit top-[50%] right-0 left-0 m-auto'>NextBusからバス停を追加してください</div>
+        </div>
+    )
+}
+
 export const TimeTableWrapper = () => {
     const AllBusStopList = useRecoilValue(getAllBusStopList)
     if (AllBusStopList.length === 0) {
         return (
-            <div>バス停を追加してください</div>
+            <EmptyBusStop></EmptyBusStop>
         )
     }
     return (
