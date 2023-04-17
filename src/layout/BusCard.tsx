@@ -20,10 +20,10 @@ const BusCard = (prop: Props) => {
 
 
     <div className='w-11/12 p-2 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-white'>
+      <BusCardDisplaySetting buslistindex={prop.index}></BusCardDisplaySetting>
       <BusCardHeader from_bus={prop.from} to_bus={prop.to} />
       <hr />
       <NextBusInfoFromAPI from_bus={prop.from} to_bus={prop.to} index={prop.index} />
-      <BusCardDisplaySetting buslistindex={prop.index}></BusCardDisplaySetting>
     </div>
   )
 }
