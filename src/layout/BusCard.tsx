@@ -14,15 +14,15 @@ type Props = {
 }
 
 
-const BusCard = (prop : Props) => {
+const BusCard = (prop: Props) => {
 
   return (
 
 
-    <div className='w-11/12 p-2 pt-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-white'>
+    <div className='w-11/12 p-2 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-white'>
       <BusCardHeader from_bus={prop.from} to_bus={prop.to} />
       <hr />
-      <NextBusInfoFromAPI from_bus={prop.from} to_bus={prop.to} index={prop.index}/>
+      <NextBusInfoFromAPI from_bus={prop.from} to_bus={prop.to} index={prop.index} />
       <BusCardDisplaySetting buslistindex={prop.index}></BusCardDisplaySetting>
     </div>
   )

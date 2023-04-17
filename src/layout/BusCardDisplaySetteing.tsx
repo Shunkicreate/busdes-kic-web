@@ -3,12 +3,12 @@ import CardDisplayButton from '../atom/CardDisplayButton'
 import useModal from '../hooks/useModal';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {busStopListAtomType} from '../types/Bus.type';
+import { busStopListAtomType } from '../types/Bus.type';
 import { deleteLocalStrageBusStops } from '../functions/LocalStrageFuction';
 
-const BusCardDisplaySetting = ({buslistindex}:{buslistindex : number}) => {
+const BusCardDisplaySetting = ({ buslistindex }: { buslistindex: number }) => {
 
-    const {Modal, openModal, closeModal, isOpen} = useModal()
+    const { Modal, openModal, closeModal, isOpen } = useModal()
 
     const addAllBusStopList = useSetRecoilState(addAllBusStopListSelector)
     const AllBusStopList = useRecoilValue(addAllBusStopListSelector)
