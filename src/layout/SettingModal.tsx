@@ -1,17 +1,20 @@
 import React from 'react';
 import useModal from '../hooks/useModal';
 import { AllBusStopsType, AllBusStops, busStopListAtomType } from '../types/Bus.type';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { ApproachInfos } from '../types/Bus.type';
 import Addbutton from '../images/addButton.svg'
 import { useForm, Controller } from 'react-hook-form';
+import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
+
 import {
     Box,
     TextField,
     Autocomplete,
 } from '@mui/material'
 import { setLocalStrageBusStops } from '../functions/LocalStrageFuction';
+
 
 const SettingModal = () => {
     const { Modal, isOpen, openModal, closeModal } = useModal();
@@ -25,15 +28,50 @@ const SettingModal = () => {
             BusStop: null,
         },
     });
+    const AllBusStopList = useRecoilValue(getAllBusStopList)
 
-    const Empty: ApproachInfos = {
+    const addBusStop = (fr: AllBusStopsType, to: AllBusStopsType) => {
+        if (isAlreadyListed(AllBusStopList, fr, to)) {
+            const BusStopData = AllBusStopList.filter((BusStop) => BusStop.fr === fr && BusStop.to === to)[0]
+            const Empty: ApproachInfos = { 'approach_infos': [] }
+            const addBusStop: busStopListAtomType[] = [{
+                fr: BusStopData.fr,
+                to: BusStopData.to,
+                ShowTimeTable: true,
+                ShowBusCard: true,
+                TimeTableData: BusStopData.TimeTableData,
+                BusCardData: BusStopData.BusCardData,
+            }]
+            addAllBusStopList(addBusStop)
+            setLocalStrageBusStops(addBusStop[0])
+        }
+        else {
+            const Empty: ApproachInfos = { 'approach_infos': [] }
+            const addBusStop: busStopListAtomType[] = [{
+                fr: fr,
+                to: to,
+                ShowTimeTable: true,
+                ShowBusCard: true,
+                TimeTableData: undefined,
+                BusCardData: Empty,
+            }]
+            addAllBusStopList(addBusStop)
+            setLocalStrageBusStops(addBusStop[0])
+        }
+    }
 
-        'approach_infos': [
-
-        ]
+    const isAlreadyListed = (BusStopList: busStopListAtomType[], fr: AllBusStopsType, to: AllBusStopsType) => {
+        let flag = false
+        BusStopList.forEach(((BusStop) => {
+            if (BusStop.fr === fr && BusStop.to === to) {
+                flag = true
+            }
+        }))
+        return flag
     }
 
     const addSettingList = () => {
+
         const BusStop = getValues().BusStop
         if (!BusStop) {
             alert('バス停を選択してください')
@@ -42,26 +80,8 @@ const SettingModal = () => {
             alert('正式なバス停の名前を選択してください。')
         }
         else {
-            let addBusStop: busStopListAtomType[] = [{
-                fr: BusStop,
-                to: '立命館大学',
-                ShowTimeTable: true,
-                ShowBusCard: true,
-                TimeTableData: undefined,
-                BusCardData: Empty,
-            }]
-            addAllBusStopList(addBusStop)
-            setLocalStrageBusStops(addBusStop[0])
-            addBusStop = [{
-                fr: '立命館大学前',
-                to: BusStop,
-                ShowTimeTable: true,
-                ShowBusCard: true,
-                TimeTableData: undefined,
-                BusCardData: Empty,
-            }]
-            addAllBusStopList(addBusStop)
-            setLocalStrageBusStops(addBusStop[0])
+            addBusStop(BusStop, '立命館大学')
+            addBusStop('立命館大学前', BusStop)
             closeModal()
         }
     }
