@@ -1,31 +1,30 @@
 {
-  "short_name": "Busdes!",
-  "name": "Busdes!【衣笠キャンパス】",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "android-chrome-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "android-chrome-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "categories": [
-    "education",
-    "travel",
-    "utilities"
-  ],
-  "description": "立命館大学衣笠キャンパスの学生のためのバス時刻表表示アプリケーションです"
+    "short_name": "Busdes!",
+    "name": "Busdes!【衣笠キャンパス】",
+    "icons": [{
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "android-chrome-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "android-chrome-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#FFE600",
+    "background_color": "#F8F8F8",
+    "categories": [
+        "education",
+        "travel",
+        "utilities"
+    ],
+    "description": "立命館大学衣笠キャンパスの学生のためのバス時刻表表示アプリケーションです"
 }
