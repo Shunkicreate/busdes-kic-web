@@ -32,7 +32,7 @@ const getModeParam = () => {
 
 const BackGround = () => {
     return (
-        <div className='bg-white fixed w-full h-full'></div>
+        <div className='bg-white fixed w-full h-full -z-10'></div>
     )
 }
 
