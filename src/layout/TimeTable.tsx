@@ -250,11 +250,23 @@ const ShowTimeTable = () => {
     )
 }
 
+const EmptyBusStop = () => {
+    return (
+        <div className='fixed top-0 left-0 right-0 bottom-0 bg-bgColor'>
+            <div className='absolute w-fit h-fit top-[50%] right-0 left-0 m-auto'>NextBusからバス停を追加してください</div>
+        </div>
+    )
+}
+
 export const TimeTableWrapper = () => {
     const AllBusStopList = useRecoilValue(getAllBusStopList)
-    if (AllBusStopList.length === 0) {
+    let emptyFlag = true
+    AllBusStopList.filter((BusStop) => BusStop.ShowTimeTable).forEach(() => {
+        emptyFlag = false
+    })
+    if (emptyFlag || AllBusStopList.length === 0) {
         return (
-            <div>バス停を追加してください</div>
+            <EmptyBusStop></EmptyBusStop>
         )
     }
     return (
