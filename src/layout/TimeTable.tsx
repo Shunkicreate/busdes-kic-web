@@ -243,7 +243,7 @@ const ShowTimeTable = () => {
                 <TimeTableHeader fr={currentFromBusStop} to={currenToBusStop} switchBusStop={switchBusStop}></TimeTableHeader>
                 <SelectBox BusStops={switchShowElem(currentFromBusStop, currenToBusStop, AllBusStopList)} value={value} handleChange={handleChange}></SelectBox>
             </div>
-            <div className="mx-4 mt-40 overflow-scroll whitespace-normal">
+            <div className="mx-4 mt-36 overflow-scroll whitespace-normal">
                 <SwiperTable BusStops={switchShowElem(currentFromBusStop, currenToBusStop, AllBusStopList)} swiperRef={swiperRef} handleChange={handleChange}></SwiperTable>
             </div>
         </div>
