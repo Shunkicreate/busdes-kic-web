@@ -11,6 +11,9 @@ module.exports = {
         hiddenText: '#0000004d',
         bgColor: '#F8F8F8',
         buttonOnClick: '#E8D000',
+      },
+      zIndex: {
+        '-10': '-10',
       }
     },
   },

@@ -18,7 +18,7 @@ const localStrageInit = () => {
         //ローカルストレージにデータがない状態でロードされたら京都駅のデータを追加．
         initLocalStrageBusStops()
     }
-    else if (LocalStrageBusStops?.length === 0){
+    else if (LocalStrageBusStops?.length === 0) {
         //入力が空の状態でロードされたらそのまま何もしない．
         null
     }
@@ -30,6 +30,12 @@ const getModeParam = () => {
     return defaultMode
 }
 
+const BackGround = () => {
+    return (
+        <div className='bg-bgColor fixed w-full h-full -z-10'></div>
+    )
+}
+
 const App = () => {
     localStrageInit()
     let defaultMode = getModeParam()
@@ -37,14 +43,14 @@ const App = () => {
         defaultMode = 'NextBus'
     }
     const [mode, setMode] = useState<mode>(defaultMode as mode)
-    
+
     useEffect(() => {
         window.addEventListener('popstate', handlePopstate);
         return () => {
             window.removeEventListener('popstate', handlePopstate);
         };
     }, []);
-    
+
     const handlePopstate = () => {
         const returnModeParam = getModeParam()
         if (returnModeParam) {
@@ -53,7 +59,8 @@ const App = () => {
     }
 
     return (
-        <div className='App bg-white'>
+        <div className='App bg-bgColor'>
+            <BackGround />
             <RecoilRoot>
                 <Header></Header>
                 <div className='pb-20'>
