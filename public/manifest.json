@@ -20,7 +20,7 @@
     "start_url": ".",
     "display": "standalone",
     "theme_color": "#FFE600",
-    "background_color": "#F8F8F8",
+    "background_color": "#FFE600",
     "categories": [
         "education",
         "travel",
