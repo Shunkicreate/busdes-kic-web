@@ -1,6 +1,6 @@
 import React from 'react';
 import useModal from '../hooks/useModal';
-import { AllBusStopsType, AllBusStops, busStopListAtomType } from '../types/Bus.type';
+import { AllBusStopsType, AllBusStops, busStopListAtomType, TimeTable } from '../types/Bus.type';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import addAllBusStopListSelector from '../grobalState/selectors/addAllBusStopList';
 import { ApproachInfos } from '../types/Bus.type';
@@ -30,33 +30,27 @@ const SettingModal = () => {
     });
     const AllBusStopList = useRecoilValue(getAllBusStopList)
 
+    const addLocalStorageAndGlobalState = (fr: AllBusStopsType, to: AllBusStopsType, ShowTimeTable = true, ShowBusCard = true, TimeTableData?: TimeTable, BusCardData?: ApproachInfos) => {
+        const Empty: ApproachInfos = { 'approach_infos': [] }
+        const addBusStop: busStopListAtomType[] = [{
+            fr: fr,
+            to: to,
+            ShowTimeTable: ShowTimeTable,
+            ShowBusCard: ShowBusCard,
+            TimeTableData: TimeTableData,
+            BusCardData: BusCardData ? BusCardData : Empty,
+        }]
+        addAllBusStopList(addBusStop)
+        setLocalStrageBusStops(addBusStop[0])
+    }
+
     const addBusStop = (fr: AllBusStopsType, to: AllBusStopsType) => {
         if (isAlreadyListed(AllBusStopList, fr, to)) {
             const BusStopData = AllBusStopList.filter((BusStop) => BusStop.fr === fr && BusStop.to === to)[0]
-            const Empty: ApproachInfos = { 'approach_infos': [] }
-            const addBusStop: busStopListAtomType[] = [{
-                fr: BusStopData.fr,
-                to: BusStopData.to,
-                ShowTimeTable: true,
-                ShowBusCard: true,
-                TimeTableData: BusStopData.TimeTableData,
-                BusCardData: BusStopData.BusCardData,
-            }]
-            addAllBusStopList(addBusStop)
-            setLocalStrageBusStops(addBusStop[0])
+            addLocalStorageAndGlobalState(BusStopData.fr, BusStopData.to, true, true, BusStopData.TimeTableData, BusStopData.BusCardData)
         }
         else {
-            const Empty: ApproachInfos = { 'approach_infos': [] }
-            const addBusStop: busStopListAtomType[] = [{
-                fr: fr,
-                to: to,
-                ShowTimeTable: true,
-                ShowBusCard: true,
-                TimeTableData: undefined,
-                BusCardData: Empty,
-            }]
-            addAllBusStopList(addBusStop)
-            setLocalStrageBusStops(addBusStop[0])
+            addLocalStorageAndGlobalState(fr, to)
         }
     }
 
