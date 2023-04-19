@@ -23,5 +23,5 @@
   },
   "include": [
     "src"
-, "Bus.type.ts"  ]
+, "src/types/Bus.type.ts"  ]
 }

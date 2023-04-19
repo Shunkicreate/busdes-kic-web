@@ -1,58 +1,98 @@
-import BusCard from './BusCard';
-import { useTimeTableApi, showTimeTable } from './TimeTable';
-import logo from './logo.svg'
-import { useState } from 'react'
+import BusCard from './layout/BusCard';
+import RoundTripCard from './layout/BuscardRoundTrip'
+import { TimeTableWrapper } from './layout/TimeTable';
+import { useState, useEffect } from 'react'
+import { mode } from './types/main.type';
+import { Header } from './layout/Header';
+import { Footer } from './layout/Footer';
+import Settings from './layout/Settings';
+import { RecoilRoot } from 'recoil';
+import React from 'react';
+import './App.css'
+import { getLocalStrageBusStops, initLocalStrageBusStops, setLocalStrageBusStops } from './functions/LocalStrageFuction';
+import { ApproachInfos } from './types/Bus.type';
+
+const localStrageInit = () => {
+    const LocalStrageBusStops = getLocalStrageBusStops()
+    if (!LocalStrageBusStops) {
+        //ローカルストレージにデータがない状態でロードされたら京都駅のデータを追加．
+        initLocalStrageBusStops()
+    }
+    else if (LocalStrageBusStops?.length === 0) {
+        //入力が空の状態でロードされたらそのまま何もしない．
+        null
+    }
+}
+
+const getModeParam = () => {
+    const params = new URLSearchParams(document.location.search.substring(1));
+    const defaultMode = params.get('mode') as mode | null
+    return defaultMode
+}
+
+const BackGround = () => {
+    return (
+        <div className='bg-bgColor fixed w-full h-full -z-10'></div>
+    )
+}
 
 const App = () => {
-    const [{ timeTable, isLoading, isError, count, doFetch, setStartSta, setGoalSta }] = useTimeTableApi()
-    let idx = 0
-    const searchData = [["京都駅前", "立命館大学"], ["立命館大学前", "京都駅"]]
-    const [mode, setMode] = useState('Next bus')
+    localStrageInit()
+    let defaultMode = getModeParam()
+    if (defaultMode === null) {
+        defaultMode = 'NextBus'
+    }
+    const [mode, setMode] = useState<mode>(defaultMode as mode)
+
+    useEffect(() => {
+        window.addEventListener('popstate', handlePopstate);
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, []);
+
+    const handlePopstate = () => {
+        const returnModeParam = getModeParam()
+        if (returnModeParam) {
+            setMode(returnModeParam)
+        }
+    }
+
     return (
-        <div className="App">
-            <body className='border-2' style={{ background: "white" }}>
-                <div>
-                    {count}
-                </div>
-                <div>
-                    <button onClick={() => doFetch()}>検索!</button>
-                </div>
-                {(() => {
-                    if (mode === "Next bus") {
-                        return (
-                            <BusCard></BusCard>
-                        )
+        <div className='App bg-bgColor'>
+            <BackGround />
+            <RecoilRoot>
+                <Header></Header>
+                <div className='pb-28 mt-16'>
+                    {
+                        (() => {
+                            if (mode === 'NextBus') {
+                                return (
+                                    <RoundTripCard />
+                                )
+                            }
+                            else if (mode === 'TimeTable') {
+                                return (
+                                    <div>
+                                        <TimeTableWrapper></TimeTableWrapper>
+                                    </div>
+                                )
+                            }
+                            else if (mode === 'Settings') {
+                                return (
+                                    <Settings></Settings>
+                                )
+                            }
+                            else {
+                                return (
+                                    <></>
+                                )
+                            }
+                        })()
                     }
-                    else if (mode === "Timetable") {
-                        return (
-                            <>
-                                {isError && <div>Something went wrong ...</div>}
-                                {isLoading ? (
-                                    <div>Loading...</div>
-                                ) : (
-                                    showTimeTable(timeTable)
-                                )}
-                            </>
-                        )
-                    }
-                })()}
-                {/* <div>
-                    <button onClick={() => { idx++; setStartSta(searchData[idx % 2][0]); setGoalSta(searchData[idx % 2][1]); }}>スワッピング</button>
                 </div>
-                <div>
-                    <input type="text" placeholder='from' defaultValue={"立命館大学"} onChange={event => setStartSta(event.target.value)} />
-                </div>
-                <div>
-                    <input type="text" placeholder='to' defaultValue={"京都駅前"} onChange={event => setGoalSta(event.target.value)} />
-                </div> */}
-                <div className='absolute bottom-0 text-center w-full my-5'>
-                    <button onClick={() => { setMode("Next bus") }}>Next bus</button>
-                    <button onClick={() => { setMode("Timetable") }}>Timetable</button>
-                    <div className='bg-stone-100'>
-                        AdSense
-                    </div>
-                </div>
-            </body>
+                <Footer setMode={setMode} currentMode={mode}></Footer>
+            </RecoilRoot>
         </div>
     );
 }
