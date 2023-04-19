@@ -41,7 +41,15 @@ const SettingModal = () => {
             BusCardData: BusCardData ? BusCardData : Empty,
         }]
         addAllBusStopList(addBusStop)
-        setLocalStrageBusStops(addBusStop[0])
+        const localStrageAddBusStop: busStopListAtomType[] = [{
+            fr: fr,
+            to: to,
+            ShowTimeTable: ShowTimeTable,
+            ShowBusCard: ShowBusCard,
+            TimeTableData: undefined,
+            BusCardData: Empty,
+        }]
+        setLocalStrageBusStops(localStrageAddBusStop[0])
     }
 
     const addBusStop = (fr: AllBusStopsType, to: AllBusStopsType) => {
