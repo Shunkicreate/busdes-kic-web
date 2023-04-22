@@ -14,6 +14,10 @@ root.render(
     <HelmetProvider >
       <Helmet>
         <title>Busdes!</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Busdes!" />
+        <meta name="twitter:description" content="Busdes!【衣笠】衣笠生向けバスアプリ" />
+        <meta name="twitter:image" content='%REACT_APP_TWITTER_CARD_URL%' />
       </Helmet>
       <App />
     </HelmetProvider>
