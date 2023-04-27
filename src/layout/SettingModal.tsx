@@ -147,7 +147,7 @@ const SettingModal = () => {
                                 </form>
                             </Box>
                         </div>
-                        <button className='text-center m-8' onClick={addSettingList}>
+                        <button className='text-center m-8 rounded border-2 bg-slate-200 text-lg' onClick={addSettingList}>
                             追加
                         </button>
                     </div>

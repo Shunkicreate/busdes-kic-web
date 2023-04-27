@@ -42,8 +42,8 @@ const BusCardDisplaySetting = ({ buslistindex }: { buslistindex: number }) => {
                     <div className='pt-4 text-2xl font-bold'>バスカードの削除</div>
                     <div className='p-3'>選択したカードを削除しますか？</div>
                     <div className='grid grid-cols-9 p-1 pb-4 text-lg font-semibold'>
-                        <button className='col-start-2 col-span-3 border-2' onClick={closeModal}>キャンセル</button>
-                        <button className='col-start-6 col-span-3 border-2 border-yellow-300 bg-yellow-300' onClick={DeleteBusCard}>削除する</button>
+                        <button className='col-start-2 col-span-3 rounded border-2 bg-slate-200' onClick={closeModal}>キャンセル</button>
+                        <button className='col-start-6 col-span-3 rounded border-2 border-yellow-300 bg-yellow-300' onClick={DeleteBusCard}>削除する</button>
                     </div>
                 </div>
             </Modal>
