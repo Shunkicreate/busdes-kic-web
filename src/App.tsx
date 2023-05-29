@@ -1,4 +1,3 @@
-import BusCard from './layout/BusCard';
 import RoundTripCard from './layout/BuscardRoundTrip'
 import { TimeTableWrapper } from './layout/TimeTable';
 import { useState, useEffect } from 'react'
@@ -9,8 +8,8 @@ import Settings from './layout/Settings';
 import { RecoilRoot } from 'recoil';
 import React from 'react';
 import './App.css'
-import { getLocalStrageBusStops, initLocalStrageBusStops, setLocalStrageBusStops } from './functions/LocalStrageFuction';
-import { ApproachInfos } from './types/Bus.type';
+import { getLocalStrageBusStops, initLocalStrageBusStops } from './functions/LocalStrageFuction';
+import analytics from './lib/firebase';
 
 const localStrageInit = () => {
     const LocalStrageBusStops = getLocalStrageBusStops()
@@ -49,6 +48,10 @@ const App = () => {
         return () => {
             window.removeEventListener('popstate', handlePopstate);
         };
+    }, []);
+
+    useEffect(() => {
+        analytics
     }, []);
 
     const handlePopstate = () => {
