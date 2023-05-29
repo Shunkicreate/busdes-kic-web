@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { AllBusStopsType, busStopListAtomType, ApproachInfos } from '../types/Bus.type';
+import { AllBusStopsType, busStopListAtomType } from '../types/Bus.type';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import getAllBusStopList from '../grobalState/selectors/getAllBusStopList';
 import { useEffect } from 'react'
@@ -12,6 +12,7 @@ import 'swiper/css';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 
 const fromIsRits = (BusStop: AllBusStopsType) => {
     if (BusStop === '立命館大学前') {
@@ -267,6 +268,11 @@ export const TimeTableWrapper = () => {
     AllBusStopList.filter((BusStop) => BusStop.ShowTimeTable).forEach(() => {
         emptyFlag = false
     })
+    const analytics = getAnalytics();
+    logEvent(analytics, 'screen_view', {
+        firebase_screen: 'TimeTablePage',
+        firebase_screen_class: 'TimeTablePage',
+    });
     if (emptyFlag || AllBusStopList.length === 0) {
         return (
             <EmptyBusStop></EmptyBusStop>
